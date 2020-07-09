@@ -3,12 +3,8 @@ FROM splunk/splunk:$SPLUNK_VERSION
 ARG SPLUNK_VERSION=latest
 ARG SPLUNK_APP_ID=TA_UNKNOWN
 ARG SPLUNK_APP_PACKAGE=package
-ARG SPLUNK_SA_EVENTGEN=501
 RUN echo Splunk VERSION=$SPLUNK_VERSION
-RUN echo EVENTGEN=$SPLUNK_SA_EVENTGEN
 
-RUN wget -O /tmp/SA-eventgen.tgz https://bintray.com/splservices/SA-Eventgen/download_file?file_path=eventgen_${SPLUNK_SA_EVENTGEN}.tgz
-ENV SPLUNK_APPS_URL=/tmp/SA-eventgen.tgz
 COPY deps/apps /opt/splunk/etc/apps/
 
 COPY $SPLUNK_APP_PACKAGE /opt/splunk/etc/apps/$SPLUNK_APP_ID

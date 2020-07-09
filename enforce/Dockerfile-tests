@@ -15,9 +15,9 @@ COPY tests/entrypoint.sh /
 COPY tests/pytest-ci.ini /work/pytest.ini
 COPY .pytest.expect /work/.pytest.expect
 
-COPY tests /work/tests/
+COPY tests /work/tests
 RUN pip install -r /work/tests/requirements.txt
-COPY package /work/package/
+COPY package /work/package
 
 CMD /entrypoint.sh
 

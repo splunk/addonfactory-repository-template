@@ -1,4 +1,7 @@
 #!/bin/bash
+BRANCH=$(git rev-parse --abbrev-ref HEAD -- | head -n 1)
+INPUTFILE=repositories_$BRANCH.csv
+echo Working branch $BRANCH - $INPUTFILE
 REPOORG=splunk
 if [[  $GITHUB_USER && ${GITHUB_USER-x} ]]
 then
@@ -92,17 +95,48 @@ do
         else
             pushd work/$REPO
             git pull
-        fi                
+        fi            
 
         # Update any files in enforce
+        if [ "$BRANCH" != "master" ]; then
+            git checkout -B "test/templateupdate" develop     
+        fi
         rsync -avh --include ".*" --ignore-existing ../../seed/ .
         rsync -avh --include ".*" ../../enforce/ .
+
+        #Cleanup of bad module
+        # Remove the submodule entry from .git/config
+        git submodule deinit -f deps/script || true
+        # Remove the submodule directory from the superproject's .git/modules directory
+        rm -rf .git/modules/deps/script || true
+
+        # Remove the entry in .gitmodules and remove the submodule directory located at path/to/submodule
+        git rm -f deps/script || true
+        #Updates for pytest-splunkadd-on >=1.2.2a1
+        if [ ! -d "tests/data" ]; then
+            mkdir -p tests/data
+        fi    
+        if [ -f "tests/data/wordlist.txt" ]; then
+            git rm tests/data/wordlist.txt
+        fi    
+        if [ -f "package/default/eventgen.conf" ]; then
+            git mv package/default/eventgen.conf tests/data/eventgen.conf
+        fi    
+        if [ -d "package/samples" ]; then
+            git mv package/samples tests/data/samples
+        fi    
+                
+
         git config  user.email "addonfactory@splunk.com"
         git config  user.name "Addon Factory template"
         git add .
         git commit -am "sync for policy"   
-        git push
-
+        if [ "$BRANCH" != "master" ]; then
+            git push -f --set-upstream origin test/templateupdate   
+        else
+            git push
+        fi     
+        
     fi
     popd
-done < repositories.csv
+done < $INPUTFILE

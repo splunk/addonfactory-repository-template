@@ -44,9 +44,6 @@ workflows:
     jobs:
       - approval-run:
           type: approval
-          filters:
-            branches:
-              only: master
       - sync:
           requires:
             - approval-run

@@ -204,8 +204,7 @@ orbs:
                 export SPLUNK_APP_ID=$(crudini --get package/default/app.conf id name)
                 docker-compose -f docker-compose-ci.yml build
                 docker-compose -f docker-compose-ci.yml up -d splunk                
-                while [ $? -ne 0 ]; do docker logs c14f4fadf39a | grep "Ansible playbook complete" ; done
-                sleep 30
+                until docker-compose -f docker-compose-ci.yml logs splunk | grep "Ansible playbook complete" ; do sleep 1; done
           - run:
               name: Run diag
               when: always
@@ -239,6 +238,7 @@ orbs:
                 docker cp dummy:/work/test-results/cim-compliance-report.md test-results/
     jobs:
       aio:
+        resource_class: xlarge
         parameters:
           splunk_version:
             description: Image version

@@ -1,0 +1,4 @@
+splunk-add-on-for-mcafee-epo-syslog,Splunk_TA_mcafee_epo_syslog,private,"Splunk Add-on for McAfee EPO Syslog"
+splunk-add-on-for-microsoft-cloud-services,Splunk_TA_microsoft-cloudservices,private,"Splunk Add-on for Microsoft Cloud Services"
+splunk-add-on-for-juniper,Splunk_TA_juniper,private,"Splunk Add-on for Juniper"
+splunk-add-on-for-unix-and-linux,Splunk_TA_nix,private,"Splunk Add-on for Unix and Linux"
