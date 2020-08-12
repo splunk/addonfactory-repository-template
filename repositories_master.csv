@@ -59,3 +59,4 @@ splunk-add-on-for-zeek-aka-bro,Splunk_TA_bro,private,"Splunk Add-on for Zeek aka
 splunk-add-on-for-rsa-securid-cas,Splunk_TA_rsa_securid_cas,private,"Splunk Add-on for RSA SecurID CAS"
 splunk-add-on-for-splunk-global-monitoring-console,Splunk_TA_splunk_global_monitoring_console,"Splunk Add-on for Splunk Global Monitoring Console"
 splunk-add-on-for-zoom,Splunk_TA_zoom,"Splunk Add-on for Zoom"
+splunk-add-on-for-microsoft-sqlserver,Splunk_TA_microsoft-sqlserver,private,"Splunk Add-on for Microsoft SQL Server"
