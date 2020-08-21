@@ -125,6 +125,9 @@ do
         if [ -d "package/samples" ]; then
             git mv package/samples tests/data/samples
         fi
+        if [ -d ".dependabot" ]; then
+            git rm -rf .dependabot
+        fi
 
 
         git config  user.email "addonfactory@splunk.com"
