@@ -235,7 +235,7 @@ orbs:
                                     -v project_results:/work/test-results \
                                     registry.access.redhat.com/ubi7/ubi
                 docker cp dummy:/work/test-results/test.xml test-results/
-                docker cp dummy:/work/test-results/cim-compliance-report.md test-results/
+                docker cp dummy:/work/test-results/cim-compliance-report.md test-results/ || true
     jobs:
       aio:
         resource_class: xlarge
