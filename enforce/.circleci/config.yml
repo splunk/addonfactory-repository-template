@@ -197,45 +197,34 @@ orbs:
                 pip install git+https://github.com/pixelb/crudini        
                 mkdir test-results
           - run:
-              name: Splunk up
+              name: Splunk Testing
               command: |
+                # Start Splunk
                 ls -l deps/build/addonfactory_test_matrix_splunk/splunk_matrix.conf
                 export SPLUNK_VERSION=$(crudini --get deps/build/addonfactory_test_matrix_splunk/splunk_matrix.conf "<<parameters.splunk_version>>" VERSION)
                 export SPLUNK_APP_ID=$(crudini --get package/default/app.conf id name)
                 docker-compose -f docker-compose-ci.yml build
                 docker-compose -f docker-compose-ci.yml up -d splunk                
                 until docker-compose -f docker-compose-ci.yml logs splunk | grep "Ansible playbook complete" ; do sleep 1; done
-          - run:
-              name: Run diag
-              when: always
-              command: |
+                # Run a Splunk Diag
                 mkdir /tmp/diag
                 diag=$(docker-compose -f docker-compose-ci.yml exec splunk sudo -u splunk /opt/splunk/bin/splunk diag | grep "Splunk diagnosis file created" | sed -n 's/.* \(\/.*\.gz\)/\1/p') 
                 docker-compose -f docker-compose-ci.yml exec splunk sudo chmod +r ${diag//[$'\t\r\n']}
                 docker cp project_splunk_1:${diag//[$'\t\r\n']} /tmp/diag
-          - run:
-              name: Check btool
-              when: always
-              command: |
+                # Check with btool
                 docker-compose -f docker-compose-ci.yml exec splunk sudo /opt/splunk/bin/splunk cmd btool check
                 docker-compose -f docker-compose-ci.yml up -d splunk
                 sleep 30
-          - run:
-              name: Test
-              when: always
-              command: |
+                # Run the tests
                 docker-compose -f docker-compose-ci.yml up  --abort-on-container-exit test
-              no_output_timeout: 1h
-          - run:
-              name: collect results
-              when: always
-              command: |
+                # Collect Results
                 docker volume ls
                 docker container create --name dummy \
                                     -v project_results:/work/test-results \
                                     registry.access.redhat.com/ubi7/ubi
                 docker cp dummy:/work/test-results/test.xml test-results/
                 docker cp dummy:/work/test-results/cim-compliance-report.md test-results/ || true
+              no_output_timeout: 2h
     jobs:
       aio:
         resource_class: xlarge
