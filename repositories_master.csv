@@ -60,3 +60,4 @@ splunk-add-on-for-rsa-securid-cas,Splunk_TA_rsa_securid_cas,private,"Splunk Add-
 splunk-add-on-for-splunk-global-monitoring-console,Splunk_TA_splunk_global_monitoring_console,"Splunk Add-on for Splunk Global Monitoring Console"
 splunk-add-on-for-zoom,Splunk_TA_zoom,private,"Splunk Add-on for Zoom"
 splunk-add-on-for-google-gsuite,Splunk_TA_google-gsuite,private,"Splunk Add-on for G Suite"
+splunk-add-on-for-cef,TA-cef-for-splunk,public,"TA CEF for Splunk"
