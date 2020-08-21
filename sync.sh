@@ -134,11 +134,13 @@ do
         git config  user.name "Addon Factory template"
         git add .
         git commit -am "sync for policy"
-        if [ "$BRANCH" != "master" ]; then
-            git push -f --set-upstream origin test/templateupdate
-        else
-            git push
-        fi
+        # if [ "$BRANCH" != "master" ]; then
+        #     git push -f --set-upstream origin test/templateupdate
+        # else
+        #     git push
+        # fi
+        git push -f --set-upstream origin test/templateupdate
+        hub pull-request -b develop "Update repository configuration from template" --no-edit
 
     fi
     popd
