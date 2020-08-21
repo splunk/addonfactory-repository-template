@@ -5,7 +5,7 @@ echo Working branch $BRANCH - $INPUTFILE
 REPOORG=splunk
 if [[  $GITHUB_USER && ${GITHUB_USER-x} ]]
 then
-    echo "GITHUB_USER Found" 
+    echo "GITHUB_USER Found"
 else
     echo "GITHUB_USER Not found"
     exit 1
@@ -19,7 +19,7 @@ else
 fi
 if [[  $CIRCLECI_TOKEN && ${CIRCLECI_TOKEN-x} ]]
 then
-    echo "GITHUB_USER Found" 
+    echo "GITHUB_USER Found"
 else
     echo "GITHUB_USER Not found"
     exit 1
@@ -38,21 +38,21 @@ do
     if ! gh repo view -R $REPOORG/${REPO} >/dev/null
     then
         rm -rf work/$REPO
-        echo Repository is new    
+        echo Repository is new
         mkdir -p work/$REPO || true
+        pushd work/$REPO
         rsync -avh --include ".*" ../../seed/ .
         rsync -avh --include ".*" ../../enforce/ .
-        pushd work/$REPO
-        
+
         crudini --set package/default/app.conf launcher description "$TITLE"
         crudini --set package/default/app.conf ui label "$TITLE"
         crudini --set package/default/app.conf package id $TAID
         crudini --set package/default/app.conf id name $TAID
-        
-        tmpf=$(mktemp) 
+
+        tmpf=$(mktemp)
         jq --arg TITLE "${TITLE}" '.info.title = $TITLE' package/app.manifest >$tmpf
         mv -f $tmpf package/app.manifest
-        tmpf=$(mktemp) 
+        tmpf=$(mktemp)
         jq --arg TITLE "${TITLE}" '.info.description = $TITLE' package/app.manifest >$tmpf
         mv -f $tmpf package/app.manifest
         jq --arg TAID "${TAID}" '.info.id.name = $TAID' package/app.manifest >$tmpf
@@ -67,11 +67,11 @@ do
 
         git add .
         git commit -am "base"
-        git tag -a v0.2.0 -m "CI base"        
+        git tag -a v0.2.0 -m "CI base"
 
         hub create -p $REPOORG/$REPO
-        hub api orgs/$REPOORG/teams/products-shared-services-all/repos/$REPOORG/$REPO --raw-field 'permission=maintain' -X PUT 
-        hub api orgs/$REPOORG/teams/productsecurity/repos/$REPOORG/$REPO --raw-field 'permission=read' -X PUT 
+        hub api orgs/$REPOORG/teams/products-shared-services-all/repos/$REPOORG/$REPO --raw-field 'permission=maintain' -X PUT
+        hub api orgs/$REPOORG/teams/productsecurity/repos/$REPOORG/$REPO --raw-field 'permission=read' -X PUT
 
         curl -X POST https://circleci.com/api/v1.1/project/github/$REPOORG/$REPO/follow?circle-token=${CIRCLECI_TOKEN}
         curl -X POST --header "Content-Type: application/json" -d '{"type":"github-user-key"}' https://circleci.com/api/v1.1/project/github/$REPOORG/$REPO/checkout-key?circle-token=${CIRCLECI_TOKEN}
@@ -84,7 +84,7 @@ do
         git push --follow-tags
         git checkout -b develop
         git push --set-upstream origin develop
-        
+
     else
         echo Repository is existing
         if [ ! -d "$REPO" ]; then
@@ -95,11 +95,11 @@ do
         else
             pushd work/$REPO
             git pull
-        fi            
+        fi
 
         # Update any files in enforce
         if [ "$BRANCH" != "master" ]; then
-            git checkout -B "test/templateupdate" develop     
+            git checkout -B "test/templateupdate" develop
         fi
         rsync -avh --include ".*" --ignore-existing ../../seed/ .
         rsync -avh --include ".*" ../../enforce/ .
@@ -115,28 +115,28 @@ do
         #Updates for pytest-splunkadd-on >=1.2.2a1
         if [ ! -d "tests/data" ]; then
             mkdir -p tests/data
-        fi    
+        fi
         if [ -f "tests/data/wordlist.txt" ]; then
             git rm tests/data/wordlist.txt
-        fi    
+        fi
         if [ -f "package/default/eventgen.conf" ]; then
             git mv package/default/eventgen.conf tests/data/eventgen.conf
-        fi    
+        fi
         if [ -d "package/samples" ]; then
             git mv package/samples tests/data/samples
-        fi    
-                
+        fi
+
 
         git config  user.email "addonfactory@splunk.com"
         git config  user.name "Addon Factory template"
         git add .
-        git commit -am "sync for policy"   
+        git commit -am "sync for policy"
         if [ "$BRANCH" != "master" ]; then
-            git push -f --set-upstream origin test/templateupdate   
+            git push -f --set-upstream origin test/templateupdate
         else
             git push
-        fi     
-        
+        fi
+
     fi
     popd
 done < $INPUTFILE

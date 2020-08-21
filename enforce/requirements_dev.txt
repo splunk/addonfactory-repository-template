@@ -2,6 +2,6 @@
 ## SPDX-FileCopyrightText: 2020 Splunk, Inc. <sales@splunk.com>
 ## SPDX-License-Identifier: LicenseRef-Splunk-1-2020
 ##
-pytest-splunk-addon[docker]>=1.1.0
 -r tests/requirements.txt
+pytest-splunk-addon[docker]>=1.1.0
 reuse
