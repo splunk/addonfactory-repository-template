@@ -61,3 +61,4 @@ splunk-add-on-for-splunk-global-monitoring-console,Splunk_TA_splunk_global_monit
 splunk-add-on-for-zoom,Splunk_TA_zoom,private,"Splunk Add-on for Zoom"
 splunk-add-on-for-google-gsuite,Splunk_TA_google-gsuite,private,"Splunk Add-on for G Suite"
 splunk-add-on-for-cef,TA-cef-for-splunk,public,"TA CEF for Splunk"
+splunk-add-on-for-mcafee-nsp,Splunk_TA_mcafee_nsp,private,"Splunk Add-on for McAfee NSP"
