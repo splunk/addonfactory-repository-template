@@ -107,8 +107,18 @@ orbs:
           - run:
               name: report
               command: |
-                zip -j /tmp/$CIRCLE_PROJECT_REPONAME-appinspect-mode-<<parameters.label>>.zip test-results/$CIRCLE_PROJECT_REPONAME-appinspect-mode-<<parameters.label>>.xml 
-                curl -X POST "$RP_ENDPOINT/api/v1/addonfactory/launch/import" -H "accept: */*" -H "Content-Type: multipart/form-data" -H "Authorization: bearer $RP_UUID" -F "file=@/tmp/$CIRCLE_PROJECT_REPONAME-appinspect-mode-<<parameters.label>>.zip;type=application/zip"
+                source ~/.venv/bin/activate
+                zip -j /tmp/$CIRCLE_PROJECT_REPONAME-appinspect-mode-<<parameters.label>>.zip test-results/$CIRCLE_PROJECT_REPONAME-appinspect-mode-<<parameters.label>>.xml                 
+
+                LUUID=$(curl -X POST "$RP_ENDPOINT/api/v1/addonfactory/launch/import" -H "accept: */*" -H "Content-Type: multipart/form-data" -H "Authorization: bearer $RP_UUID" -F "file=@/tmp/$CIRCLE_PROJECT_REPONAME-appinspect-mode-<<parameters.label>>.zip;type=application/zip" 2>/dev/null | sed 's/\(.*id = \)\([^ ]*\)\(.*\)/\2/')
+                LID=$(curl -X GET "$RP_ENDPOINT/api/v1/addonfactory/launch/uuid/$LUUID" -H "accept: */*" -H "Authorization: bearer $RP_UUID" 2>/dev/null| jq .id)
+                APPINSPECTVER=$(splunk-appinspect list version | sed 's/\(.*Version \)\(.*\)/\2/')
+
+                curl -X PUT "$RP_ENDPOINT/api/v1/addonfactory/launch/$LID/update" \
+                  -H "accept: */*" \
+                  -H "Content-Type: application/json" \
+                  -H "Authorization: bearer $RP_UUID" \
+                  -d "{ \"attributes\": [ { \"job\" : \"${CIRCLE_JOB}\", \"deployment\" : \"byoe\", \"appinspect\" : \"$APPINSPECTVER\", \"branch\" : \"<< pipeline.git.branch >>\", \"commit\" : \"${CIRCLE_SHA1}\", \"release\" : \"${RELEASE}\", \"version\" : \"$(./semtag getcurrent)\" } ] }"
           - run:
               name: set result
               command: |
