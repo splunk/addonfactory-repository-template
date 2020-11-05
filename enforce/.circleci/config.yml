@@ -72,7 +72,7 @@ orbs:
           - store_artifacts:
               path: build/VERSION
               destination: build-version
-  
+
   splunk-app-test:
     executors:
       python37:
@@ -269,7 +269,8 @@ jobs:
         description: string to identify test options in file name of output
         type: string
         default: test
-    executor: python37
+    docker:
+      - image: circleci/python:3.7
     steps:
       - checkout
       - attach_workspace:
@@ -303,7 +304,7 @@ jobs:
               -H "accept: */*" \
               -H "Content-Type: application/json" \
               -H "Authorization: bearer $RP_UUID" \
-              -d "{ \"attributes\": [ { \"job\" : \"${CIRCLE_JOB}\", \"deployment\" : \"byoe\", \"appinspect\" : \"$APPINSPECTVER\", \"branch\" : \"<< pipeline.git.branch >>\", \"commit\" : \"${CIRCLE_SHA1}\", \"release\" : \"${RELEASE}\", \"version\" : \"$(./semtag getcurrent)\" } ] }"
+              -d "{ \"attributes\": [ { \"job\" : \"${CIRCLE_JOB}\", \"deployment\" : \"byoe\", \"appinspect\" : \"$APPINSPECTVER\", \"branch\" : \"<< pipeline.git.branch >>\", \"commit\" : \"${CIRCLE_SHA1}\", \"release\" : \"${RELEASE}\", \"version\" : \"$(./semtag getcurrent)\", \"repo\" : \"$CIRCLE_PROJECT_REPONAME\" } ] }"
       - run:
           name: set result
           command: |
