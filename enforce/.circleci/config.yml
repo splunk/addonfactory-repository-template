@@ -143,25 +143,42 @@ orbs:
             description: Image version
             type: string
             default: latest
+          test_set:
+            description: Test Set
+            type: string
+            default: knowledge
         steps:
           - attach_workspace:
               at: /tmp/workspace
           - run:
               name: Setup for testing
               command: |
-                pip install -r requirements_dev.txt
                 pip install git+https://github.com/pixelb/crudini        
                 mkdir test-results
                 cp -r /tmp/workspace/output output
           - run:
               name: Splunk Testing
+              no_output_timeout: 2h
               command: |
                 # Start Splunk
-                ls -l deps/build/addonfactory_test_matrix_splunk/splunk_matrix.conf
+                TEST_SET=$(echo "<<parameters.test_set>>" | awk -F- '{print $1}' )
+                BROWSER=$(echo "<<parameters.test_set>>" | awk -F- '{print $2}' )
+                [ ! -d "tests/$TEST_SET" ] && exit 0
+                [ "$BROWSER" = "safari" ] && [ "$UI_TEST_HEADLESS" = "true" ] && exit 0
                 export SPLUNK_VERSION=$(crudini --get deps/build/addonfactory_test_matrix_splunk/splunk_matrix.conf "<<parameters.splunk_version>>" VERSION)
                 export SPLUNK_APP_ID=$(crudini --get package/default/app.conf id name)
                 export SPLUNK_APP_PACKAGE=output/$(ls output/)
+                export TEST_SET=tests/$TEST_SET
+                export TEST_BROWSER=$BROWSER
+                # JOB_NAME: For Saucelabs integration. Used as a build-name.
+                export JOB_NAME="CircleCI::$CIRCLE_PROJECT_REPONAME[$CIRCLE_BRANCH] #$CIRCLE_BUILD_NUM"
+                export SAUCE_IDENTIFIER=$SAUCE_IDENTIFIER-$(cat /proc/sys/kernel/random/uuid)
+                # Build
                 docker-compose -f docker-compose-ci.yml build
+
+                # Saucelab connection
+                [ -z $BROWSER ] || [ "$UI_TEST_HEADLESS" = "true" ] || docker-compose -f docker-compose-ci.yml up -d sauceconnect                
+                # Start Splunk
                 docker-compose -f docker-compose-ci.yml up -d splunk                
                 until docker-compose -f docker-compose-ci.yml logs splunk | grep "Ansible playbook complete" ; do sleep 1; done
                 # Run a Splunk Diag
@@ -172,20 +189,24 @@ orbs:
                 # Check with btool
                 docker-compose -f docker-compose-ci.yml exec splunk sudo /opt/splunk/bin/splunk cmd btool check
                 docker-compose -f docker-compose-ci.yml up -d splunk
-                sleep 30
+                until docker-compose -f docker-compose-ci.yml logs splunk | grep "Ansible playbook complete" ; do sleep 1; done
+
+                # Normal Inspecting
+                [ -z $BROWSER ] || [ "$UI_TEST_HEADLESS" = "true" ] || docker-compose -f docker-compose-ci.yml logs sauceconnect
+                docker ps -a
+                                
                 # Run the tests
-                docker-compose -f docker-compose-ci.yml up  --abort-on-container-exit test
-              no_output_timeout: 2h
-          - run:
-              name: Splunk Get Results
-              when: always
-              command: |
+                test_exit_code=0
+                docker-compose -f docker-compose-ci.yml up --abort-on-container-exit test || test_exit_code=$?
                 # Collect Results
                 docker container create --name dummy \
-                                    -v project_results:/home/circleci/work/test-results \
+                                    -v project_results:/home/circleci/work \
                                     registry.access.redhat.com/ubi7/ubi
-                docker cp dummy:/home/circleci/work/test-results/test.xml test-results/  || true
-                docker cp dummy:/home/circleci/work/test-results/cim-compliance-report.md test-results/ || true
+                docker cp dummy:/home/circleci/work/test-results/test.xml test-results/  || echo "ignoring..."
+                docker cp dummy:/home/circleci/work/assets test-results/assets  || echo "ignoring..."
+                docker cp dummy:/home/circleci/work/report.html test-results/report.html  || echo "ignoring..."
+                docker cp dummy:/home/circleci/work/test-results/cim-compliance-report.md test-results/ || echo "ignoring..."
+                exit "$test_exit_code"
 
     jobs:
       aio:
@@ -194,6 +215,10 @@ orbs:
             description: Image version
             type: string
             default: latest
+          test_set:
+            description: Test Set
+            type: string
+            default: knowledge
         executor: python37
         steps:
           - checkout
@@ -203,6 +228,7 @@ orbs:
               docker_layer_caching: true
           - aio:
               splunk_version: <<parameters.splunk_version>>
+              test_set: <<parameters.test_set>>
           - store_artifacts:
               path: /tmp/diag
               destination: test-diag
@@ -374,12 +400,13 @@ workflows:
             - package
       - splunk-app-test/aio:
           context:
-            - gdi-reportportal
+            - gdi-saucelabs
           requires:
             - package
           matrix:
             parameters:
-              splunk_version: ["7.2", "7.3", "8.0"]
+              splunk_version: ["8.0"]
+              test_set: ["knowledge", "ui-firefox", "ui-chrome", "ui-safari", "ui-edge"]
           filters:
             branches:
               only: /.*/
