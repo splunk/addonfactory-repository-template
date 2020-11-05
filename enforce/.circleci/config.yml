@@ -73,114 +73,6 @@ orbs:
               path: build/VERSION
               destination: build-version
 
-  splunk-app-test:
-    executors:
-      python37:
-        docker:
-          - image: circleci/python:3.7
-        resource_class: xlarge
-    commands:
-      aio:
-        parameters:
-          splunk_version:
-            description: Image version
-            type: string
-            default: latest
-          test_set:
-            description: Test Set
-            type: string
-            default: knowledge
-        steps:
-          - attach_workspace:
-              at: /tmp/workspace
-          - run:
-              name: Setup for testing
-              command: |
-                pip install git+https://github.com/pixelb/crudini        
-                mkdir test-results
-                cp -r /tmp/workspace/output output
-          - run:
-              name: Splunk Testing
-              no_output_timeout: 2h
-              command: |
-                # Start Splunk
-                TEST_SET=$(echo "<<parameters.test_set>>" | awk -F- '{print $1}' )
-                BROWSER=$(echo "<<parameters.test_set>>" | awk -F- '{print $2}' )
-                [ ! -d "tests/$TEST_SET" ] && exit 0
-                [ "$BROWSER" = "safari" ] && [ "$UI_TEST_HEADLESS" = "true" ] && exit 0
-                export SPLUNK_VERSION=$(crudini --get deps/build/addonfactory_test_matrix_splunk/splunk_matrix.conf "<<parameters.splunk_version>>" VERSION)
-                export SPLUNK_APP_ID=$(crudini --get package/default/app.conf id name)
-                export SPLUNK_APP_PACKAGE=output/$(ls output/)
-                export TEST_SET=tests/$TEST_SET
-                export TEST_BROWSER=$BROWSER
-                # JOB_NAME: For Saucelabs integration. Used as a build-name.
-                export JOB_NAME="CircleCI::$CIRCLE_PROJECT_REPONAME[$CIRCLE_BRANCH] #$CIRCLE_BUILD_NUM"
-                export SAUCE_IDENTIFIER=$SAUCE_IDENTIFIER-$(cat /proc/sys/kernel/random/uuid)
-                # Build
-                docker-compose -f docker-compose-ci.yml build
-
-                # Saucelab connection
-                [ -z $BROWSER ] || [ "$UI_TEST_HEADLESS" = "true" ] || docker-compose -f docker-compose-ci.yml up -d sauceconnect                
-                # Start Splunk
-                docker-compose -f docker-compose-ci.yml up -d splunk                
-                until docker-compose -f docker-compose-ci.yml logs splunk | grep "Ansible playbook complete" ; do sleep 1; done
-                # Run a Splunk Diag
-                mkdir /tmp/diag
-                diag=$(docker-compose -f docker-compose-ci.yml exec splunk sudo -u splunk /opt/splunk/bin/splunk diag | grep "Splunk diagnosis file created" | sed -n 's/.* \(\/.*\.gz\)/\1/p') 
-                docker-compose -f docker-compose-ci.yml exec splunk sudo chmod +r ${diag//[$'\t\r\n']}
-                docker cp project_splunk_1:${diag//[$'\t\r\n']} /tmp/diag
-                # Check with btool
-                docker-compose -f docker-compose-ci.yml exec splunk sudo /opt/splunk/bin/splunk cmd btool check
-                docker-compose -f docker-compose-ci.yml up -d splunk
-                until docker-compose -f docker-compose-ci.yml logs splunk | grep "Ansible playbook complete" ; do sleep 1; done
-
-                # Normal Inspecting
-                [ -z $BROWSER ] || [ "$UI_TEST_HEADLESS" = "true" ] || docker-compose -f docker-compose-ci.yml logs sauceconnect
-                docker ps -a
-                                
-                # Run the tests
-                test_exit_code=0
-                docker-compose -f docker-compose-ci.yml up --abort-on-container-exit test || test_exit_code=$?
-                # Collect Results
-                docker container create --name dummy \
-                                    -v project_results:/home/circleci/work \
-                                    registry.access.redhat.com/ubi7/ubi
-                docker cp dummy:/home/circleci/work/test-results/test.xml test-results/  || echo "ignoring..."
-                docker cp dummy:/home/circleci/work/assets test-results/assets  || echo "ignoring..."
-                docker cp dummy:/home/circleci/work/report.html test-results/report.html  || echo "ignoring..."
-                docker cp dummy:/home/circleci/work/test-results/cim-compliance-report.md test-results/ || echo "ignoring..."
-                exit "$test_exit_code"
-
-    jobs:
-      aio:
-        parameters:
-          splunk_version:
-            description: Image version
-            type: string
-            default: latest
-          test_set:
-            description: Test Set
-            type: string
-            default: knowledge
-        executor: python37
-        steps:
-          - checkout
-          - run: git submodule sync
-          - run: git submodule update --init
-          - setup_remote_docker:
-              docker_layer_caching: true
-          - aio:
-              splunk_version: <<parameters.splunk_version>>
-              test_set: <<parameters.test_set>>
-          - store_artifacts:
-              path: /tmp/diag
-              destination: test-diag
-          - store_artifacts:
-              path: test-results
-              destination: test-results
-          - store_test_results:
-              path: test-results
-
   splunk-release:
     executors:
       python37:
@@ -343,6 +235,93 @@ jobs:
           destination: test-results
       - store_test_results:
           path: test-results
+  splunk-app-test:
+    parameters:
+      splunk_version:
+        description: Image version
+        type: string
+        default: latest
+      test_set:
+        description: Test Set
+        type: string
+        default: knowledge
+    docker:
+      - image: circleci/python:3.7
+    resource_class: xlarge
+    steps:
+      - checkout
+      - run: git submodule sync
+      - run: git submodule update --init
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Setup for testing
+          command: |
+            pip install git+https://github.com/pixelb/crudini        
+            mkdir test-results
+            cp -r /tmp/workspace/output output
+      - run:
+          name: Splunk Testing
+          no_output_timeout: 2h
+          command: |
+            # Start Splunk
+            TEST_SET=$(echo "<<parameters.test_set>>" | awk -F- '{print $1}' )
+            BROWSER=$(echo "<<parameters.test_set>>" | awk -F- '{print $2}' )
+            [ ! -d "tests/$TEST_SET" ] && exit 0
+            [ "$BROWSER" = "safari" ] && [ "$UI_TEST_HEADLESS" = "true" ] && exit 0
+            export SPLUNK_VERSION=$(crudini --get deps/build/addonfactory_test_matrix_splunk/splunk_matrix.conf "<<parameters.splunk_version>>" VERSION)
+            export SPLUNK_APP_ID=$(crudini --get package/default/app.conf id name)
+            export SPLUNK_APP_PACKAGE=output/$(ls output/)
+            export TEST_SET=tests/$TEST_SET
+            export TEST_BROWSER=$BROWSER
+            # JOB_NAME: For Saucelabs integration. Used as a build-name.
+            export JOB_NAME="CircleCI::$CIRCLE_PROJECT_REPONAME[$CIRCLE_BRANCH] #$CIRCLE_BUILD_NUM"
+            export SAUCE_IDENTIFIER=$SAUCE_IDENTIFIER-$(cat /proc/sys/kernel/random/uuid)
+            # Build
+            docker-compose -f docker-compose-ci.yml build
+
+            # Saucelab connection
+            [ -z $BROWSER ] || [ "$UI_TEST_HEADLESS" = "true" ] || docker-compose -f docker-compose-ci.yml up -d sauceconnect                
+            # Start Splunk
+            docker-compose -f docker-compose-ci.yml up -d splunk                
+            until docker-compose -f docker-compose-ci.yml logs splunk | grep "Ansible playbook complete" ; do sleep 1; done
+            # Run a Splunk Diag
+            mkdir /tmp/diag
+            diag=$(docker-compose -f docker-compose-ci.yml exec splunk sudo -u splunk /opt/splunk/bin/splunk diag | grep "Splunk diagnosis file created" | sed -n 's/.* \(\/.*\.gz\)/\1/p') 
+            docker-compose -f docker-compose-ci.yml exec splunk sudo chmod +r ${diag//[$'\t\r\n']}
+            docker cp project_splunk_1:${diag//[$'\t\r\n']} /tmp/diag
+            # Check with btool
+            docker-compose -f docker-compose-ci.yml exec splunk sudo /opt/splunk/bin/splunk cmd btool check
+            docker-compose -f docker-compose-ci.yml up -d splunk
+            until docker-compose -f docker-compose-ci.yml logs splunk | grep "Ansible playbook complete" ; do sleep 1; done
+
+            # Normal Inspecting
+            [ -z $BROWSER ] || [ "$UI_TEST_HEADLESS" = "true" ] || docker-compose -f docker-compose-ci.yml logs sauceconnect
+            docker ps -a
+                            
+            # Run the tests
+            test_exit_code=0
+            docker-compose -f docker-compose-ci.yml up --abort-on-container-exit test || test_exit_code=$?
+            # Collect Results
+            docker container create --name dummy \
+                                -v project_results:/home/circleci/work \
+                                registry.access.redhat.com/ubi7/ubi
+            docker cp dummy:/home/circleci/work/test-results/test.xml test-results/  || echo "ignoring..."
+            docker cp dummy:/home/circleci/work/assets test-results/assets  || echo "ignoring..."
+            docker cp dummy:/home/circleci/work/report.html test-results/report.html  || echo "ignoring..."
+            docker cp dummy:/home/circleci/work/test-results/cim-compliance-report.md test-results/ || echo "ignoring..."
+            exit "$test_exit_code"
+      - store_artifacts:
+          path: /tmp/diag
+          destination: test-diag
+      - store_artifacts:
+          path: test-results
+          destination: test-results
+      - store_test_results:
+          path: test-results
+
   publish-gh:
     docker:
       - image: circleci/python:3.7
@@ -427,9 +406,10 @@ workflows:
               only: /.*/
           requires:
             - package
-      - splunk-app-test/aio:
+      - splunk-app-test:
           context:
             - gdi-saucelabs
+            - gdi-reportportal
           requires:
             - package
           matrix:
