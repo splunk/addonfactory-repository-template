@@ -103,17 +103,16 @@ orbs:
                 PACKAGE=$(ls /tmp/workspace/build/package/splunkbase/*)
                 if [ "<<parameters.label>>" == "cloud" ]; then TEST_PARM="--mode precert --included-tags cloud"; fi
                 if [ "<<parameters.label>>" == "appinspect" ]; then TEST_PARM="--mode test"; fi
-                splunk-appinspect inspect <<parameters.options>> --data-format junitxml --output-file test-results/appinspect-mode-<<parameters.label>>.xml $PACKAGE
+                splunk-appinspect inspect <<parameters.options>> --data-format junitxml --output-file test-results/$CIRCLE_PROJECT_REPONAME-appinspect-mode-<<parameters.label>>.xml $PACKAGE
           - run:
               name: report
               command: |
-                sed -i 's/\(<testsuite name=\"\)\(Splunk AppInspect\)\(\"\)/\1$CIRCLE_PROJECT_REPONAME-\2-<<parameters.label>>\3/' test-results/appinspect-mode-<<parameters.label>>.xml
-                zip -j /tmp/appinspect-mode-<<parameters.label>>.zip test-results/appinspect-mode-<<parameters.label>>.xml 
-                curl -X POST "$RP_ENDPOINT/api/v1/addonfactory/launch/import" -H "accept: */*" -H "Content-Type: multipart/form-data" -H "Authorization: bearer $RP_UUID" -F "file=@/tmp/appinspect-mode-<<parameters.label>>.zip;type=application/zip"
+                zip -j /tmp/$CIRCLE_PROJECT_REPONAME-appinspect-mode-<<parameters.label>>.zip test-results/$CIRCLE_PROJECT_REPONAME-appinspect-mode-<<parameters.label>>.xml 
+                curl -X POST "$RP_ENDPOINT/api/v1/addonfactory/launch/import" -H "accept: */*" -H "Content-Type: multipart/form-data" -H "Authorization: bearer $RP_UUID" -F "file=@/tmp/$CIRCLE_PROJECT_REPONAME-appinspect-mode-<<parameters.label>>.zip;type=application/zip"
           - run:
               name: set result
               command: |
-                if grep failures=\"[1-9] test-results/appinspect-mode-<<parameters.label>>.xml>/dev/null; then exit 1; else exit 0; fi
+                if grep failures=\"[1-9] test-results/$CIRCLE_PROJECT_REPONAME-appinspect-mode-<<parameters.label>>.xml>/dev/null; then exit 1; else exit 0; fi
 
     jobs:
       inspect:
