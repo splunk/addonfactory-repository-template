@@ -72,63 +72,7 @@ orbs:
           - store_artifacts:
               path: build/VERSION
               destination: build-version
-  splunk-app-inspect:
-
-    jobs:
-      inspect:
-        parameters:
-          options:
-            description: Inspect options
-            type: string
-            default: --mode test
-          label:
-            description: string to identify test options in file name of output
-            type: string
-            default: test
-        executor: python37
-        steps:
-          - checkout
-          - attach_workspace:
-              at: /tmp/workspace
-          - run:
-              name: Install
-              command: |
-                python -m venv ~/.venv
-                source ~/.venv/bin/activate
-                pip install https://download.splunk.com/misc/appinspect/splunk-appinspect-latest.tar.gz
-          - run:
-              name: inspect
-              command: |
-                source ~/.venv/bin/activate
-                mkdir test-results || true
-                PACKAGE=$(ls /tmp/workspace/build/package/splunkbase/*)
-                if [ "<<parameters.label>>" == "cloud" ]; then TEST_PARM="--mode precert --included-tags cloud"; fi
-                if [ "<<parameters.label>>" == "appinspect" ]; then TEST_PARM="--mode test"; fi
-                splunk-appinspect inspect <<parameters.options>> --data-format junitxml --output-file test-results/$CIRCLE_PROJECT_REPONAME-appinspect-mode-<<parameters.label>>.xml $PACKAGE
-          - run:
-              name: report
-              command: |
-                source ~/.venv/bin/activate
-                zip -j /tmp/$CIRCLE_PROJECT_REPONAME-appinspect-mode-<<parameters.label>>.zip test-results/$CIRCLE_PROJECT_REPONAME-appinspect-mode-<<parameters.label>>.xml                 
-
-                LUUID=$(curl -X POST "$RP_ENDPOINT/api/v1/addonfactory/launch/import" -H "accept: */*" -H "Content-Type: multipart/form-data" -H "Authorization: bearer $RP_UUID" -F "file=@/tmp/$CIRCLE_PROJECT_REPONAME-appinspect-mode-<<parameters.label>>.zip;type=application/zip" 2>/dev/null | sed 's/\(.*id = \)\([^ ]*\)\(.*\)/\2/')
-                LID=$(curl -X GET "$RP_ENDPOINT/api/v1/addonfactory/launch/uuid/$LUUID" -H "accept: */*" -H "Authorization: bearer $RP_UUID" 2>/dev/null| jq .id)
-                APPINSPECTVER=$(splunk-appinspect list version | sed 's/\(.*Version \)\(.*\)/\2/')
-
-                curl -X PUT "$RP_ENDPOINT/api/v1/addonfactory/launch/$LID/update" \
-                  -H "accept: */*" \
-                  -H "Content-Type: application/json" \
-                  -H "Authorization: bearer $RP_UUID" \
-                  -d "{ \"attributes\": [ { \"job\" : \"${CIRCLE_JOB}\", \"deployment\" : \"byoe\", \"appinspect\" : \"$APPINSPECTVER\", \"branch\" : \"<< pipeline.git.branch >>\", \"commit\" : \"${CIRCLE_SHA1}\", \"release\" : \"${RELEASE}\", \"version\" : \"$(./semtag getcurrent)\" } ] }"
-          - run:
-              name: set result
-              command: |
-                if grep failures=\"[1-9] test-results/$CIRCLE_PROJECT_REPONAME-appinspect-mode-<<parameters.label>>.xml>/dev/null; then exit 1; else exit 0; fi
-          - store_artifacts:
-              path: test-results
-              destination: test-results
-          - store_test_results:
-              path: test-results
+  
   splunk-app-test:
     executors:
       python37:
@@ -315,6 +259,60 @@ orbs:
               gh_token: <<parameters.gh_token>>
 
 jobs:
+  splunk-app-inspect:
+    parameters:
+      options:
+        description: Inspect options
+        type: string
+        default: --mode test
+      label:
+        description: string to identify test options in file name of output
+        type: string
+        default: test
+    executor: python37
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Install
+          command: |
+            python -m venv ~/.venv
+            source ~/.venv/bin/activate
+            pip install https://download.splunk.com/misc/appinspect/splunk-appinspect-latest.tar.gz
+      - run:
+          name: inspect
+          command: |
+            source ~/.venv/bin/activate
+            mkdir test-results || true
+            PACKAGE=$(ls /tmp/workspace/build/package/splunkbase/*)
+            if [ "<<parameters.label>>" == "cloud" ]; then TEST_PARM="--mode precert --included-tags cloud"; fi
+            if [ "<<parameters.label>>" == "appinspect" ]; then TEST_PARM="--mode test"; fi
+            splunk-appinspect inspect <<parameters.options>> --data-format junitxml --output-file test-results/$CIRCLE_PROJECT_REPONAME-appinspect-mode-<<parameters.label>>.xml $PACKAGE
+      - run:
+          name: report
+          command: |
+            source ~/.venv/bin/activate
+            zip -j /tmp/$CIRCLE_PROJECT_REPONAME-appinspect-mode-<<parameters.label>>.zip test-results/$CIRCLE_PROJECT_REPONAME-appinspect-mode-<<parameters.label>>.xml                 
+
+            LUUID=$(curl -X POST "$RP_ENDPOINT/api/v1/addonfactory/launch/import" -H "accept: */*" -H "Content-Type: multipart/form-data" -H "Authorization: bearer $RP_UUID" -F "file=@/tmp/$CIRCLE_PROJECT_REPONAME-appinspect-mode-<<parameters.label>>.zip;type=application/zip" 2>/dev/null | sed 's/\(.*id = \)\([^ ]*\)\(.*\)/\2/')
+            LID=$(curl -X GET "$RP_ENDPOINT/api/v1/addonfactory/launch/uuid/$LUUID" -H "accept: */*" -H "Authorization: bearer $RP_UUID" 2>/dev/null| jq .id)
+            APPINSPECTVER=$(splunk-appinspect list version | sed 's/\(.*Version \)\(.*\)/\2/')
+
+            curl -X PUT "$RP_ENDPOINT/api/v1/addonfactory/launch/$LID/update" \
+              -H "accept: */*" \
+              -H "Content-Type: application/json" \
+              -H "Authorization: bearer $RP_UUID" \
+              -d "{ \"attributes\": [ { \"job\" : \"${CIRCLE_JOB}\", \"deployment\" : \"byoe\", \"appinspect\" : \"$APPINSPECTVER\", \"branch\" : \"<< pipeline.git.branch >>\", \"commit\" : \"${CIRCLE_SHA1}\", \"release\" : \"${RELEASE}\", \"version\" : \"$(./semtag getcurrent)\" } ] }"
+      - run:
+          name: set result
+          command: |
+            if grep failures=\"[1-9] test-results/$CIRCLE_PROJECT_REPONAME-appinspect-mode-<<parameters.label>>.xml>/dev/null; then exit 1; else exit 0; fi
+      - store_artifacts:
+          path: test-results
+          destination: test-results
+      - store_test_results:
+          path: test-results
   publish-gh:
     docker:
       - image: circleci/python:3.7
@@ -388,7 +386,7 @@ workflows:
           filters:
             branches:
               only: /.*/
-      - splunk-app-inspect/inspect:
+      - splunk-app-inspect:
           context:
             - gdi-reportportal
           matrix:
