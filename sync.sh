@@ -113,6 +113,7 @@ do
         
         # Update any files in enforce
         #if [ "$BRANCH" != "master" ]; then
+        git checkout test/templateupdate && git checkout develop && git checkout -D test/templateupdate
         git checkout -B "test/templateupdate" develop
         git submodule update --init --recursive
         #fi
