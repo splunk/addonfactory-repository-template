@@ -73,11 +73,8 @@ orbs:
               path: build/VERSION
               destination: build-version
   splunk-app-inspect:
-    executors:
-      python37:
-        docker:
-          - image: circleci/python:3.7
-    commands:
+
+    jobs:
       inspect:
         parameters:
           options:
@@ -88,7 +85,11 @@ orbs:
             description: string to identify test options in file name of output
             type: string
             default: test
+        executor: python37
         steps:
+          - checkout
+          - attach_workspace:
+              at: /tmp/workspace
           - run:
               name: Install
               command: |
@@ -123,26 +124,6 @@ orbs:
               name: set result
               command: |
                 if grep failures=\"[1-9] test-results/$CIRCLE_PROJECT_REPONAME-appinspect-mode-<<parameters.label>>.xml>/dev/null; then exit 1; else exit 0; fi
-
-    jobs:
-      inspect:
-        parameters:
-          options:
-            description: Inspect options
-            type: string
-            default: --mode test
-          label:
-            description: string to identify test options in file name of output
-            type: string
-            default: test
-        executor: python37
-        steps:
-          - checkout
-          - attach_workspace:
-              at: /tmp/workspace
-          - inspect:
-              options: <<parameters.options>>
-              label: <<parameters.label>>
           - store_artifacts:
               path: test-results
               destination: test-results
