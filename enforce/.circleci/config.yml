@@ -294,6 +294,9 @@ jobs:
           name: report
           command: |
             source ~/.venv/bin/activate
+            export VERSION=$(./semtag getfinal)
+            [ "${VERSION}" == "<< pipeline.git.tag >>" ] && export RELEASE=<< pipeline.git.tag >> || export RELEASE=${VERSION}-post            
+
             zip -j /tmp/$CIRCLE_PROJECT_REPONAME-appinspect-mode-<<parameters.label>>.zip test-results/$CIRCLE_PROJECT_REPONAME-appinspect-mode-<<parameters.label>>.xml                 
 
             LUUID=$(curl -X POST "$RP_ENDPOINT/api/v1/addonfactory/launch/import" -H "accept: */*" -H "Content-Type: multipart/form-data" -H "Authorization: bearer $RP_UUID" -F "file=@/tmp/$CIRCLE_PROJECT_REPONAME-appinspect-mode-<<parameters.label>>.zip;type=application/zip" 2>/dev/null | sed 's/\(.*id = \)\([^ ]*\)\(.*\)/\2/')
