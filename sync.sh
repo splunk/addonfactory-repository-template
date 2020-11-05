@@ -112,8 +112,8 @@ do
         git config  user.name "Addon Factory template"
         
         # Update any files in enforce
-        #if [ "$BRANCH" != "master" ]; then
-        git checkout test/templateupdate && git checkout develop && git checkout -D test/templateupdate
+        #if [ "$BRANCH" != "master" ]; then 
+        ( git checkout test/templateupdate  && git checkout develop && git checkout -D test/templateupdate ) || true
         git checkout -B "test/templateupdate" develop
         git submodule update --init --recursive
         #fi
@@ -148,7 +148,7 @@ do
             git submodule deinit -f deps/apps/splunk_env_indexer
             rm -rf .git/modules/deps/apps/splunk_env_indexer
             git rm -f deps/apps/splunk_env_indexer
-            git add .
+            git add deps/apps/splunk_env_indexer
             git commit -m "Deprecate splunk_env_indexer submodule"
         fi       
         git submodule update --remote --merge deps/build/addonfactory_test_matrix_splunk 
@@ -177,9 +177,12 @@ do
         if [ -d "deps/build/disable_popup" ]; then
             git rm -f deps/build/disable_popup
             git submodule update --remote --merge deps/build/addonfactory_test_matrix_splunk
-            git add .
+            git add deps/build/disable_popup
             git commit -m "Deprecate disable_popup"
-        fi  
+        fi 
+        if [[ -f "test_credentials.env" ]]; then
+            echo "# Add Addon specific Environment variables in this file. Variables must be set in CircleCI Environment." > test_credentials.env
+        fi
         git add . || true
         git commit -am "sync for policy" || true
         # if [ "$BRANCH" != "master" ]; then
