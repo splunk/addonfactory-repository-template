@@ -180,7 +180,7 @@ do
             git add deps/build/disable_popup
             git commit -m "Deprecate disable_popup"
         fi 
-        if [[ -f "test_credentials.env" ]]; then
+        if [[ ! -f "test_credentials.env" ]]; then
             echo "# Add Addon specific Environment variables in this file. Variables must be set in CircleCI Environment." > test_credentials.env
         fi
         git add . || true
