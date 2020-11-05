@@ -1,3 +1,6 @@
-splunk-add-on-for-cef,TA-cef-for-splunk,public,"TA CEF for Splunk"
 splunk-add-on-for-ucc-example,Splunk_TA_UCCExample,public,"Splunk_TA_UCCExample"
-seckit_sa_geolocation,SecKit_SA_geolocation,public,"SecKit TA Geo Location"
+splunk-add-on-for-servicenow,Splunk_TA_snow,internal,"Splunk Add-on for ServiceNow"
+splunk-add-on-for-microsoft-office-365,splunk_ta_o365,internal,"Splunk Add-on for Microsoft Office 365"
+splunk-add-on-for-infoblox,Splunk_TA_infoblox,internal,"Splunk Add-on for Infoblox"
+splunk-add-on-for-microsoft-system-center-operations-manager,Splunk_TA_microsoft-scom,internal,"Splunk Add-on for Microsoft SCOM"
+splunk-add-on-for-box,Splunk_TA_box,internal,"Splunk Add-on for Box"
