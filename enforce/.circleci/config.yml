@@ -308,9 +308,6 @@ jobs:
                         { \"key\": \"job\",
                         \"value\": \"${CIRCLE_JOB}\"
                         },
-                        { \"key\": \"deployment\",
-                        \"value\": \"byoe\"
-                        },
                         { \"key\": \"appinspect\",
                         \"value\": \"$APPINSPECTVER\"
                         },
