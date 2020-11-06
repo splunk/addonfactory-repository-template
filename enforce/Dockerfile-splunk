@@ -8,5 +8,5 @@ RUN echo Splunk VERSION=$SPLUNK_VERSION
 COPY deps/apps /opt/splunk/etc/apps/
 COPY deps/build/addonfactory_test_matrix_splunk/packages/all/common /opt/splunk/etc/apps/
 COPY deps/build/addonfactory_test_matrix_splunk/packages/all/sh /opt/splunk/etc/apps/
-COPY deps/build/addonfactory_test_matrix_splunk/packages/all/addon_factory_web /opt/splunk/system/local
+COPY deps/build/addonfactory_test_matrix_splunk/packages/all/addon_factory_web /opt/splunk/etc/system/local
 COPY $SPLUNK_APP_PACKAGE /opt/splunk/etc/apps/$SPLUNK_APP_ID
