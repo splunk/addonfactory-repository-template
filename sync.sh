@@ -128,7 +128,7 @@ do
 
         # Remove the entry in .gitmodules and remove the submodule directory located at path/to/submodule
         git rm -f deps/script || true
-        #Updates for pytest-splunkadd-on >=1.2.2a1
+        #Updates for pytest-splunk-add-on >=1.2.2a1
         if [ ! -d "tests/data" ]; then
             mkdir -p tests/data
         fi
@@ -179,6 +179,16 @@ do
             git submodule update --remote --merge deps/build/addonfactory_test_matrix_splunk
             git add deps/build/disable_popup
             git commit -m "Deprecate disable_popup"
+        fi
+        if [[ -d "tests/data" ]]; then
+            mkdir -p tests/knowledge || true
+            git rm tests/pytest.ini || true
+            git rm tests/test_addon.py || true
+            git rm tests/__init__.py || true
+            git rm tests/pytest-ci.ini || true
+            git rm tests/conftest.py || true
+            git rm tests/requirements.txt || true
+            git mv tests/data tests/knowledge
         fi
         git add . || true
         git commit -am "sync for policy" || true
