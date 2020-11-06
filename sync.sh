@@ -113,7 +113,7 @@ do
         
         # Update any files in enforce
         #if [ "$BRANCH" != "master" ]; then 
-        ( git checkout test/templateupdate  && git checkout develop && git checkout -D test/templateupdate ) || true
+        ( git checkout test/templateupdate  && git checkout develop && git branch -D test/templateupdate ) || true
         git checkout -B "test/templateupdate" develop
         git submodule update --init --recursive
         #fi
@@ -182,14 +182,28 @@ do
         fi
         if [[ -d "tests/data" ]]; then
             mkdir -p tests/knowledge || true
-            git rm tests/pytest.ini || true
-            git rm tests/test_addon.py || true
-            git rm tests/__init__.py || true
-            git rm tests/pytest-ci.ini || true
-            git rm tests/conftest.py || true
-            git rm tests/requirements.txt || true
-            git mv tests/data tests/knowledge
+            git mv tests/data/* tests/knowledge
         fi
+
+        if [[ -f "tests/pytest.ini" ]]; then
+            git rm tests/pytest.ini || true
+        fi
+        if [[ -f "tests/test_addon.py" ]]; then
+            git rm tests/test_addon.py || true
+        fi
+        if [[ -f "tests/__init__.py" ]]; then
+            git rm tests/__init__.py || true
+        fi
+        if [[ -f "tests/pytest-ci.ini" ]]; then
+            git rm tests/pytest-ci.ini || true
+        fi
+        if [[ -f "tests/conftest.py" ]]; then
+            git rm tests/conftest.py || true
+        fi
+        if [[ -f "tests/requirements.txt" ]]; then
+            git rm tests/requirements.txt || true
+        fi
+
         git add . || true
         git commit -am "sync for policy" || true
         # if [ "$BRANCH" != "master" ]; then
