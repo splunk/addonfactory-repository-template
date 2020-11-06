@@ -203,7 +203,12 @@ do
         if [[ -f "tests/requirements.txt" ]]; then
             git rm tests/requirements.txt || true
         fi
-
+        if [[ -f "requirements.txt" ]]; then
+            git rm requirements.txt || true
+        fi
+        if [[ -d "tests/ui" ]]; then
+            rsync -avh --include ".*" ../../conditional/ .
+        fi
         git add . || true
         git commit -am "sync for policy" || true
         # if [ "$BRANCH" != "master" ]; then
