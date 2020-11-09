@@ -7,7 +7,7 @@
 
 cd /home/circleci/work
 if [ -f "${TEST_SET}/pytest-ci.ini" ]; then
-    cp -f ${TEST_SET}/pytest-ci.ini ${TEST_SET}/pytest.ini
+    cp -f ${TEST_SET}/pytest-ci.ini pytest.ini
 fi
 
 pip install -r ${TEST_SET}/requirements.txt
