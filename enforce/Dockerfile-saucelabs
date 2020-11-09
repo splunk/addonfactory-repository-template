@@ -9,4 +9,4 @@
 FROM circleci/python:3.7
 RUN curl https://saucelabs.com/downloads/sc-4.6.2-linux.tar.gz -o /home/circleci/saucelabs.tar.gz
 RUN tar -xzf /home/circleci/saucelabs.tar.gz --directory /home/circleci/
-CMD /home/circleci/sc-sc-4.6.2-linux/bin/sc -u $SAUCE_USERNAME -k $SAUCE_PASSWORD -i $SAUCE_TUNNEL_ID --no-remove-colliding-tunnels -v --se-port 4445
+CMD /home/circleci/sc-4.6.2-linux/bin/sc -u $SAUCE_USERNAME -k $SAUCE_PASSWORD -i $SAUCE_TUNNEL_ID --no-remove-colliding-tunnels -v --se-port 4445
