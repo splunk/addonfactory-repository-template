@@ -16,6 +16,12 @@ services:
       - UI_TEST_HEADLESS=${UI_TEST_HEADLESS}
       - RERUN_COUNT=${RERUN_COUNT}
       - TEST_BROWSER=${TEST_BROWSER}
+      - RP_ENDPOINT=${RP_ENDPOINT}
+      - RP_UUID=${RP_UUID}
+      - RP_LAUNCH_ATTRIBUTES=${RP_LAUNCH_ATTRIBUTES}
+      - RP_PROJECT=${RP_PROJECT}
+      - RP_LAUNCH=${RP_LAUNCH}
+      - RP_LAUNCH_DESC=${RP_LAUNCH_DESC}
     env_file:
       - test_credentials.env
     build:
