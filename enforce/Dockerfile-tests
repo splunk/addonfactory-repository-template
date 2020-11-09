@@ -9,7 +9,7 @@
 FROM circleci/python:3.7-browsers
 RUN mkdir -p /home/circleci/work/tests
 RUN mkdir -p /home/circleci/work/test-results/functional
-RUN pip install six
+RUN pip install six>=1.15
 RUN pip install git+https://github.com/rfaircloth-splunk/agent-python-pytest.git
 
 COPY tests/entrypoint.sh /
