@@ -263,6 +263,14 @@ jobs:
             # JOB_NAME: For Saucelabs integration. Used as a build-name.
             export JOB_NAME="CircleCI::$CIRCLE_PROJECT_REPONAME[$CIRCLE_BRANCH][$TEST_BROWSER] #$CIRCLE_BUILD_NUM"
             export SAUCE_IDENTIFIER=$SAUCE_IDENTIFIER-$(cat /proc/sys/kernel/random/uuid)
+
+            #Report portal integration
+            export RP_LAUNCH_ATTRIBUTES="'job:${CIRCLE_JOB}' 'deployment:byoe' 'splunkmajor:<< parameters.splunk_version >>' 'splunk:${SPLUNK_VERSION}' 'branch:<< pipeline.git.branch >>' 'commit:${CIRCLE_SHA1}' 'release:${RELEASE}' 'version:$(./semtag getcurrent)' 'test_set:<<parameters.test_set>>'"
+            export RP_PROJECT=addonfactory
+
+            export RP_LAUNCH="$CIRCLE_PROJECT_REPONAME-$(echo <<parameters.test_set>> | sed 's/\(.*\)\(-.*\)/\1/')"
+            export RP_LAUNCH_DESC="ci run"
+
             # Build
             docker-compose -f docker-compose-ci.yml build
 
@@ -287,10 +295,6 @@ jobs:
                             
             # Run the tests
             test_exit_code=0
-            export RP_LAUNCH_ATTRIBUTES="'job:${CIRCLE_JOB}' 'deployment:byoe' 'splunkmajor:<< parameters.splunk_version >>' 'branch:<< pipeline.git.branch >>' 'commit:${CIRCLE_SHA1}' 'release:${RELEASE}' 'version:$(./semtag getcurrent)'"
-            export RP_PROJECT=addonfactory
-            export RP_LAUNCH="$CIRCLE_PROJECT_REPONAME-<<parameters.test_set>>"
-            export RP_LAUNCH_DESC="ci run"
 
             docker-compose -f docker-compose-ci.yml up --abort-on-container-exit test || test_exit_code=$?
             # Collect Results
