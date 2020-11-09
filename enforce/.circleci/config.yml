@@ -289,7 +289,7 @@ jobs:
             test_exit_code=0
             export RP_LAUNCH_ATTRIBUTES="'job:${CIRCLE_JOB}' 'deployment:byoe' 'splunkmajor:<< parameters.splunk_version >>' 'branch:<< pipeline.git.branch >>' 'commit:${CIRCLE_SHA1}' 'release:${RELEASE}' 'version:$(./semtag getcurrent)'"
             export RP_PROJECT=addonfactory
-            export RP_LAUNCH="<<parameters.test_set>> test"
+            export RP_LAUNCH="$CIRCLE_PROJECT_REPONAME-<<parameters.test_set>>"
             export RP_LAUNCH_DESC="ci run"
 
             docker-compose -f docker-compose-ci.yml up --abort-on-container-exit test || test_exit_code=$?
