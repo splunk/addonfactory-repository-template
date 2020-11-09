@@ -11,6 +11,8 @@ if [ -f "${TEST_SET}/pytest-ci.ini" ]; then
 fi
 
 pip install -r ${TEST_SET}/requirements.txt
+pip install six>=1.15
+pip install git+https://github.com/rfaircloth-splunk/agent-python-pytest.git
 
 cp -f .pytest.expect ${TEST_SET}
 
