@@ -184,7 +184,15 @@ do
             mkdir -p tests/knowledge || true
             git mv tests/data/* tests/knowledge
         fi
-
+        if [[ -f "tests/knowledge/requirements.txt" ]]; then
+            git rm tests/knowledge/requirements.txt || true
+        fi
+        if [[ -f "tests/knowledge/wordlist.txt" ]]; then
+            git rm tests/knowledge/wordlist.txt || true
+        fi
+        if [[ -f "tests/ui/requirements.txt" ]]; then
+            git rm tests/ui/requirements.txt || true
+        fi     
         if [[ -f "tests/pytest.ini" ]]; then
             git rm tests/pytest.ini || true
         fi
