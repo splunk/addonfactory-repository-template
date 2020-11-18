@@ -1,66 +1,66 @@
-splunk-add-on-for-amazon-kinesis-firehose,Splunk_TA_aws-kinesis-firehose,internal,"Splunk Add-on For Kinesis Firehose"
-splunk-add-on-for-amazon-web-services,Splunk_TA_aws,internal,"Splunk Add-on for AWS"
-splunk-add-on-for-apache-web-server,Splunk_TA_apache,internal,"Splunk Add-on for Apache"
-splunk-add-on-for-bmc-remedy,Splunk_TA_remedy,internal,"Splunk Add-on for BMC Remedy"
-splunk-add-on-for-box,Splunk_TA_box,internal,"Splunk Add-on for Box"
-splunk-add-on-for-bromium,Splunk_TA_bromium,internal,"Splunk Add-on for Bromium"
-splunk-add-on-for-carbon-black,Splunk_TA_bit9-carbonblack,internal,"Splunk Add-on for Carbon Black"
-splunk-add-on-for-check-point-opsec-lea,Splunk_TA_checkpoint-opseclea,internal,"Splunk Add-on for Check Point OPSEC LEA"
-splunk-add-on-for-cisco-asa,Splunk_TA_cisco-asa,internal,"Splunk Add-on for Cisco ASA"
-splunk-add-on-for-cisco-esa,Splunk_TA_cisco-esa,internal,"Splunk Add-on for Cisco ESA"
-splunk-add-on-for-cisco-firesight,Splunk_TA_sourcefire,internal,"Splunk Add-on for Cisco FireSIGHT"
-splunk-add-on-for-cisco-identity-services,Splunk_TA_cisco-ise,internal,"Splunk Add-on for Cisco ISE"
-splunk-add-on-for-cisco-ucs,Splunk_TA_cisco-ucs,internal,"Splunk Add-on for Cisco UCS"
-splunk-add-on-for-cisco-wsa,Splunk_TA_cisco-wsa,internal,"Splunk Add-on for Cisco WSA"
-splunk-add-on-for-citrix-netscaler,Splunk_TA_citrix-netscaler,internal,"Splunk Add-on for Citrix NetScaler"
-splunk-add-on-for-cyberark,Splunk_TA_cyberark,internal,"Splunk Add-on for CyberArk"
-splunk-add-on-for-cyberark-epm,Splunk_TA_cyberark_epm,internal,Splunk Add-on for CyberArk EPM
-splunk-add-on-for-f5-big-ip,Splunk_TA_f5-bigip,internal,"Splunk Add-on for F5 BIG-IP"
-splunk-add-on-for-forcepoint-web-security,Splunk_TA_websense-cg,internal,"Splunk Add-on for Forcepoint Web Security"
-splunk-add-on-for-google-cloud-platform,Splunk_TA_google-cloudplatform,internal,"Splunk Add-on for Google Cloud Platform"
-splunk-add-on-for-haproxy,Splunk_TA_haproxy,internal,"Splunk Add-on for HAProxy"
-splunk-add-on-for-ibm-websphere-application-server,Splunk_TA_ibm-was,internal,"Splunk Add-on for IBM WebSphere Application Server"
-splunk-add-on-for-imperva-securesphere-waf,Splunk_TA_imperva-waf,internal,"Splunk Add-on for Imperva SecureSphere WAF"
-splunk-add-on-for-infoblox,Splunk_TA_infoblox,internal,"Splunk Add-on for Infoblox"
-splunk-add-on-for-isc-bind,Splunk_TA_isc-bind,internal,"Splunk Add-on for ISC BIND"
-splunk-add-on-for-isc-dhcp,Splunk_TA_isc-dhcp,internal,"Splunk Add-on for ISC DHCP"
-splunk-add-on-for-java-management-extensions,Splunk_TA_jmx,internal,"Splunk Add-on for Java Management Extensions"
-splunk-add-on-for-jboss,Splunk_TA_jboss,internal,"Splunk Add-on for JBoss"
-splunk-add-on-for-juniper,Splunk_TA_juniper,internal,"Splunk Add-on for Juniper"
-splunk-add-on-for-linux,Splunk_TA_linux,internal,"Splunk Add-on for Linux"
-splunk-add-on-for-mcafee-epo-syslog,Splunk_TA_mcafee_epo_syslog,internal,"Splunk Add-on for McAfee EPO Syslog"
-splunk-add-on-for-mcafee-web-gateway,Splunk_TA_mcafee-wg,internal,"Splunk Add-on for McAfee Web Gateway"
-splunk-add-on-for-mcafee,Splunk_TA_mcafee,internal,"Splunk Add-on for McAfee"
-splunk-add-on-for-microsoft-cloud-services,Splunk_TA_microsoft-cloudservices,internal,"Splunk Add-on for Microsoft Cloud Services"
-splunk-add-on-for-microsoft-hyper-v,Splunk_TA_microsoft-hyperv,internal,"Splunk Add-on for Microsoft Hyper-V"
-splunk-add-on-for-microsoft-iis,Splunk_TA_microsoft-iis,internal,"Splunk Add-on for Microsoft IIS"
-splunk-add-on-for-microsoft-office-365,splunk_ta_o365,internal,"Splunk Add-on for Microsoft Office 365"
-splunk-add-on-for-microsoft-sql-server,Splunk_TA_microsoft-sqlserver,internal,"Splunk Add-on for Microsoft SQL Server"
-splunk-add-on-for-microsoft-system-center-operations-manager,Splunk_TA_microsoft-scom,internal,"Splunk Add-on for Microsoft SCOM"
-splunk-add-on-for-microsoft-windows,Splunk_TA_windows,internal,"Splunk Add-on for Microsoft Windows"
-splunk-add-on-for-mysql,Splunk_TA_mysql,internal,"Splunk Add-on for MySQL"
-splunk-add-on-for-nagios-core,Splunk_TA_nagios-core,internal,"Splunk Add-on for Nagios Core"
-splunk-add-on-for-nginx,Splunk_TA_nginx,internal,"Splunk Add-on for Nginx"
-splunk-add-on-for-oracle-database,Splunk_TA_oracle,internal,"Splunk Add-on for Oracle"
-splunk-add-on-for-ossec,Splunk_TA_ossec,internal,"Splunk Add-on for OSSEC"
-splunk-add-on-for-rsa-dlp,Splunk_TA_rsa-dlp,internal,"Splunk Add-on for RSA DLP"
-splunk-add-on-for-rsa-securid,Splunk_TA_rsa-securid,internal,"Splunk Add-on for RSA SecurID"
-splunk-add-on-for-salesforce,Splunk_TA_salesforce,internal,"Splunk Add-on for Salesforce"
-splunk-add-on-for-servicenow,Splunk_TA_snow,internal,"Splunk Add-on for ServiceNow"
-splunk-add-on-for-sophos,Splunk_TA_sophos,internal,"Splunk Add-on for Sophos"
-splunk-add-on-for-squid-proxy,Splunk_TA_squid,internal,"Splunk Add-on for Squid Proxy"
-splunk-add-on-for-symantec-blue-coat-proxysg,Splunk_TA_bluecoat-proxysg,internal,"Splunk Add-on for Blue Coat ProxySG"
-splunk-add-on-for-symantec-dlp,Splunk_TA_symantec-dlp,internal,"Splunk Add-on for Symantec DLP"
-splunk-add-on-for-symantec-endpoint-protection,Splunk_TA_symantec-ep,internal,"Splunk Add-on for Symantec Endpoint Protection"
-splunk-add-on-for-tomcat,Splunk_TA_tomcat,internal,"Splunk Add-on for Tomcat"
-splunk-add-on-for-unix-and-linux,Splunk_TA_nix,internal,"Splunk Add-on for Unix and Linux"
-splunk-add-on-for-websense-dlp,Splunk_TA_websense-dlp,internal,"Splunk Add-on for Websense DLP"
-splunk-add-on-for-zeek-aka-bro,Splunk_TA_bro,internal,"Splunk Add-on for Zeek aka Bro"
-splunk-add-on-for-rsa-securid-cas,Splunk_TA_rsa_securid_cas,internal,"Splunk Add-on for RSA SecurID CAS"
-splunk-add-on-for-splunk-global-monitoring-console,Splunk_TA_splunk_global_monitoring_console,public,"Splunk Add-on for Splunk Global Monitoring Console"
-splunk-add-on-for-zoom,Splunk_TA_zoom,internal,"Splunk Add-on for Zoom"
-splunk-add-on-for-google-gsuite,Splunk_TA_google-gsuite,internal,"Splunk Add-on for G Suite"
-splunk-add-on-for-cef,TA-cef-for-splunk,public,"TA CEF for Splunk"
-splunk-add-on-for-mcafee-nsp,Splunk_TA_mcafee_nsp,internal,"Splunk Add-on for McAfee NSP"
-splunk-add-on-for-ucc-example,Splunk_TA_UCCExample,public,"Splunk_TA_UCCExample"
-seckit_sa_geolocation,SecKit_SA_geolocation,public,"SecKit Geolocation with Maxmind"
+splunk-add-on-for-amazon-kinesis-firehose,Splunk_TA_aws-kinesis-firehose,internal,"Splunk Add-on For Kinesis Firehose",master
+splunk-add-on-for-amazon-web-services,Splunk_TA_aws,internal,"Splunk Add-on for AWS",master
+splunk-add-on-for-apache-web-server,Splunk_TA_apache,internal,"Splunk Add-on for Apache",develop
+splunk-add-on-for-bmc-remedy,Splunk_TA_remedy,internal,"Splunk Add-on for BMC Remedy",master
+splunk-add-on-for-box,Splunk_TA_box,internal,"Splunk Add-on for Box",develop
+splunk-add-on-for-bromium,Splunk_TA_bromium,internal,"Splunk Add-on for Bromium",develop
+splunk-add-on-for-carbon-black,Splunk_TA_bit9-carbonblack,internal,"Splunk Add-on for Carbon Black",develop
+splunk-add-on-for-check-point-opsec-lea,Splunk_TA_checkpoint-opseclea,internal,"Splunk Add-on for Check Point OPSEC LEA",develop
+splunk-add-on-for-cisco-asa,Splunk_TA_cisco-asa,internal,"Splunk Add-on for Cisco ASA",develop
+splunk-add-on-for-cisco-esa,Splunk_TA_cisco-esa,internal,"Splunk Add-on for Cisco ESA",develop
+splunk-add-on-for-cisco-firesight,Splunk_TA_sourcefire,internal,"Splunk Add-on for Cisco FireSIGHT",develop
+splunk-add-on-for-cisco-identity-services,Splunk_TA_cisco-ise,internal,"Splunk Add-on for Cisco ISE",develop
+splunk-add-on-for-cisco-ucs,Splunk_TA_cisco-ucs,internal,"Splunk Add-on for Cisco UCS",develop
+splunk-add-on-for-cisco-wsa,Splunk_TA_cisco-wsa,internal,"Splunk Add-on for Cisco WSA",master
+splunk-add-on-for-citrix-netscaler,Splunk_TA_citrix-netscaler,internal,"Splunk Add-on for Citrix NetScaler",master
+splunk-add-on-for-cyberark,Splunk_TA_cyberark,internal,"Splunk Add-on for CyberArk",develop
+splunk-add-on-for-cyberark-epm,Splunk_TA_cyberark_epm,internal,Splunk Add-on for CyberArk EPM,develop
+splunk-add-on-for-f5-big-ip,Splunk_TA_f5-bigip,internal,"Splunk Add-on for F5 BIG-IP",develop
+splunk-add-on-for-forcepoint-web-security,Splunk_TA_websense-cg,internal,"Splunk Add-on for Forcepoint Web Security",develop
+splunk-add-on-for-google-cloud-platform,Splunk_TA_google-cloudplatform,internal,"Splunk Add-on for Google Cloud Platform",master
+splunk-add-on-for-haproxy,Splunk_TA_haproxy,internal,"Splunk Add-on for HAProxy",master
+splunk-add-on-for-ibm-websphere-application-server,Splunk_TA_ibm-was,internal,"Splunk Add-on for IBM WebSphere Application Server",develop
+splunk-add-on-for-imperva-securesphere-waf,Splunk_TA_imperva-waf,internal,"Splunk Add-on for Imperva SecureSphere WAF",develop
+splunk-add-on-for-infoblox,Splunk_TA_infoblox,internal,"Splunk Add-on for Infoblox",develop
+splunk-add-on-for-isc-bind,Splunk_TA_isc-bind,internal,"Splunk Add-on for ISC BIND",master
+splunk-add-on-for-isc-dhcp,Splunk_TA_isc-dhcp,internal,"Splunk Add-on for ISC DHCP",develop
+splunk-add-on-for-java-management-extensions,Splunk_TA_jmx,internal,"Splunk Add-on for Java Management Extensions",develop
+splunk-add-on-for-jboss,Splunk_TA_jboss,internal,"Splunk Add-on for JBoss",develop
+splunk-add-on-for-juniper,Splunk_TA_juniper,internal,"Splunk Add-on for Juniper",master
+splunk-add-on-for-linux,Splunk_TA_linux,internal,"Splunk Add-on for Linux",develop
+splunk-add-on-for-mcafee-epo-syslog,Splunk_TA_mcafee_epo_syslog,internal,"Splunk Add-on for McAfee EPO Syslog",develop
+splunk-add-on-for-mcafee-web-gateway,Splunk_TA_mcafee-wg,internal,"Splunk Add-on for McAfee Web Gateway",develop
+splunk-add-on-for-mcafee,Splunk_TA_mcafee,internal,"Splunk Add-on for McAfee",develop
+splunk-add-on-for-microsoft-cloud-services,Splunk_TA_microsoft-cloudservices,internal,"Splunk Add-on for Microsoft Cloud Services",develop
+splunk-add-on-for-microsoft-hyper-v,Splunk_TA_microsoft-hyperv,internal,"Splunk Add-on for Microsoft Hyper-V",develop
+splunk-add-on-for-microsoft-iis,Splunk_TA_microsoft-iis,internal,"Splunk Add-on for Microsoft IIS",develop
+splunk-add-on-for-microsoft-office-365,splunk_ta_o365,internal,"Splunk Add-on for Microsoft Office 365",develop
+splunk-add-on-for-microsoft-sql-server,Splunk_TA_microsoft-sqlserver,internal,"Splunk Add-on for Microsoft SQL Server",develop
+splunk-add-on-for-microsoft-system-center-operations-manager,Splunk_TA_microsoft-scom,internal,"Splunk Add-on for Microsoft SCOM",master
+splunk-add-on-for-microsoft-windows,Splunk_TA_windows,internal,"Splunk Add-on for Microsoft Windows",master
+splunk-add-on-for-mysql,Splunk_TA_mysql,internal,"Splunk Add-on for MySQL",develop
+splunk-add-on-for-nagios-core,Splunk_TA_nagios-core,internal,"Splunk Add-on for Nagios Core",develop
+splunk-add-on-for-nginx,Splunk_TA_nginx,internal,"Splunk Add-on for Nginx",develop
+splunk-add-on-for-oracle-database,Splunk_TA_oracle,internal,"Splunk Add-on for Oracle",develop
+splunk-add-on-for-ossec,Splunk_TA_ossec,internal,"Splunk Add-on for OSSEC",develop
+splunk-add-on-for-rsa-dlp,Splunk_TA_rsa-dlp,internal,"Splunk Add-on for RSA DLP",develop
+splunk-add-on-for-rsa-securid,Splunk_TA_rsa-securid,internal,"Splunk Add-on for RSA SecurID",develop
+splunk-add-on-for-salesforce,Splunk_TA_salesforce,internal,"Splunk Add-on for Salesforce",develop
+splunk-add-on-for-servicenow,Splunk_TA_snow,internal,"Splunk Add-on for ServiceNow",develop
+splunk-add-on-for-sophos,Splunk_TA_sophos,internal,"Splunk Add-on for Sophos",develop
+splunk-add-on-for-squid-proxy,Splunk_TA_squid,internal,"Splunk Add-on for Squid Proxy",master
+splunk-add-on-for-symantec-blue-coat-proxysg,Splunk_TA_bluecoat-proxysg,internal,"Splunk Add-on for Blue Coat ProxySG",develop
+splunk-add-on-for-symantec-dlp,Splunk_TA_symantec-dlp,internal,"Splunk Add-on for Symantec DLP",develop
+splunk-add-on-for-symantec-endpoint-protection,Splunk_TA_symantec-ep,internal,"Splunk Add-on for Symantec Endpoint Protection",develop
+splunk-add-on-for-tomcat,Splunk_TA_tomcat,internal,"Splunk Add-on for Tomcat",develop
+splunk-add-on-for-unix-and-linux,Splunk_TA_nix,internal,"Splunk Add-on for Unix and Linux",master
+splunk-add-on-for-websense-dlp,Splunk_TA_websense-dlp,internal,"Splunk Add-on for Websense DLP",develop
+splunk-add-on-for-zeek-aka-bro,Splunk_TA_bro,internal,"Splunk Add-on for Zeek aka Bro",develop
+splunk-add-on-for-rsa-securid-cas,Splunk_TA_rsa_securid_cas,internal,"Splunk Add-on for RSA SecurID CAS",develop
+splunk-add-on-for-splunk-global-monitoring-console,Splunk_TA_splunk_global_monitoring_console,public,"Splunk Add-on for Splunk Global Monitoring Console",develop
+splunk-add-on-for-zoom,Splunk_TA_zoom,internal,"Splunk Add-on for Zoom",develop
+splunk-add-on-for-google-gsuite,Splunk_TA_google-gsuite,internal,"Splunk Add-on for G Suite",develop
+splunk-add-on-for-cef,TA-cef-for-splunk,public,"TA CEF for Splunk",develop
+splunk-add-on-for-mcafee-nsp,Splunk_TA_mcafee_nsp,internal,"Splunk Add-on for McAfee NSP",develop
+splunk-add-on-for-ucc-example,Splunk_TA_UCCExample,public,"Splunk_TA_UCCExample",develop
+seckit_sa_geolocation,SecKit_SA_geolocation,public,"SecKit Geolocation with Maxmind",develop
