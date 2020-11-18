@@ -32,9 +32,9 @@ command -v crudini >/dev/null 2>&1 || { echo >&2 "I require crudini but it's not
 command -v jq >/dev/null 2>&1 || { echo >&2 "I require jq but it's not installed.  Aborting."; exit 1; }
 command -v rsync >/dev/null 2>&1 || { echo >&2 "I require rsync but it's not installed.  Aborting."; exit 1; }
 
-while IFS=, read -r REPO TAID REPOVISIBILITY TITLE OTHER
+while IFS=, read -r REPO TAID REPOVISIBILITY TITLE BRANCH OTHER
 do
-    echo "Woring on:$REPO|$TAID|$REPOVISIBILITY|$TITLE|$OTHER"
+    echo "Working on:$REPO|$TAID|$REPOVISIBILITY|$TITLE|$BRANCH|$OTHER"
     #Things we want to do no matter what
     #Create RP Project
     curl -X POST "$RP_ENDPOINT/api/v1/project" -H "accept: */*" -H "Content-Type: application/json" -H "Authorization: bearer $RP_UUID" -d "{ \"entryType\": \"INTERNAL\", \"projectName\": \"${REPO}\"}" || true
@@ -114,7 +114,7 @@ do
         # Update any files in enforce
         #if [ "$BRANCH" != "master" ]; then 
         ( git checkout test/templateupdate  && git checkout develop && git branch -D test/templateupdate ) || true
-        git checkout -B "test/templateupdate" develop
+        git checkout -B "test/templateupdate" $BRANCH
         git submodule update --init --recursive
         #fi
         rsync -avh --include ".*" --ignore-existing ../../seed/ .
@@ -225,7 +225,7 @@ do
         #     git push
         # fi
         git push -f --set-upstream origin test/templateupdate
-        hub pull-request -b develop "Bump repository configuration from template" --no-edit
+        hub pull-request -b $BRANCH "Bump repository configuration from template" --no-edit
         hub api /repos/$REPOORG/$REPO  -H 'Accept: application/vnd.github.nebula-preview+json' -X PATCH -F visibility=$REPOVISIBILITY
 
     fi

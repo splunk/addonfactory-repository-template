@@ -1,11 +1,14 @@
-splunk-add-on-for-symantec-blue-coat-proxysg,Splunk_TA_bluecoat-proxysg,internal,"Splunk Add-on for Blue Coat ProxySG"
-splunk-add-on-for-symantec-endpoint-protection,Splunk_TA_symantec-ep,internal,"Splunk Add-on for Symantec Endpoint Protection"
-splunk-add-on-for-tomcat,Splunk_TA_tomcat,internal,"Splunk Add-on for Tomcat"
-splunk-add-on-for-unix-and-linux,Splunk_TA_nix,internal,"Splunk Add-on for Unix and Linux"
-splunk-add-on-for-websense-dlp,Splunk_TA_websense-dlp,internal,"Splunk Add-on for Websense DLP"
-splunk-add-on-for-zeek-aka-bro,Splunk_TA_bro,internal,"Splunk Add-on for Zeek aka Bro"
-splunk-add-on-for-rsa-securid-cas,Splunk_TA_rsa_securid_cas,internal,"Splunk Add-on for RSA SecurID CAS"
-splunk-add-on-for-cef,TA-cef-for-splunk,public,"TA CEF for Splunk"
-splunk-add-on-for-splunk-global-monitoring-console,Splunk_TA_splunk_global_monitoring_console,public,"Splunk Add-on for Splunk Global Monitoring Console"
-splunk-add-on-for-ucc-example,Splunk_TA_UCCExample,public,"Splunk_TA_UCCExample"
-seckit_sa_geolocation,SecKit_SA_geolocation,public,"SecKit Geolocation with Maxmind"
+splunk-add-on-for-cisco-wsa,Splunk_TA_cisco-wsa,internal,"Splunk Add-on for Cisco WSA",master
+splunk-add-on-for-citrix-netscaler,Splunk_TA_citrix-netscaler,internal,"Splunk Add-on for Citrix NetScaler",master
+splunk-add-on-for-haproxy,Splunk_TA_haproxy,internal,"Splunk Add-on for HAProxy",master
+splunk-add-on-for-unix-and-linux,Splunk_TA_nix,internal,"Splunk Add-on for Unix and Linux",master
+splunk-add-on-for-isc-bind,Splunk_TA_isc-bind,internal,"Splunk Add-on for ISC BIND",master
+splunk-add-on-for-juniper,Splunk_TA_juniper,internal,"Splunk Add-on for Juniper",master
+splunk-add-on-for-squid-proxy,Splunk_TA_squid,internal,"Splunk Add-on for Squid Proxy",master
+splunk-add-on-for-microsoft-system-center-operations-manager,Splunk_TA_microsoft-scom,internal,"Splunk Add-on for Microsoft SCOM",master
+splunk-add-on-for-microsoft-windows,Splunk_TA_windows,internal,"Splunk Add-on for Microsoft Windows",master
+splunk-add-on-for-bmc-remedy,Splunk_TA_remedy,internal,"Splunk Add-on for BMC Remedy",master
+splunk-add-on-for-cef,TA-cef-for-splunk,public,"TA CEF for Splunk",master
+splunk-add-on-for-splunk-global-monitoring-console,Splunk_TA_splunk_global_monitoring_console,public,"Splunk Add-on for Splunk Global Monitoring Console",master
+splunk-add-on-for-ucc-example,Splunk_TA_UCCExample,public,"Splunk_TA_UCCExample",master
+seckit_sa_geolocation,SecKit_SA_geolocation,public,"SecKit Geolocation with Maxmind",master
