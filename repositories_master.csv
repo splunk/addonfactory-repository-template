@@ -64,3 +64,5 @@ splunk-add-on-for-cef,TA-cef-for-splunk,public,"TA CEF for Splunk",develop
 splunk-add-on-for-mcafee-nsp,Splunk_TA_mcafee_nsp,internal,"Splunk Add-on for McAfee NSP",develop
 splunk-add-on-for-ucc-example,Splunk_TA_UCCExample,public,"Splunk_TA_UCCExample",develop
 seckit_sa_geolocation,SecKit_SA_geolocation,public,"SecKit Geolocation with Maxmind",develop
+splunk-add-on-for-modinput-test,Splunk_TA_Modinput_Test,internal,"Splunk Add-on for Modinput Test",develop
+
