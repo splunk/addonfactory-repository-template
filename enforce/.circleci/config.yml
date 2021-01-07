@@ -348,6 +348,7 @@ jobs:
 
             [ ! -d "tests/unit" ] && exit 0
             export SPLUNK_VERSION=latest
+            export SC4S_VERSION=latest
             export SPLUNK_APP_ID=$(crudini --get package/default/app.conf id name)
             export SPLUNK_APP_PACKAGE=output/$(ls output/)
             export TEST_SET=tests/unit
