@@ -204,6 +204,10 @@ jobs:
         description: Test Set
         type: string
         default: knowledge
+      sc4s_version:
+        description: sc4s version
+        type: string
+        default: latest
     docker:
       - image: circleci/python:3.7
     resource_class: xlarge
@@ -243,6 +247,7 @@ jobs:
             [ ! -d "tests/$TEST_TYPE" ] && exit 0
             [ "$BROWSER" = "safari" ] && [ "$UI_TEST_HEADLESS" = "true" ] && exit 0
             export SPLUNK_VERSION=$(crudini --get deps/build/addonfactory_test_matrix_splunk/splunk_matrix.conf "<<parameters.splunk_version>>" VERSION)
+            export SC4S_VERSION=$(crudini --get deps/build/addonfactory_test_matrix_splunk/SC4S_matrix.conf "<<parameters.sc4s_version>>" VERSION)
             export SPLUNK_APP_ID=$(crudini --get package/default/app.conf id name)
             export SPLUNK_APP_PACKAGE=output/$(ls output/)
             export TEST_SET=tests/$TEST_TYPE
@@ -477,6 +482,7 @@ workflows:
           matrix:
             parameters:
               splunk_version: ["7.2","7.3","8.0","8.1"]
+              sc4s_version: ["1"]
               test_set: ["knowledge"]
           filters:
             branches:
@@ -490,6 +496,7 @@ workflows:
           matrix:
             parameters:
               splunk_version: ["7.3","8.0","8.1"]
+              sc4s_version: ["1"]
               test_set: ["ui-firefox", "ui-chrome", "ui-safari", "ui-edge"]
           filters:
             branches:
@@ -502,6 +509,7 @@ workflows:
           matrix:
             parameters:
               splunk_version: ["7.3","8.0","8.1"]
+              sc4s_version: ["1"]
               test_set: ["modinput_functional", "modinput_others"]
           filters:
             branches:
