@@ -359,6 +359,7 @@ jobs:
           command: |
             # Start Splunk
             TEST_TYPE=$(echo "<<parameters.test_set>>" | awk -F- '{print $1}' )
+            export IMAGE_TAG="3.7-browsers"
             [ ! -d "tests/$TEST_TYPE" ] && exit 0
             export SPLUNK_VERSION=$(crudini --get deps/build/addonfactory_test_matrix_splunk/splunk_matrix.conf "<<parameters.splunk_version>>" VERSION)
             export SPLUNK_APP_ID=$(crudini --get package/default/app.conf id name)

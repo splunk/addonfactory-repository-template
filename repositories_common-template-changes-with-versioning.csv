@@ -7,3 +7,4 @@ splunk-add-on-for-microsoft-cloud-services,Splunk_TA_microsoft-cloudservices,int
 splunk-add-on-for-microsoft-office-365,splunk_ta_o365,internal,"Splunk Add-on for Microsoft Office 365",master
 splunk-add-on-for-nginx,Splunk_TA_nginx,internal,"Splunk Add-on for Nginx",master
 splunk-add-on-for-jboss,Splunk_TA_jboss,internal,"Splunk Add-on for JBoss",master
+splunk-add-on-for-bmc-remedy,Splunk_TA_remedy,internal,"Splunk Add-on for BMC Remedy",master
