@@ -20,7 +20,14 @@ RUN cd /home/circleci/work/tests && ls
 
 RUN cd ../..
 COPY package /home/circleci/work/package
+COPY output /home/circleci/work/output
 RUN sudo chown -R circleci /home/circleci/
+
+# Below three lines are added to create specific path required by splunktalib to create log file.
+# Once fix is avalible(ADDON-32060) in splunktalib, remove these lines.
+USER root
+RUN mkdir -p /opt/splunk/var/log/splunk
+RUN chmod -R 777 /opt/splunk/var/log/splunk
 
 USER circleci
 ENTRYPOINT /entrypoint.sh
