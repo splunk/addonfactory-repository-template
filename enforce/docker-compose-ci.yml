@@ -117,7 +117,7 @@ services:
     env_file:
       - test_credentials.env
     volumes:
-      - backend_result:/home/circleci/work_backend
+      - backend_results:/home/circleci/work_backend
 
   sauceconnect:
     build:
@@ -147,5 +147,5 @@ services:
 volumes:
   results:
     external: false
-  backend_result:
+  backend_results:
     external: false

@@ -390,7 +390,7 @@ jobs:
             docker-compose -f docker-compose-ci.yml exec --user root splunk bash /home/circleci/work_backend/tests/backend_entrypoint.sh || test_exit_code=$?
             # Collect Results
             docker container create --name dummy \
-                                -v project_results:/home/circleci/work_backend \
+                                -v project_backend_results:/home/circleci/work_backend \
                                 registry.access.redhat.com/ubi7/ubi
             docker cp dummy:/home/circleci/work_backend/test-results/test_py2.xml test-results/  || echo "ignoring..."
             docker cp dummy:/home/circleci/work_backend/test-results/test_py3.xml test-results/  || echo "ignoring..."
