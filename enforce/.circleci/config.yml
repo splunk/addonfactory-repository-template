@@ -254,7 +254,7 @@ jobs:
             export TEST_TYPE=$TEST_TYPE
             export TEST_BROWSER=$BROWSER
             # JOB_NAME: For Saucelabs integration. Used as a build-name.
-            export JOB_NAME="CircleCI::$CIRCLE_PROJECT_REPONAME[$CIRCLE_BRANCH][$TEST_BROWSER][$PYTHON_VERSION] #$CIRCLE_BUILD_NUM"
+            export JOB_NAME="CircleCI::$CIRCLE_PROJECT_REPONAME[$CIRCLE_BRANCH][$TEST_BROWSER] #$CIRCLE_BUILD_NUM"
             export SAUCE_IDENTIFIER=$SAUCE_IDENTIFIER-$(cat /proc/sys/kernel/random/uuid)
 
             #export env credentials
@@ -305,6 +305,88 @@ jobs:
             docker cp dummy:/home/circleci/work/assets test-results/assets  || echo "ignoring..."
             docker cp dummy:/home/circleci/work/report.html test-results/report.html  || echo "ignoring..."
             docker cp dummy:/home/circleci/work/test-results/cim-compliance-report.md test-results/ || echo "ignoring..."
+            docker-compose -f docker-compose-ci.yml down || echo "ignoring..."
+            exit "$test_exit_code"
+      - store_artifacts:
+          path: /tmp/diag
+          destination: test-diag
+      - store_artifacts:
+          path: test-results
+          destination: test-results
+      - store_test_results:
+          path: test-results
+
+  splunk-app-backend-test:
+    parameters:
+      splunk_version:
+        description: Image version
+        type: string
+        default: latest
+      test_set:
+        description: Test Set
+        type: string
+        default: knowledge
+    docker:
+      - image: circleci/python:3.7
+    resource_class: xlarge
+    steps:
+      - checkout
+      - run: git submodule sync
+      - run: git submodule update --init
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Setup for testing
+          command: |
+            pip install git+https://github.com/pixelb/crudini        
+            mkdir test-results
+            cp -rf /tmp/workspace/* .
+            mkdir -p deps/apps/splunk-add-on-for-modinput-test
+            cd deps/apps/splunk-add-on-for-modinput-test
+            mkdir output 
+            cd output 
+            curl -s https://api.github.com/repos/splunk/splunk-add-on-for-modinput-test/releases/latest | grep "Splunk_TA.*tar.gz" | grep -v search_head | grep -v indexer | grep -v forwarder | cut -d : -f 2,3 | tr -d \" | wget -qi - || true
+            ls
+            tar -xzf *.tar.gz
+            ls
+            rm *.tar.gz
+            ls
+      - run:
+          name: Splunk Testing
+          no_output_timeout: 2h
+          command: |
+            # Start Splunk
+            TEST_TYPE=$(echo "<<parameters.test_set>>" | awk -F- '{print $1}' )
+            [ ! -d "tests/$TEST_TYPE" ] && exit 0
+            export SPLUNK_VERSION=$(crudini --get deps/build/addonfactory_test_matrix_splunk/splunk_matrix.conf "<<parameters.splunk_version>>" VERSION)
+            export SPLUNK_APP_ID=$(crudini --get package/default/app.conf id name)
+            export SPLUNK_APP_PACKAGE=output/$(ls output/)
+            export TEST_SET=tests/$TEST_TYPE
+            export TEST_TYPE=$TEST_TYPE
+            #export env credentials
+            if [ -f ".circleci/testcredentials.sh" ]; then
+                bash ./.circleci/testcredentials.sh
+            fi
+            #Report portal integration
+            export RP_LAUNCH_ATTRIBUTES="'job:${CIRCLE_JOB}' 'deployment:byoe' 'splunkmajor:<< parameters.splunk_version >>' 'splunk:${SPLUNK_VERSION}' 'branch:<< pipeline.git.branch >>' 'commit:${CIRCLE_SHA1}' 'release:${RELEASE}' 'version:$(./semtag getcurrent)' 'test_set:<<parameters.test_set>>' 'repo:${CIRCLE_PROJECT_REPONAME}'"
+            export RP_PROJECT=addonfactory
+            export RP_LAUNCH="$CIRCLE_PROJECT_REPONAME-$(echo <<parameters.test_set>> | sed 's/\(.*\)\(-.*\)/\1/')"
+            export RP_LAUNCH_DESC="ci run"
+            # Build
+            docker-compose -f docker-compose-ci.yml build
+            docker-compose -f docker-compose-ci.yml up -d splunk
+            until docker-compose -f docker-compose-ci.yml logs splunk | grep "Ansible playbook complete" ; do sleep 1; done
+            # Run the tests
+            test_exit_code=0
+            docker-compose -f docker-compose-ci.yml exec --user root splunk bash /home/circleci/work_backend/tests/backend_entrypoint.sh || test_exit_code=$?
+            # Collect Results
+            docker container create --name dummy \
+                                -v project_results:/home/circleci/work_backend \
+                                registry.access.redhat.com/ubi7/ubi
+            docker cp dummy:/home/circleci/work_backend/test-results/test_py2.xml test-results/  || echo "ignoring..."
+            docker cp dummy:/home/circleci/work_backend/test-results/test_py3.xml test-results/  || echo "ignoring..."
             docker-compose -f docker-compose-ci.yml down || echo "ignoring..."
             exit "$test_exit_code"
       - store_artifacts:
@@ -524,6 +606,18 @@ workflows:
           matrix:
             parameters:
               test_set: ["py2-2.7.17", "py3-3.7.4", "py3-3.7.8"]
+          filters:
+            branches:
+              only: /.*/
+      - splunk-app-backend-test:
+          context:
+            - gdi-reportportal
+          requires:
+            - package
+          matrix:
+            parameters:
+              splunk_version: ["7.3", "8.0", "8.1"]
+              test_set: ["backend"]
           filters:
             branches:
               only: /.*/

@@ -107,6 +107,17 @@ services:
       - SPLUNK_PASSWORD=Chang3d!
       - SPLUNK_START_ARGS=--accept-license
       - SPLUNK_HEC_TOKEN=9b741d03-43e9-4164-908b-e09102327d22
+      - TEST_SET=${TEST_SET}
+      - RP_ENDPOINT=${RP_ENDPOINT}
+      - RP_UUID=${RP_UUID}
+      - RP_LAUNCH_ATTRIBUTES=${RP_LAUNCH_ATTRIBUTES}
+      - RP_PROJECT=${RP_PROJECT}
+      - RP_LAUNCH=${RP_LAUNCH}
+      - RP_LAUNCH_DESC=${RP_LAUNCH_DESC}
+    env_file:
+      - test_credentials.env
+    volumes:
+      - backend_result:/home/circleci/work_backend
 
   sauceconnect:
     build:
@@ -135,4 +146,6 @@ services:
 
 volumes:
   results:
+    external: false
+  backend_result:
     external: false
