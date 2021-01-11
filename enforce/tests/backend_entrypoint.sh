@@ -5,6 +5,7 @@ else
     echo "Unable to find linux OS"
     exit 0
 fi
+
 echo "Linux OS : $OS"
 
 if [[ "$OS" == *"Red Hat"* ]]; then
@@ -21,9 +22,11 @@ elif [[ "$OS" == *"Debian"* ]]; then
 fi
 
 cd /home/circleci/work_backend
+
 if [ -f "${TEST_SET}/pytest-ci.ini" ]; then
     cp -f ${TEST_SET}/pytest-ci.ini pytest.ini
 fi
+
 if ! command -v pyenv &> /dev/null
 then
     if [ ! -d "~/.pyenv" ]; then
@@ -37,6 +40,7 @@ fi
 
 python2=$(/opt/splunk/bin/splunk cmd python2 -V 2>&1) 
 python3=$(/opt/splunk/bin/splunk cmd python3 -V)
+
 if [[ "$python3" == *"Python 3."* ]]; then
     echo "Installing $python3"
     python_version=$(echo $python3| cut -d' ' -f 2)
@@ -47,6 +51,7 @@ if [[ "$python3" == *"Python 3."* ]]; then
     pip3 install git+https://github.com/rfaircloth-splunk/agent-python-pytest.git --target=py3
     pyenv versions
 fi
+
 if [[ "$python2" == *"Python 2."* ]]; then
     echo "Installing $python2"
     python_version=$(echo $python2| cut -d' ' -f 2)
@@ -56,9 +61,20 @@ if [[ "$python2" == *"Python 2."* ]]; then
     pip2 install pytest-expect --target=py2
     pyenv versions
 fi
+
 source /opt/splunk/bin/setSplunkEnv
+
 export test_exit_code_py2=0
 export test_exit_code_py3=0
+
+if [ -d "py2" ]; then
+    cd py2
+    echo "Executing Test..."
+    python2 -m pytest ../${TEST_SET} --junitxml=/home/circleci/work_backend/test-results/test_py2.xml
+    test_exit_code_py2=$?
+    cd ..
+fi
+
 if [ -d "py3" ]; then
     cd py3
     echo "Executing Test..."
@@ -69,13 +85,6 @@ if [ -d "py3" ]; then
     --reportportal -o "rp_endpoint=${RP_ENDPOINT}" -o "rp_launch_attributes=${RP_LAUNCH_ATTRIBUTES}" \
     -o "rp_project=${RP_PROJECT}" -o "rp_launch=${RP_LAUNCH}" -o "rp_launch_description='${RP_LAUNCH_DESC}'" -o "rp_ignore_attributes='xfail' 'usefixture'"
     test_exit_code_py3=$?
-    cd ..
-fi
-if [ -d "py2" ]; then
-    cd py2
-    echo "Executing Test..."
-    python2 -m pytest ../${TEST_SET} --junitxml=/home/circleci/work_backend/test-results/test_py2.xml
-    test_exit_code_py2=$?
     cd ..
 fi
 
