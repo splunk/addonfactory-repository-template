@@ -12,6 +12,7 @@ if [[ "$OS" == *"Red Hat"* ]]; then
     yum -y update
     yum -y install zlib-devel bzip2 bzip2-devel sqlite sqlite-devel openssl-devel \
     xz xz-devel libffi-devel findutils git gcc make
+    yum -y install java-11-openjdk-devel
 elif [[ "$OS" == *"Debian"* ]]; then
     apt update
     apt-get install -y build-essential libssl-dev zlib1g-dev libbz2-dev \
