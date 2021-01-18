@@ -1,3 +1,4 @@
+splunk-add-on-for-modinput-test,Splunk_TA_Modinput_Test,public,Splunk Add-on for Modinput Test,master
 splunk-add-on-for-jboss,Splunk_TA_jboss,internal,"Splunk Add-on for JBoss",master
 splunk-add-on-for-bmc-remedy,Splunk_TA_remedy,internal,"Splunk Add-on for BMC Remedy",master
 splunk-add-on-for-box,Splunk_TA_box,internal,"Splunk Add-on for Box",master
