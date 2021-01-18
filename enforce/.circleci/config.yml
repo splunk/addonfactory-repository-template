@@ -622,10 +622,18 @@ workflows:
           filters:
             branches:
               only: /.*/
-      - release:
+      - approval-release:
           requires:
             - package
-            - splunk-app-inspect
+          context:
+            - gdi-github
+          type: approval
+          filters:
+            branches:
+              only: master
+      - release:
+          requires:
+            - approval-release
           context:
             - gdi-github
   publish:

@@ -218,7 +218,7 @@ do
             rsync -avh --include ".*" ../../conditional/ .
         fi
         git add . || true
-        git commit -am "sync for policy" || true
+        git commit -am "test: sync for policy" || true
         # if [ "$BRANCH" != "master" ]; then
         #     git push -f --set-upstream origin test/templateupdate
         # else
