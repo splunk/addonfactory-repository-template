@@ -231,10 +231,8 @@ jobs:
             pip install git+https://github.com/pixelb/crudini        
             mkdir test-results
             cp -rf /tmp/workspace/* .
-            mkdir -p deps/apps/splunk-add-on-for-modinput-test
-            cd deps/apps/splunk-add-on-for-modinput-test
-            mkdir output 
-            cd output 
+            mkdir -p deps/apps/splunk-add-on-for-modinput-test/output
+            cd deps/apps/splunk-add-on-for-modinput-test/output
             curl -s https://api.github.com/repos/splunk/splunk-add-on-for-modinput-test/releases/latest | grep "Splunk_TA.*tar.gz" | grep -v search_head | grep -v indexer | grep -v forwarder | cut -d : -f 2,3 | tr -d \" | wget -qi - || true
             ls
             tar -xzf *.tar.gz
@@ -349,10 +347,8 @@ jobs:
             pip install git+https://github.com/pixelb/crudini        
             mkdir test-results
             cp -rf /tmp/workspace/* .
-            mkdir -p deps/apps/splunk-add-on-for-modinput-test
-            cd deps/apps/splunk-add-on-for-modinput-test
-            mkdir output 
-            cd output 
+            mkdir -p deps/apps/splunk-add-on-for-modinput-test/output
+            cd deps/apps/splunk-add-on-for-modinput-test/output
             curl -s https://api.github.com/repos/splunk/splunk-add-on-for-modinput-test/releases/latest | grep "Splunk_TA.*tar.gz" | grep -v search_head | grep -v indexer | grep -v forwarder | cut -d : -f 2,3 | tr -d \" | wget -qi - || true
             ls
             tar -xzf *.tar.gz
@@ -428,6 +424,14 @@ jobs:
             pip install git+https://github.com/pixelb/crudini        
             mkdir test-results
             cp -rf /tmp/workspace/* .
+            mkdir -p deps/apps/splunk-add-on-for-modinput-test/output
+            cd deps/apps/splunk-add-on-for-modinput-test/output
+            curl -s https://api.github.com/repos/splunk/splunk-add-on-for-modinput-test/releases/latest | grep "Splunk_TA.*tar.gz" | grep -v search_head | grep -v indexer | grep -v forwarder | cut -d : -f 2,3 | tr -d \" | wget -qi - || true
+            ls
+            tar -xzf *.tar.gz
+            ls
+            rm *.tar.gz
+            ls
       - run:
           name: Splunk Testing
           no_output_timeout: 2h
