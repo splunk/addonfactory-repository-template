@@ -1,3 +1,6 @@
+splunk-add-on-for-tomcat,Splunk_TA_tomcat,internal,"Splunk Add-on for Tomcat",master
+splunk-add-on-for-f5-big-ip,Splunk_TA_f5-bigip,internal,"Splunk Add-on for F5 BIG-IP",master
+splunk-add-on-for-mcafee-web-gateway,Splunk_TA_mcafee-wg,internal,"Splunk Add-on for McAfee Web Gateway",master
 splunk-add-on-for-jboss,Splunk_TA_jboss,internal,"Splunk Add-on for JBoss",master
 splunk-add-on-for-bmc-remedy,Splunk_TA_remedy,internal,"Splunk Add-on for BMC Remedy",master
 splunk-add-on-for-box,Splunk_TA_box,internal,"Splunk Add-on for Box",master
