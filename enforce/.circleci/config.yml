@@ -634,7 +634,9 @@ workflows:
           type: approval
           filters:
             branches:
-              only: master
+              only: 
+                - master
+                - develop
       - release:
           requires:
             - approval-release

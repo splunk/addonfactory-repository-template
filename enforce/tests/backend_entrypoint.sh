@@ -70,7 +70,7 @@ export test_exit_code_py3=0
 if [ -d "py2" ]; then
     cd py2
     echo "Executing Test..."
-    python2 -m pytest ../${TEST_SET} --junitxml=/home/circleci/work_backend/test-results/test_py2.xml
+    python2 -m pytest -v ../${TEST_SET} --junitxml=/home/circleci/work_backend/test-results/test_py2.xml
     test_exit_code_py2=$?
     cd ..
 fi
@@ -81,7 +81,7 @@ if [ -d "py3" ]; then
     echo Test Args $@ --reportportal -o "rp_endpoint=${RP_ENDPOINT}" -o "rp_launch_attributes=${RP_LAUNCH_ATTRIBUTES}" \
     -o "rp_project=${RP_PROJECT}" -o "rp_launch=${RP_LAUNCH}" -o "rp_launch_description='${RP_LAUNCH_DESC}'" -o "rp_ignore_attributes='xfail' 'usefixture'" \
     ${TEST_SET}
-    python3 -m pytest -p pytest_reportportal ../${TEST_SET} --junitxml=/home/circleci/work_backend/test-results/test_py3.xml \
+    python3 -m pytest -v -p pytest_reportportal ../${TEST_SET} --junitxml=/home/circleci/work_backend/test-results/test_py3.xml \
     --reportportal -o "rp_endpoint=${RP_ENDPOINT}" -o "rp_launch_attributes=${RP_LAUNCH_ATTRIBUTES}" \
     -o "rp_project=${RP_PROJECT}" -o "rp_launch=${RP_LAUNCH}" -o "rp_launch_description='${RP_LAUNCH_DESC}'" -o "rp_ignore_attributes='xfail' 'usefixture'"
     test_exit_code_py3=$?
