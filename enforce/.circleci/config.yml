@@ -641,7 +641,6 @@ workflows:
           requires:
             - approval-release
             - splunk-app-inspect
-            - splunk-app-test
             - splunk-app-unit-test
             - splunk-app-backend-test
           context:
