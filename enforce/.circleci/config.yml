@@ -83,7 +83,7 @@ orbs:
               command: |
                 git remote set-url origin https://${GH_USER}:${GH_TOKEN}@github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git
                 ./semtag <<parameters.tag_level>>
-      merge-to-master:
+      merge-to-main:
         steps:
           - run:
               name: Merge
@@ -91,9 +91,9 @@ orbs:
                 git remote set-url origin https://${GH_USER}:${GH_TOKEN}@github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git
                 git config --global user.email "addonreleasesrv@splunk.com"
                 git config --global user.name "Add on release service"
-                git pull origin master
-                git merge master -m "Merge from master"
-                git checkout master
+                git pull origin main
+                git merge main -m "Merge from main"
+                git checkout main
                 git merge develop
                 git push
     jobs:
@@ -107,11 +107,11 @@ orbs:
           - checkout
           - tag:
               tag_level: <<parameters.tag_level>>
-      merge-to-master:
+      merge-to-main:
         executor: python37
         steps:
           - checkout
-          - merge-to-master
+          - merge-to-main
 
 jobs:
   splunk-app-inspect:
@@ -635,11 +635,15 @@ workflows:
           filters:
             branches:
               only: 
-                - master
+                - main
                 - develop
       - release:
           requires:
             - approval-release
+            - splunk-app-inspect
+            - splunk-app-test
+            - splunk-app-unit-test
+            - splunk-app-backend-test
           context:
             - gdi-github
   publish:
