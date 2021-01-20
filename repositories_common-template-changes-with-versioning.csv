@@ -12,3 +12,5 @@ splunk-add-on-for-salesforce,Splunk_TA_salesforce,internal,"Splunk Add-on for Sa
 splunk-add-on-for-microsoft-cloud-services,Splunk_TA_microsoft-cloudservices,internal,"Splunk Add-on for Microsoft Cloud Services",master
 splunk-add-on-for-microsoft-office-365,splunk_ta_o365,internal,"Splunk Add-on for Microsoft Office 365",master
 splunk-add-on-for-nginx,Splunk_TA_nginx,internal,"Splunk Add-on for Nginx",master
+splunk-add-on-for-ucc-example,Splunk_TA_UCCExample,public,"Splunk_TA_UCCExample",master
+splunk-add-on-for-cef,TA-cef-for-splunk,public,"TA CEF for Splunk",master
