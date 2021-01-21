@@ -124,6 +124,7 @@ do
         git checkout $BRANCH
         git checkout master 
         git checkout -b temp_main || echo "main branch already exists"
+        git push origin temp_main 
         hub api repos/$REPOORG/$REPO -X PATCH -f name=$REPO -f default_branch=temp_main
 
         # Update any files in enforce
