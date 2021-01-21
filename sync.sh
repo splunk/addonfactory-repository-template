@@ -105,8 +105,6 @@ do
         echo "adding permission for teams"
         hub api orgs/$REPOORG/teams/products-gdi-addons/repos/$REPOORG/$REPO --raw-field 'permission=maintain' -X PUT
         hub api orgs/$REPOORG/teams/products-gdi-addons-adminrepo/repos/$REPOORG/$REPO --raw-field 'permission=admin' -X PUT
-        echo "changing the defailt branch"
-        hub api repos/$REPOORG/$REPO -X PATCH -f name=$REPO -f default_branch=main
         echo "done providing access and changing the default branch"
 
         if [ ! -d "$REPO" ]; then
@@ -120,7 +118,11 @@ do
         fi
         git config  user.email "addonfactory@splunk.com"
         git config  user.name "Addon Factory template"
-        
+
+        echo "changing the defailt branch"
+        git checkout -B temp_main master || echo "main branch already exists"
+        hub api repos/$REPOORG/$REPO -X PATCH -f name=$REPO -f default_branch=temp_main
+
         # Update any files in enforce
         #if [ "$BRANCH" != "master" ]; then 
         ( git checkout test/common-template-changes-for-unit-modinput  && git checkout develop && git branch -D test/common-template-changes-for-unit-modinput ) || true
@@ -129,6 +131,9 @@ do
         #fi
         rsync -avh --include ".*" --ignore-existing ../../seed/ .
         rsync -avh --include ".*" ../../enforce/ .
+
+
+
 
         #Cleanup of bad module
         # Remove the submodule entry from .git/config
