@@ -101,9 +101,13 @@ do
         echo Repository is existing
         
         hub api repos/$REPOORG/$REPO --raw-field 'visibility=${REPOVISIBILITY}' -X PATCH || true
+        
+        echo "adding permission for teams"
         hub api orgs/$REPOORG/teams/products-gdi-addons/repos/$REPOORG/$REPO --raw-field 'permission=maintain' -X PUT
         hub api orgs/$REPOORG/teams/products-gdi-addons-adminrepo/repos/$REPOORG/$REPO --raw-field 'permission=admin' -X PUT
-        hub api orgs/$REPOORG/$REPO -X PATCH --field default_branch=main
+        echo "changing the defailt branch"
+        hub api repos/$REPOORG/$REPO -X PATCH -f name=$REPO -f default_branch=main
+        echo "done providing access and changing the default branch"
 
         if [ ! -d "$REPO" ]; then
             #hub clone $REPOORG/$REPO work/$REPO
