@@ -121,7 +121,9 @@ do
 
         echo "changing the defailt branch"
         git fetch --all
-        git checkout -b temp_main master || echo "main branch already exists"
+        git checkout $BRANCH
+        git checkout master 
+        git checkout -b temp_main || echo "main branch already exists"
         hub api repos/$REPOORG/$REPO -X PATCH -f name=$REPO -f default_branch=temp_main
 
         # Update any files in enforce
