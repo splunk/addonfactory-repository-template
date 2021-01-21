@@ -120,6 +120,7 @@ do
         git config  user.name "Addon Factory template"
 
         echo "changing the defailt branch"
+        git fetch --all
         git checkout -b temp_main master || echo "main branch already exists"
         hub api repos/$REPOORG/$REPO -X PATCH -f name=$REPO -f default_branch=temp_main
 
