@@ -1,16 +1,2 @@
-splunk-add-on-for-tomcat,Splunk_TA_tomcat,internal,"Splunk Add-on for Tomcat",master
-splunk-add-on-for-f5-big-ip,Splunk_TA_f5-bigip,internal,"Splunk Add-on for F5 BIG-IP",master
-splunk-add-on-for-mcafee-web-gateway,Splunk_TA_mcafee-wg,internal,"Splunk Add-on for McAfee Web Gateway",master
-splunk-add-on-for-jboss,Splunk_TA_jboss,internal,"Splunk Add-on for JBoss",master
-splunk-add-on-for-bmc-remedy,Splunk_TA_remedy,internal,"Splunk Add-on for BMC Remedy",master
-splunk-add-on-for-box,Splunk_TA_box,internal,"Splunk Add-on for Box",master
-splunk-add-on-for-cyberark-epm,Splunk_TA_cyberark_epm,internal,Splunk Add-on for CyberArk EPM,master
-splunk-add-on-for-servicenow,Splunk_TA_snow,internal,"Splunk Add-on for ServiceNow",master
-splunk-add-on-for-citrix-netscaler,Splunk_TA_citrix-netscaler,internal,"Splunk Add-on for Citrix NetScaler",master
-splunk-add-on-for-google-cloud-platform,Splunk_TA_google-cloudplatform,internal,"Splunk Add-on for Google Cloud Platform",master
-splunk-add-on-for-salesforce,Splunk_TA_salesforce,internal,"Splunk Add-on for Salesforce",master
-splunk-add-on-for-microsoft-cloud-services,Splunk_TA_microsoft-cloudservices,internal,"Splunk Add-on for Microsoft Cloud Services",master
-splunk-add-on-for-microsoft-office-365,splunk_ta_o365,internal,"Splunk Add-on for Microsoft Office 365",master
-splunk-add-on-for-nginx,Splunk_TA_nginx,internal,"Splunk Add-on for Nginx",master
 splunk-add-on-for-ucc-example,Splunk_TA_UCCExample,public,"Splunk_TA_UCCExample",master
 splunk-add-on-for-cef,TA-cef-for-splunk,public,"TA CEF for Splunk",master
