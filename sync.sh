@@ -109,7 +109,6 @@ do
         echo "adding permission for teams"
         hub api orgs/$REPOORG/teams/products-gdi-addons/repos/$REPOORG/$REPO --raw-field 'permission=maintain' -X PUT
         hub api orgs/$REPOORG/teams/products-gdi-addons-adminrepo/repos/$REPOORG/$REPO --raw-field 'permission=admin' -X PUT
-        echo "done providing access and changing the default branch"
 
         if [ ! -d "$REPO" ]; then
             #hub clone $REPOORG/$REPO work/$REPO
