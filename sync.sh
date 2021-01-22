@@ -122,10 +122,10 @@ do
         echo "changing the default branch"
         git fetch --all
         git checkout $BRANCH
-        git checkout master 
-        git checkout -b temp_main || echo "main branch already exists"
-        git push origin temp_main 
-        hub api repos/$REPOORG/$REPO -X PATCH -f name=$REPO -f default_branch=temp_main
+        git checkout master || echo "master branch is deleted."
+        git checkout -b main || echo "main branch already exists."
+        git push origin main 
+        hub api repos/$REPOORG/$REPO -X PATCH -f name=$REPO -f default_branch=main
 
         # Update any files in enforce
         #if [ "$BRANCH" != "master" ]; then 
