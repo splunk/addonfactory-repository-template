@@ -1,4 +1,8 @@
 #!/bin/bash
+# echo all the commands 
+set -x 
+
+
 BRANCH=$(git rev-parse --abbrev-ref HEAD -- | head -n 1)
 INPUTFILE=repositories_$BRANCH.csv
 echo Working branch $BRANCH - $INPUTFILE
