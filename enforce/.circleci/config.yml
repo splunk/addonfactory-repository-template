@@ -33,9 +33,17 @@ orbs:
                 npx -p @semantic-release/exec -p semantic-release semantic-release --dry-run --plugins "@semantic-release/commit-analyzer,@semantic-release/exec" --analyzeCommits @semantic-release/commit-analyzer --verifyRelease @semantic-release/exec --verifyReleaseCmd 'echo ${nextRelease.version} > nextRelease.txt'
                 sed -i "s/-develop./develop/g" nextRelease.txt
                 VERSION=$(cat nextRelease.txt)
-                echo "$VERSION"
+                echo VERSION="$VERSION"
+                echo CIRCLE_TAG=$CIRCLE_TAG
                 source ~/.venv/bin/activate
-                ucc-gen --ta-version="$VERSION"
+                if [ -z "$CIRCLE_TAG" ]
+                then
+                  ucc-gen --ta-version="$VERSION"
+                else
+                  CIRCLE_TAG=${CIRCLE_TAG:1}
+                  echo CIRCLE_TAG=$CIRCLE_TAG
+                  ucc-gen --ta-version="$CIRCLE_TAG"
+                fi
           - run:
               name: Generating package
               command: |
@@ -492,9 +500,29 @@ jobs:
           at: /tmp/workspace
       - checkout
       - run:
+          name: "Apply Release Tag"
+          command: |
+            npx semantic-release --plugins "@semantic-release/github" --success @semantic-release/github
+
+  publish-gh:
+    docker:
+      - image: circleci/python:3.7
+    steps:
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - attach_workspace:
+          at: /tmp/workspace
+      - checkout
+      - go/install
+      - run:
           name: "Publish on GitHub"
           command: |
-            npx semantic-release
+            PATH=$PATH:/usr/local/go/bin
+            go get -v -u github.com/tcnksm/ghr            
+            [[ << pipeline.git.tag >> =~ ^v[0-9]*.[0-9]*.[0-9]*$ ]] || export ISPRE=-prerelease
+            $HOME/go/bin/ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${ISPRE} -delete "<< pipeline.git.tag >>" /tmp/workspace/build/package/splunkbase
+            $HOME/go/bin/ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${ISPRE} "<< pipeline.git.tag >>" /tmp/workspace/build/package/deployment
+
   publish-sbase:
     docker:
       - image: circleci/python:3.7
@@ -655,6 +683,16 @@ workflows:
     jobs:
       - splunk-app-package/package:
           name: package
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v\d*\.\d*\.\d*.*$/
+      - publish-gh:
+          context:
+            - gdi-github
+          requires:
+            - package
           filters:
             branches:
               ignore: /.*/

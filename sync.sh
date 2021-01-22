@@ -119,7 +119,7 @@ do
         git config  user.email "addonfactory@splunk.com"
         git config  user.name "Addon Factory template"
 
-        echo "changing the defailt branch"
+        echo "changing the default branch"
         git fetch --all
         git checkout $BRANCH
         git checkout master 
@@ -129,8 +129,8 @@ do
 
         # Update any files in enforce
         #if [ "$BRANCH" != "master" ]; then 
-        ( git checkout test/common-template-changes-for-unit-modinput  && git checkout develop && git branch -D test/common-template-changes-for-unit-modinput ) || true
-        git checkout -B "test/common-template-changes-for-unit-modinput" $BRANCH
+        ( git checkout test/common-template-rollout-changes  && git checkout develop && git branch -D test/common-template-rollout-changes ) || true
+        git checkout -B "test/common-template-rollout-changes" $BRANCH
         git submodule update --init --recursive
         #fi
         rsync -avh --include ".*" --ignore-existing ../../seed/ .
@@ -237,13 +237,13 @@ do
             rsync -avh --include ".*" ../../conditional/ .
         fi
         git add . || true
-        git commit -am "test: sync for policy" || true
+        git commit -am "test: common template rollout changes" || true
         # if [ "$BRANCH" != "master" ]; then
-        #     git push -f --set-upstream origin test/templateupdate
+        #     git push -f --set-upstream origin test/common-template-rollout-changes
         # else
         #     git push
         # fi
-        git push -f --set-upstream origin test/common-template-changes-for-unit-modinput
+        git push -f --set-upstream origin test/common-template-rollout-changes
         hub pull-request -b $BRANCH "Bump repository configuration from template" --no-edit
         hub api /repos/$REPOORG/$REPO  -H 'Accept: application/vnd.github.nebula-preview+json' -X PATCH -F visibility=$REPOVISIBILITY
 
