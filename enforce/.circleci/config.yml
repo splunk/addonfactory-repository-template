@@ -302,7 +302,7 @@ jobs:
 
             # Normal Inspecting
             [ -z $BROWSER ] || [ "$UI_TEST_HEADLESS" = "true" ] || docker-compose -f docker-compose-ci.yml logs sauceconnect
-
+            docker-compose -f docker-compose-ci.yml logs sc4s
             docker ps -a
                             
             # Run the tests
