@@ -374,6 +374,7 @@ jobs:
             export SPLUNK_VERSION=$(crudini --get deps/build/addonfactory_test_matrix_splunk/splunk_matrix.conf "<<parameters.splunk_version>>" VERSION)
             export SPLUNK_APP_ID=$(crudini --get package/default/app.conf id name)
             export SPLUNK_APP_PACKAGE=output/$(ls output/)
+            export SC4S_VERSION=latest
             export TEST_SET=tests/$TEST_TYPE
             export TEST_TYPE=$TEST_TYPE
             #export env credentials
