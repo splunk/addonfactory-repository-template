@@ -235,6 +235,8 @@ do
         fi
         if [[ -f "requirements.txt" ]]; then
             git rm requirements.txt || true
+        if [[ -f ".python-version" ]]; then
+            git rm .python-version || true
         fi
         if [[ -d "tests/ui" ]]; then
             rsync -avh --include ".*" ../../conditional/ .
