@@ -13,3 +13,5 @@ splunk-add-on-for-mcafee-nsp,Splunk_TA_mcafee_nsp,internal,"Splunk Add-on for Mc
 splunk-add-on-for-unix-and-linux,Splunk_TA_nix,internal,"Splunk Add-on for Unix and Linux",main
 splunk-add-on-for-microsoft-cloud-services,Splunk_TA_microsoft-cloudservices,internal,"Splunk Add-on for Microsoft Cloud Services",main
 splunk-add-on-for-salesforce,Splunk_TA_salesforce,internal,"Splunk Add-on for Salesforce",main
+splunk-add-on-for-microsoft-office-365,splunk_ta_o365,internal,"Splunk Add-on for Microsoft Office 365",main
+splunk-add-on-for-nginx,Splunk_TA_nginx,internal,"Splunk Add-on for Nginx",main
