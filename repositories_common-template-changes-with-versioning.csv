@@ -1,1 +1,2 @@
 splunk-add-on-for-tomcat,Splunk_TA_tomcat,internal,"Splunk Add-on for Tomcat",main
+splunk-add-on-for-servicenow,Splunk_TA_snow,internal,"Splunk Add-on for ServiceNow",main
