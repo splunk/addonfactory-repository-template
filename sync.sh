@@ -235,6 +235,7 @@ do
         fi
         if [[ -f "requirements.txt" ]]; then
             git rm requirements.txt || true
+        fi
         if [[ -f ".python-version" ]]; then
             git rm .python-version || true
         fi
