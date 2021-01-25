@@ -1,17 +1,1 @@
-splunk-add-on-for-ucc-example,Splunk_TA_UCCExample,public,"Splunk_TA_UCCExample",main
-splunk-add-on-for-cef,TA-cef-for-splunk,public,"TA CEF for Splunk",main
-splunk-add-on-for-servicenow,Splunk_TA_snow,internal,"Splunk Add-on for ServiceNow",main
-splunk-add-on-for-cyberark,Splunk_TA_cyberark,internal,"Splunk Add-on for CyberArk",main
-splunk-add-on-for-mcafee-web-gateway,Splunk_TA_mcafee-wg,internal,"Splunk Add-on for McAfee Web Gateway",main
-splunk-add-on-for-rsa-securid-cas,Splunk_TA_rsa_securid_cas,internal,"Splunk Add-on for RSA SecurID CAS",main
-splunk-add-on-for-bmc-remedy,Splunk_TA_remedy,internal,"Splunk Add-on for BMC Remedy",main
-splunk-add-on-for-citrix-netscaler,Splunk_TA_citrix-netscaler,internal,"Splunk Add-on for Citrix NetScaler",main
-splunk-add-on-for-tomcat,Splunk_TA_tomcat,internal,"Splunk Add-on for Tomcat",main
-splunk-add-on-for-jboss,Splunk_TA_jboss,internal,"Splunk Add-on for JBoss",main
-splunk-add-on-for-microsoft-system-center-operations-manager,Splunk_TA_microsoft-scom,internal,"Splunk Add-on for Microsoft SCOM",main
-splunk-add-on-for-mcafee-nsp,Splunk_TA_mcafee_nsp,internal,"Splunk Add-on for McAfee NSP",main
-splunk-add-on-for-unix-and-linux,Splunk_TA_nix,internal,"Splunk Add-on for Unix and Linux",main
-splunk-add-on-for-microsoft-cloud-services,Splunk_TA_microsoft-cloudservices,internal,"Splunk Add-on for Microsoft Cloud Services",main
-splunk-add-on-for-salesforce,Splunk_TA_salesforce,internal,"Splunk Add-on for Salesforce",main
-splunk-add-on-for-microsoft-office-365,splunk_ta_o365,internal,"Splunk Add-on for Microsoft Office 365",main
-splunk-add-on-for-nginx,Splunk_TA_nginx,internal,"Splunk Add-on for Nginx",main
+splunk-add-on-for-modinput-test,Splunk_TA_Modinput_Test,public,Splunk Add-on for Modinput Test,main
