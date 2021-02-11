@@ -297,8 +297,9 @@ jobs:
             docker cp project_splunk_1:${diag//[$'\t\r\n']} /tmp/diag
             # Check with btool
             docker-compose -f docker-compose-ci.yml exec splunk sudo /opt/splunk/bin/splunk cmd btool check
-            docker-compose -f docker-compose-ci.yml up -d splunk
+            docker-compose -f docker-compose-ci.yml up -d splunk uf
             until docker-compose -f docker-compose-ci.yml logs splunk | grep "Ansible playbook complete" ; do sleep 1; done
+            until docker-compose -f docker-compose-ci.yml logs uf | grep "Ansible playbook complete" ; do sleep 1; done
 
             # Normal Inspecting
             [ -z $BROWSER ] || [ "$UI_TEST_HEADLESS" = "true" ] || docker-compose -f docker-compose-ci.yml logs sauceconnect
