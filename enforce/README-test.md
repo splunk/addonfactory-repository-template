@@ -52,7 +52,7 @@ export UI_TEST_HEADLESS="true"
 docker-compose -f docker-compose.yml build
 
 # Execute only if TEST_TYPE is ui
-[ -z $BROWSER ] || [ "$UI_TEST_HEADLESS" = "true" ] || docker-compose -f docker-compose-ci.yml up -d sauceconnect
+[ -z $BROWSER ] || [ "$UI_TEST_HEADLESS" = "true" ] || docker-compose -f docker-compose.yml up -d sauceconnect
 
 docker-compose -f docker-compose.yml up -d splunk
 until docker-compose -f docker-compose.yml logs splunk | grep "Ansible playbook complete" ; do sleep 1; done
