@@ -1,0 +1,40 @@
+# Gateway file which describes the Istio Loadbalancer and the port it exposes.
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: virtual-gateway-$ADDON_NAME
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - "*$ADDON_NAME.splgdi.com"
+    port:
+      number: 8000
+      name: http-splunk-web
+      protocol: HTTP
+
+  - hosts:
+    - "*$ADDON_NAME.splgdi.com"
+    port:
+      number: 8089
+      name: https-splunk-mgmt
+      protocol: HTTPS
+    tls:
+      mode: PASSTHROUGH
+
+  - hosts:
+    - "*$ADDON_NAME.splgdi.com"
+    port:
+      number: 8088
+      name: https-splunk-hec
+      protocol: HTTPS
+    tls:
+      mode: PASSTHROUGH
+
+  - hosts:
+    - "*$ADDON_NAME.splgdi.com"
+    port:
+      number: 9997
+      name: tcp-splunk-s2s
+      protocol: TCP
