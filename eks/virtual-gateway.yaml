@@ -3,6 +3,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
   name: virtual-gateway-$ADDON_NAME
+  namespace: $REPO
 spec:
   selector:
     istio: ingressgateway
