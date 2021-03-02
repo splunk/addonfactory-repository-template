@@ -1,6 +1,14 @@
 ### COMMON SCRIPT TO CREATE NAMESPACE AND SERVICE ACCOUNT FOR ADDON
 
 # AWS_ACCESS_KEY_ID AND AWS_SECRET_ACCESS_KEY SHOULD BE IN ENVIRONMENT VARIABLES
+# INSTALL AWS-CLI
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+
+# INSTALL KUBECTL
+curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+chmod +x ./kubectl && sudo mv ./kubectl /usr/local/bin/kubectl
 
 # CLUSTER VARIABLES
 export CLUSTER_NAME="addonfactory-automation-cluster"
@@ -19,28 +27,28 @@ export ROLE_BINDING_NAME="$ADDON_NAME-binding"
 export ROLE_NAME_ISTIO="istio-service-read-role"
 
 # CREATE NAMESPACE
-envsubst < namespace.yaml | kubectl apply -f -
+envsubst < eks/namespace.yaml | kubectl apply -f -
 
 # ENABLE PROXY INJECTION FOR NAMESPACE
 kubectl label namespace $REPO istio-injection=enabled
 
 # CREATE ROLE FOR NAMESPACE
-envsubst < role.yaml | kubectl apply -f -
+envsubst < eks/role.yaml | kubectl apply -f -
 
 # CREATE SERVICE ACCOUNT
-envsubst < service-account.yaml | kubectl apply -f -
+envsubst < eks/service-account.yaml | kubectl apply -f -
 
 # CREATE ROLE BINDING
-envsubst < role-binding.yaml | kubectl apply -f -
+envsubst < eks/role-binding.yaml | kubectl apply -f -
 
 # CREATE/UPDATE READ SERIVCE ROLE FOR istio-system NAMESPACE
-envsubst < role-istio.yaml | kubectl apply -f - 
+envsubst < eks/role-istio.yaml | kubectl apply -f - 
 
 # CREATE ROLE BINDING TO FOR istio-system NAMESPACE
-envsubst < role-binding-istio.yaml | kubectl apply -f -
+envsubst < eks/role-binding-istio.yaml | kubectl apply -f -
 
 # CREATE GATEWAY FOR NAMEPSPACE
-envsubst < virtual-gateway.yaml | kubectl apply -f -
+envsubst < eks/virtual-gateway.yaml | kubectl apply -f -
 
 # GET SERVICE ACCOUNT TOKEN
 export SA_TOKEN=$(kubectl get secret $(kubectl get sa $SERVICE_ACCOUNT -n $REPO -o jsonpath='{.secrets[0].name}') -o jsonpath='{.data.token}' -n $REPO | base64 -d) 
