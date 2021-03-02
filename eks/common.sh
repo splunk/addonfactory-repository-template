@@ -54,10 +54,10 @@ envsubst < eks/virtual-gateway.yaml | kubectl apply -f -
 export SA_TOKEN=$(kubectl get secret $(kubectl get sa $SERVICE_ACCOUNT -n $REPO -o jsonpath='{.secrets[0].name}') -o jsonpath='{.data.token}' -n $REPO | base64 -d) 
 
 # SET CLUSTER_ENDPOINT, CLUSTER_CERTIFICATE, SA_TOKEN IN ENVIRONMENT OF ADDON
+echo "Setting Creds"
 curl -X POST --header "Content-Type: application/json" -d "{\"name\":\"CLUSTER_ENDPOINT\", \"value\":\"${CLUSTER_ENDPOINT}\"}" https://circleci.com/api/v1.1/project/github/$REPOORG/$REPO/envvar?circle-token=${CIRCLECI_TOKEN}
 curl -X POST --header "Content-Type: application/json" -d "{\"name\":\"CLUSTER_CERTIFICATE\", \"value\":\"${CLUSTER_CERTIFICATE}\"}" https://circleci.com/api/v1.1/project/github/$REPOORG/$REPO/envvar?circle-token=${CIRCLECI_TOKEN}
 curl -X POST --header "Content-Type: application/json" -d "{\"name\":\"SA_TOKEN\", \"value\":\"${SA_TOKEN}\"}" https://circleci.com/api/v1.1/project/github/$REPOORG/$REPO/envvar?circle-token=${CIRCLECI_TOKEN}
-
 
 # SET AWS CREDS FOR ROUTE53 ACCESS(THIS ACCOUNT HAS ONLY ACCESS TO ROUTE53)
 # curl -X POST --header "Content-Type: application/json" -d "{\"name\":\"AWS_ACCESS_KEY_ID\", \"value\":\"${AWS_ACCESS_KEY_ID}\"}" https://circleci.com/api/v1.1/project/github/$REPOORG/$REPO/envvar?circle-token=${CIRCLECI_TOKEN}

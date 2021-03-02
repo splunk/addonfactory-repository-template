@@ -46,6 +46,7 @@ do
     curl -X PUT  "$RP_ENDPOINT/api/v1/project/${REPO}/assign" -H "accept: */*" -H "Content-Type: application/json" -H "Authorization: bearer $RP_UUID" -d "{ \"userNames\": { \"circleci\": \"PROJECT_MANAGER\" }}"  || true
     curl -X PUT  "$RP_ENDPOINT/api/v1/project/${REPO}/assign" -H "accept: */*" -H "Content-Type: application/json" -H "Authorization: bearer $RP_UUID" -d "{ \"userNames\": { \"default\": \"PROJECT_MANAGER\" }}"  || true
     export REPO=$REPO
+    export REPOORG=$REPOORG
     sh eks/common.sh
     #Conditional work
     if ! gh repo view $REPOORG/${REPO} >/dev/null
