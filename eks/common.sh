@@ -54,13 +54,6 @@ envsubst < eks/virtual-gateway.yaml | kubectl apply -f -
 export SA_TOKEN=$(kubectl get secret $(kubectl get sa $SERVICE_ACCOUNT -n $REPO -o jsonpath='{.secrets[0].name}') -o jsonpath='{.data.token}' -n $REPO | base64 -d) 
 
 # SET CLUSTER_ENDPOINT, CLUSTER_CERTIFICATE, SA_TOKEN IN ENVIRONMENT OF ADDON
-echo "Setting Creds"
-echo ${CLUSTER_ENDPOINT}
-echo ${CLUSTER_CERTIFICATE}
-
-echo "------------------------------------------------"
-echo "{\"name\":\"CLUSTER_ENDPOINT\", \"value\":\"${CLUSTER_ENDPOINT}\"}"
-echo "{\"name\":\"SA_TOKEN\", \"value\":\"${SA_TOKEN}\"}"
 
 curl -X POST --header "Content-Type: application/json" -d "{\"name\":\"CLUSTER_ENDPOINT\", \"value\":\"${CLUSTER_ENDPOINT}\"}" https://circleci.com/api/v1.1/project/github/$REPOORG/$REPO/envvar?circle-token=${CIRCLECI_TOKEN}
 curl -X POST --header "Content-Type: application/json" -d "{\"name\":\"CLUSTER_CERTIFICATE\", \"value\":\"${CLUSTER_CERTIFICATE}\"}" https://circleci.com/api/v1.1/project/github/$REPOORG/$REPO/envvar?circle-token=${CIRCLECI_TOKEN}

@@ -1,1 +1,2 @@
 splunk-add-on-for-ucc-example,Splunk_TA_UCCExample,public,"Splunk_TA_UCCExample",main
+splunk-add-on-for-nginx,Splunk_TA_nginx,internal,"Splunk Add-on for Nginx",main
