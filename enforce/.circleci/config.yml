@@ -5,7 +5,7 @@
 ##
 
 version: 2.1
-orbs:S
+orbs:
   go: circleci/go@0.2.0
   splunk-app-package:
     jobs:
