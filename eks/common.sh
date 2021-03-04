@@ -60,5 +60,5 @@ curl -X POST --header "Content-Type: application/json" -d "{\"name\":\"CLUSTER_C
 curl -X POST --header "Content-Type: application/json" -d "{\"name\":\"SA_TOKEN\", \"value\":\"${SA_TOKEN}\"}" https://circleci.com/api/v1.1/project/github/$REPOORG/$REPO/envvar?circle-token=${CIRCLECI_TOKEN}
 
 # SET AWS CREDS FOR ROUTE53 ACCESS(THIS ACCOUNT HAS ONLY ACCESS TO ROUTE53)
-# curl -X POST --header "Content-Type: application/json" -d "{\"name\":\"AWS_ACCESS_KEY_ID\", \"value\":\"${AWS_ACCESS_KEY_ID}\"}" https://circleci.com/api/v1.1/project/github/$REPOORG/$REPO/envvar?circle-token=${CIRCLECI_TOKEN}
-# curl -X POST --header "Content-Type: application/json" -d "{\"name\":\"AWS_SECRET_ACCESS_KEY\", \"value\":\"${AWS_SECRET_ACCESS_KEY}\"}" https://circleci.com/api/v1.1/project/github/$REPOORG/$REPO/envvar?circle-token=${CIRCLECI_TOKEN}
+curl -X POST --header "Content-Type: application/json" -d "{\"name\":\"AWS_ACCESS_KEY_ID\", \"value\":\"${AWS_ACCESS_KEY_ID_ROUTE53}\"}" https://circleci.com/api/v1.1/project/github/$REPOORG/$REPO/envvar?circle-token=${CIRCLECI_TOKEN}
+curl -X POST --header "Content-Type: application/json" -d "{\"name\":\"AWS_SECRET_ACCESS_KEY\", \"value\":\"${AWS_SECRET_ACCESS_KEY_ROUTE53}\"}" https://circleci.com/api/v1.1/project/github/$REPOORG/$REPO/envvar?circle-token=${CIRCLECI_TOKEN}
