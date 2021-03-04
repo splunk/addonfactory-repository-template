@@ -23,7 +23,6 @@ tests/
 .semgrep
 
 ## Additional files to be ignored
-
 .circleci/
 .github/
 .reuse/
