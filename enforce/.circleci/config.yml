@@ -517,8 +517,8 @@ jobs:
             echo "View Result at Semgrep Dashboard: $DASHBOARD_URL"
             
             # Semgrep Exclude files
-            dos2unix .semgrepignore
             SEMGREP_EXCLUDE=$(sed "/^#/d" .semgrepignore | sed "/^:/d" | sed -r '/^\s*$/d' | sed ':a;N;$!ba;s/\n/ --exclude /g')
+            
             # Generate xml file
             semgrep --config="p/r2c-ci" --config="p/r2c-security-audit" --config="p/bandit" --error --strict --timeout=0 --junit-xml -o /root/project/test-results/semgrep-scan.xml --exclude $SEMGREP_EXCLUDE
      
@@ -609,6 +609,9 @@ workflows:
       - semgrep:
           context:
             - gdi-semgrep      
+          filters:
+            branches:
+              only: /.*/
       - reuse:
           filters:
             branches:
