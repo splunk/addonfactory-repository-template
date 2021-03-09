@@ -69,3 +69,4 @@ splunk-add-on-for-checkpoint-log-exporter,Splunk_TA_checkpoint_log_exporter,inte
 dropbox-app-for-splunk,splunk-app-dropbox,internal,"Dropbox Business App for Splunk",main
 dropbox-add-on-for-splunk,TA_Dropbox,internal,"Dropbox Business Add-on for Splunk",main
 splunk-add-on-for-sc4snmp,Splunk_TA_sc4snmp,public,"Splunk Add-on for Splunk Connect for SNNP",main
+splunk-add-on-for-cisco-meraki,Splunk_TA_cisco-meraki,internal,"Splunk Add-on for Cisco Meraki",main
