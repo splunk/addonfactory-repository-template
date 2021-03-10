@@ -12,12 +12,13 @@ chmod +x ./kubectl && sudo mv ./kubectl /usr/local/bin/kubectl
 
 # CLUSTER VARIABLES
 export CLUSTER_NAME="addonfactory-automation-cluster"
-export CLUSTER_ENDPOINT=$(aws eks describe-cluster --name $CLUSTER_NAME --region us-east-1 | jq -r ".cluster.endpoint")
-export CLUSTER_CERTIFICATE=$(aws eks describe-cluster --name $CLUSTER_NAME --region us-east-1 | jq -r ".cluster.certificateAuthority.data")
+export CLUSTER_REGION="us-east-1"
+export CLUSTER_ENDPOINT=$(aws eks describe-cluster --name $CLUSTER_NAME --region $CLUSTER_REGION | jq -r ".cluster.endpoint")
+export CLUSTER_CERTIFICATE=$(aws eks describe-cluster --name $CLUSTER_NAME --region $CLUSTER_REGION | jq -r ".cluster.certificateAuthority.data")
 
 # UPDATE KUBE CONFIG
 rm -rf ~/.kube
-aws eks update-kubeconfig --name $CLUSTER_NAME --region us-east-1
+aws eks update-kubeconfig --name $CLUSTER_NAME --region $CLUSTER_REGION
 
 # EXPORT ADDON SPECIFIC VARIABLES
 export ADDON_NAME=$(echo $REPO | sed -r 's/splunk-add-on-for-//g')
