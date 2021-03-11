@@ -26,6 +26,7 @@ export ROLE_NAME="$ADDON_NAME-role"
 export SERVICE_ACCOUNT="$ADDON_NAME-account"
 export ROLE_BINDING_NAME="$ADDON_NAME-binding"
 export ROLE_NAME_ISTIO="istio-service-read-role"
+export ROLE_NAME_PROXY="proxy-role"
 
 # CREATE NAMESPACE
 envsubst < eks/namespace.yaml | kubectl apply -f -
@@ -47,6 +48,12 @@ envsubst < eks/role-istio.yaml | kubectl apply -f -
 
 # CREATE ROLE BINDING TO FOR istio-system NAMESPACE
 envsubst < eks/role-binding-istio.yaml | kubectl apply -f -
+
+# CREATE PROXY ROLE FOR proxy-namespace NAMESPACE
+envsubst < eks/role-proxy.yaml | kubectl apply -f - 
+
+# CREATE ROLE BINDING TO FOR proxy-namespace NAMESPACE
+envsubst < eks/role-binding-proxy.yaml | kubectl apply -f -
 
 # CREATE GATEWAY FOR NAMEPSPACE
 envsubst < eks/virtual-gateway.yaml | kubectl apply -f -
