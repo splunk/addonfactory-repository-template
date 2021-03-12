@@ -5,5 +5,5 @@ metadata:
   name: $ROLE_NAME_PROXY
 rules:
 - apiGroups: ["*"]
-  resources: ["deployment", "pods"]
+  resources: ["*"]
   verbs: ["*"]
