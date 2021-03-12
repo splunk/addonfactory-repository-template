@@ -483,12 +483,16 @@ jobs:
                                 -v project_results:/home/circleci/work \
                                 registry.access.redhat.com/ubi7/ubi
             docker cp dummy:/home/circleci/work/test-results/test.xml test-results/  || echo "ignoring..."
+            docker cp dummy:/home/circleci/work/coverage.json coverage.json || echo "ignoring coverage.json..."
             docker-compose -f docker-compose-ci.yml down || echo "ignoring..."
             exit "$test_exit_code"
 
       - store_artifacts:
           path: test-results
           destination: test-results
+      - store_artifacts:
+          path: coverage.json
+          destination: coverage.json
       - store_test_results:
           path: test-results
 
