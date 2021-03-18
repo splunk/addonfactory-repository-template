@@ -89,7 +89,7 @@ pip3 install -r requirements_dev.txt
 
 3. Set Variables (only if Addon supports sc4s)
 
-**Note:** Stop the existing splunk if it is running. New splunk will up after executing following steps with `Changed@11` splunk password.
+**Note:** Stop the existing splunk if it is running. New splunk will up after executing following steps with `Chang3d!` splunk password.
 ```bash
 export SPLUNK_VERSION=<splunk_version> [i.e. latest, 8.1.0]
 export SPLUNK_APP_ID=<Addon_id> [i.e. Splunk_TA_addon-name]
