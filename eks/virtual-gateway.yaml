@@ -18,29 +18,16 @@ spec:
   - hosts:
     - "*$ADDON_NAME.splgdi.com"
     port:
-      number: 9000
-      name: https-splunk-web
-      protocol: HTTPS
-    tls:
-      mode: PASSTHROUGH
-
-  - hosts:
-    - "*$ADDON_NAME.splgdi.com"
-    port:
       number: 8089
       name: https-splunk-mgmt
-      protocol: HTTPS
-    tls:
-      mode: PASSTHROUGH
+      protocol: HTTP
 
   - hosts:
     - "*$ADDON_NAME.splgdi.com"
     port:
       number: 8088
       name: https-splunk-hec
-      protocol: HTTPS
-    tls:
-      mode: PASSTHROUGH
+      protocol: HTTP
 
   - hosts:
     - "*$ADDON_NAME.splgdi.com"
