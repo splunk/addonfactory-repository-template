@@ -497,14 +497,14 @@ jobs:
         SEMGREP_REPO_URL: << pipeline.project.git_url >>
         SEMGREP_BRANCH: << pipeline.git.branch >>
     docker:
-      - image: returntocorp/semgrep-agent:v1
+      - image: returntocorp/semgrep-agent:release-0.41.1
         user: root
     steps:
       - checkout
       - run:
           name: "Install Dependencies"
           command: |
-            pip3 install --upgrade semgrep
+            pip3 install semgrep==0.41.1
       - run:
           name: "Semgrep Scan"
           no_output_timeout: 1h
