@@ -1,14 +1,14 @@
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: $ADDON_NAME-istio-svc-read
-  namespace: istio-system
+  name: $PROXY_ROLE_BINDING
+  namespace: $PROXY_NAMESPACE
 subjects:
 - kind: ServiceAccount
-  name: $ADDON_NAME-account
+  name: $SERVICE_ACCOUNT
   namespace: $REPO
   apiGroup: ""
 roleRef:
   kind: Role
-  name: $ROLE_NAME_ISTIO
+  name: $PROXY_ROLE
   apiGroup: ""

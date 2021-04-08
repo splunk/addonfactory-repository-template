@@ -1,8 +1,8 @@
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: proxy-namespace
-  name: $ROLE_NAME_PROXY
+  namespace: $REPO
+  name: $ADDON_ROLE
 rules:
 - apiGroups: ["*"]
   resources: ["*"]

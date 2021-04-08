@@ -1,7 +1,7 @@
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: $ROLE_BINDING_NAME
+  name: $ADDON_ROLE_BINDING
   namespace: $REPO
 subjects:
 - kind: ServiceAccount
@@ -9,5 +9,5 @@ subjects:
   apiGroup: ""
 roleRef:
   kind: Role
-  name: $ROLE_NAME
+  name: $ADDON_ROLE
   apiGroup: ""

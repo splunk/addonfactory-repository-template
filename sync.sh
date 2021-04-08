@@ -2,7 +2,6 @@
 # echo all the commands 
 set -x 
 
-
 BRANCH=$(git rev-parse --abbrev-ref HEAD -- | head -n 1)
 INPUTFILE=repositories_$BRANCH.csv
 echo Working branch $BRANCH - $INPUTFILE
@@ -36,6 +35,16 @@ command -v crudini >/dev/null 2>&1 || { echo >&2 "I require crudini but it's not
 command -v jq >/dev/null 2>&1 || { echo >&2 "I require jq but it's not installed.  Aborting."; exit 1; }
 command -v rsync >/dev/null 2>&1 || { echo >&2 "I require rsync but it's not installed.  Aborting."; exit 1; }
 
+# EKS Cluster
+export CLUSTER_NAME="addonfactory-automation-cluster"
+export CLUSTER_REGION="us-east-1"
+export CLUSTER_ENDPOINT=$(aws eks describe-cluster --name $CLUSTER_NAME --region $CLUSTER_REGION | jq -r ".cluster.endpoint")
+export CLUSTER_CERTIFICATE=$(aws eks describe-cluster --name $CLUSTER_NAME --region $CLUSTER_REGION | jq -r ".cluster.certificateAuthority.data")
+
+# Update kube config for eks cluster
+rm -rf ~/.kube
+aws eks update-kubeconfig --name $CLUSTER_NAME --region $CLUSTER_REGION
+
 while IFS=, read -r REPO TAID REPOVISIBILITY TITLE BRANCH OTHER
 do
     echo "Working on:$REPO|$TAID|$REPOVISIBILITY|$TITLE|$BRANCH|$OTHER"
@@ -47,6 +56,7 @@ do
     curl -X PUT  "$RP_ENDPOINT/api/v1/project/${REPO}/assign" -H "accept: */*" -H "Content-Type: application/json" -H "Authorization: bearer $RP_UUID" -d "{ \"userNames\": { \"default\": \"PROJECT_MANAGER\" }}"  || true
     export REPO=$REPO
     export REPOORG=$REPOORG
+
     sh eks/common.sh
     #Conditional work
     if ! gh repo view $REPOORG/${REPO} >/dev/null
