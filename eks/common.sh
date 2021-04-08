@@ -30,7 +30,7 @@ envsubst < eks/addon-rolebinding.yaml | kubectl apply -f -
 envsubst < eks/istio-role.yaml | kubectl apply -f - 
 
 # Create role binding between istio service real role and service account
-envsubst < eks/istio-rolebinding-.yaml | kubectl apply -f -
+envsubst < eks/istio-rolebinding.yaml | kubectl apply -f -
 
 # Create namespace for porxy servers
 envsubst < eks/proxy-namespace.yaml | kubectl apply -f -
