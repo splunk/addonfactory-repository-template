@@ -10,5 +10,5 @@ subjects:
   apiGroup: ""
 roleRef:
   kind: Role
-  name: $ROLE_NAME_ISTIO
+  name: $ISTIO_ROLE
   apiGroup: ""
