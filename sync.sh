@@ -37,7 +37,7 @@ command -v rsync >/dev/null 2>&1 || { echo >&2 "I require rsync but it's not ins
 
 # EKS Cluster
 export CLUSTER_NAME="addonfactory-automation-cluster"
-export CLUSTER_REGION="us-east-1"
+export CLUSTER_REGION="us-east-2"
 export CLUSTER_ENDPOINT=$(aws eks describe-cluster --name $CLUSTER_NAME --region $CLUSTER_REGION | jq -r ".cluster.endpoint")
 export CLUSTER_CERTIFICATE=$(aws eks describe-cluster --name $CLUSTER_NAME --region $CLUSTER_REGION | jq -r ".cluster.certificateAuthority.data")
 
