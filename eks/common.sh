@@ -11,7 +11,7 @@ curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s htt
 chmod +x ./kubectl && sudo mv ./kubectl /usr/local/bin/kubectl
 
 # CLUSTER VARIABLES
-export CLUSTER_NAME="terraform-eks-splunk"
+export CLUSTER_NAME="terraform-splunk"
 export CLUSTER_REGION="us-west-2"
 export CLUSTER_ENDPOINT=$(aws eks describe-cluster --name $CLUSTER_NAME --region $CLUSTER_REGION | jq -r ".cluster.endpoint")
 export CLUSTER_CERTIFICATE=$(aws eks describe-cluster --name $CLUSTER_NAME --region $CLUSTER_REGION | jq -r ".cluster.certificateAuthority.data")
