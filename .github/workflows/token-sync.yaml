@@ -1,0 +1,25 @@
+##
+## SPDX-FileCopyrightText: 2020 Splunk, Inc. <sales@splunk.com>
+## SPDX-License-Identifier: LicenseRef-Splunk-1-2020
+##
+##
+name: Github Actions Token Sync
+
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Sync Secrets
+      uses: google/secrets-sync-action@v1.4.1
+      with:
+        SECRETS: |
+          SNYK_TOKEN
+        REPOSITORIES: |
+          splunk/splunk-add-on-for-*
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN_ADMIN }}
+        CONCURRENCY: 10
+        REPOSITORIES_LIST_REGEX: true
+      env:
+        SNYK_TOKEN: ${{secrets.SNYK_TOKEN}}
