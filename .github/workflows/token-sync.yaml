@@ -1,0 +1,32 @@
+##
+## SPDX-FileCopyrightText: 2021 Splunk, Inc. <sales@splunk.com>
+## SPDX-License-Identifier: LicenseRef-Splunk-1-2020
+##
+##
+name: Github Actions Token Sync
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Sync Secrets
+      uses: google/secrets-sync-action@v1.4.1
+      with:
+        SECRETS: |
+          SNYK_TOKEN
+          GH_USER_ADMIN
+          GH_TOKEN_ADMIN
+        REPOSITORIES: |
+          splunk/splunk-add-on-for-*
+          splunk/dropbox-add-on-for-splunk
+          splunk/dropbox-app-for-splunk
+          splunk/seckit_sa_geolocation
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN_ADMIN }}
+        CONCURRENCY: 10
+        REPOSITORIES_LIST_REGEX: true
+      env:
+        SNYK_TOKEN: ${{secrets.SNYK_TOKEN}}

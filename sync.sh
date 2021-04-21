@@ -23,9 +23,9 @@ else
 fi
 if [[  $CIRCLECI_TOKEN && ${CIRCLECI_TOKEN-x} ]]
 then
-    echo "GITHUB_USER Found"
+    echo "CIRCLECI_TOKEN Found"
 else
-    echo "GITHUB_USER Not found"
+    echo "CIRCLECI_TOKEN Not found"
     exit 1
 fi
 
@@ -72,9 +72,9 @@ do
         git init
         git config  user.email "addonfactory@splunk.com"
         git config  user.name "Addon Factory template"
-        git submodule add git@github.com:$REPOORG/addonfactory_test_matrix_splunk.git deps/build/addonfactory_test_matrix_splunk
-        git submodule add git@github.com:$REPOORG/addonfactory-splunk_sa_cim.git deps/apps/Splunk_SA_CIM
-        git submodule add git@github.com:$REPOORG/addonfactory-splunk_env_indexer.git deps/apps/splunk_env_indexer
+        git submodule add https://github.com/$REPOORG/addonfactory_test_matrix_splunk.git deps/build/addonfactory_test_matrix_splunk
+        git submodule add https://github.com/$REPOORG/addonfactory-splunk_sa_cim.git deps/apps/Splunk_SA_CIM
+        git submodule add https://github.com/$REPOORG/addonfactory-splunk_env_indexer.git deps/apps/splunk_env_indexer
 
         git add .
         git commit -am "base"
@@ -88,6 +88,8 @@ do
         hub api orgs/$REPOORG/$REPO -X PATCH --field default_branch=main
         hub api /repos/$REPOORG/$REPO --raw-field 'visibility=${REPOVISIBILITY}' -X PATCH
         hub api /repos/$REPOORG/$REPO  -H 'Accept: application/vnd.github.nebula-preview+json' -X PATCH -F visibility=$REPOVISIBILITY
+        echo "Adding branch protection"
+        hub api -X PATCH -H "Accept: application/vnd.github.v3+json" /repos/$REPOORG/$REPO/branches/main/protection --raw-field '{"dismissal_restrictions": {},"dismiss_stale_reviews": false,"require_code_owner_reviews": true,"required_approving_review_count": 1}'
 
         curl -X POST https://circleci.com/api/v1.1/project/github/$REPOORG/$REPO/follow?circle-token=${CIRCLECI_TOKEN}
         curl -X POST --header "Content-Type: application/json" -d '{"type":"github-user-key"}' https://circleci.com/api/v1.1/project/github/$REPOORG/$REPO/checkout-key?circle-token=${CIRCLECI_TOKEN}
@@ -109,6 +111,8 @@ do
         echo "adding permission for teams"
         hub api orgs/$REPOORG/teams/products-gdi-addons/repos/$REPOORG/$REPO --raw-field 'permission=maintain' -X PUT
         hub api orgs/$REPOORG/teams/products-gdi-addons-adminrepo/repos/$REPOORG/$REPO --raw-field 'permission=admin' -X PUT
+        echo "Adding branch protection"
+        hub api -X PATCH -H "Accept: application/vnd.github.v3+json" /repos/$REPOORG/$REPO/branches/main/protection --raw-field '{"dismissal_restrictions": {},"dismiss_stale_reviews": false,"require_code_owner_reviews": true,"required_approving_review_count": 1}'
 
         if [ ! -d "$REPO" ]; then
             #hub clone $REPOORG/$REPO work/$REPO
@@ -124,6 +128,8 @@ do
 
         ( git checkout test/common-template-rollout-changes  && git checkout develop && git branch -D test/common-template-rollout-changes ) || true
         git checkout -B "test/common-template-rollout-changes" $BRANCH
+        # Create a temp file so that the submodules are updated via HTTPS instead of SSH
+        git config --global url.https://github.com/.insteadOf git@github.com:
         git submodule update --init --recursive
         #fi
         rsync -avh --include ".*" --ignore-existing ../../seed/ .
