@@ -18,6 +18,8 @@ jobs:
       with:
         SECRETS: |
           SNYK_TOKEN
+          GH_USER_ADMIN
+          GH_TOKEN_ADMIN
         REPOSITORIES: |
           splunk/splunk-add-on-for-*
           splunk/dropbox-add-on-for-splunk
