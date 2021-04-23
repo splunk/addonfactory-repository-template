@@ -88,11 +88,15 @@ do
         hub api orgs/$REPOORG/$REPO -X PATCH --field default_branch=main
         hub api /repos/$REPOORG/$REPO --raw-field 'visibility=${REPOVISIBILITY}' -X PATCH
         hub api /repos/$REPOORG/$REPO  -H 'Accept: application/vnd.github.nebula-preview+json' -X PATCH -F visibility=$REPOVISIBILITY
+        # Using hub API to set Github Actions Secret 
+        hub api /repos/$REPOORG/$REPO/actions/secrets/SNYK_TOKEN -H "Accept: application/vnd.github.v3+json" -d '{${{ secrets.SNYK_TOKEN }}:${{ secrets.SNYK_TOKEN }}}' -X PUT
 
         curl -X POST https://circleci.com/api/v1.1/project/github/$REPOORG/$REPO/follow?circle-token=${CIRCLECI_TOKEN}
         curl -X POST --header "Content-Type: application/json" -d '{"type":"github-user-key"}' https://circleci.com/api/v1.1/project/github/$REPOORG/$REPO/checkout-key?circle-token=${CIRCLECI_TOKEN}
         curl -X POST --header "Content-Type: application/json" -d "{\"name\":\"GH_USER\", \"value\":\"${GITHUB_USER}\"}" https://circleci.com/api/v1.1/project/github/$REPOORG/$REPO/envvar?circle-token=${CIRCLECI_TOKEN}
         curl -X POST --header "Content-Type: application/json" -d "{\"name\":\"GITHUB_TOKEN\", \"value\":\"${GITHUB_TOKEN}\"}" https://circleci.com/api/v1.1/project/github/$REPOORG/$REPO/envvar?circle-token=${CIRCLECI_TOKEN}
+        # Using Curl to set Github Actions Secret 
+        curl -X PUT  -H "Accept: application/vnd.github.v3+json" -d '{${{ secrets.SNYK_TOKEN }}:${{ secrets.SNYK_TOKEN }}}' https://api.github.com/repos/$REPOORG/$REPO/actions/secrets/SNYK_TOKEN
 
         git remote set-url origin https://$GITHUB_USER:$GITHUB_TOKEN@github.com/$REPOORG/$REPO.git
         git push --set-upstream origin main
