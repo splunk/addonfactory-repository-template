@@ -2,3 +2,4 @@ splunk-add-on-for-nginx,Splunk_TA_nginx,internal,"Splunk Add-on for Nginx",main
 splunk-add-on-for-cyberark,Splunk_TA_cyberark,internal,"Splunk Add-on for CyberArk",main
 splunk-add-on-for-salesforce,Splunk_TA_salesforce,internal,"Splunk Add-on for Salesforce",main
 splunk-add-on-for-servicenow,Splunk_TA_snow,internal,"Splunk Add-on for ServiceNow",main
+splunk-add-on-for-zeek-aka-bro,Splunk_TA_bro,internal,"Splunk Add-on for Zeek aka Bro",main
