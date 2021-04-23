@@ -2,7 +2,7 @@ name: Snyk Scan
 
 on:
   pull_request:
-    branches: [develop, main]
+    branches: [develop, main, test/snyk-POC]
     types: [closed]
 
 jobs:
