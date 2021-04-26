@@ -7,7 +7,7 @@ BRANCH=$(git rev-parse --abbrev-ref HEAD -- | head -n 1)
 INPUTFILE=repositories_$BRANCH.csv
 echo Working branch $BRANCH - $INPUTFILE
 REPOORG=splunk
-if [[  $GITHUB_USER && ${GITHUB_USER-x} ]]
+if [[  ${{GITHUB_USER}} && ${GITHUB_USER-x} ]]
 then
     echo "GITHUB_USER Found"
 else
