@@ -19,9 +19,9 @@ jobs:
           echo ${{secrets.SNYK_TOKEN}}
       - name: Adding Github secrets in UCC-Example addon
         run: |
-          while IFS=, read -r col1
+          while IFS=, read -r col1 col2 col3 col4 col5
           do
-              echo "I got:$col1"
+              echo "I got: $col1"
           done < repositories_snyk-token-update.csv
           # while [ $repo_name != null ]; do
           #   curl \
