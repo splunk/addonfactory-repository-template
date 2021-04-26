@@ -89,10 +89,11 @@ do
         hub api /repos/$REPOORG/$REPO --raw-field 'visibility=${REPOVISIBILITY}' -X PATCH
         hub api /repos/$REPOORG/$REPO  -H 'Accept: application/vnd.github.nebula-preview+json' -X PATCH -F visibility=$REPOVISIBILITY
         # Using hub API to set Github Actions Secret 
-        SNYK_TOKEN=hub api /repos/$REPOORG/addonfactory-repository-template/actions/secrets/SNYK_TOKEN -H "Accept: application/vnd.github.v3+json"
+        SNYK_TOKEN_VALUE=hub api /repos/$REPOORG/addonfactory-repository-template/actions/secrets/SNYK_TOKEN -H "Accept: application/vnd.github.v3+json"
+        echo "SNYK token value $SNYK_TOKEN_VALUE"
         # public_secret=hub api /repos/$REPOORG/addonfactory-repository-template/actions/secrets/public-key -H "Accept: application/vnd.github.v3+json"
 
-        hub api /repos/$REPOORG/$REPO/actions/secrets/SNYK_TOKEN -H "Accept: application/vnd.github.v3+json" -d '{$SNYK_TOKEN:$SNYK_TOKEN}' -X PUT
+        # hub api /repos/$REPOORG/$REPO/actions/secrets/SNYK_TOKEN -H "Accept: application/vnd.github.v3+json" -d '{$SNYK_TOKEN:$SNYK_TOKEN}' -X PUT
 
         curl -X POST https://circleci.com/api/v1.1/project/github/$REPOORG/$REPO/follow?circle-token=${CIRCLECI_TOKEN}
         curl -X POST --header "Content-Type: application/json" -d '{"type":"github-user-key"}' https://circleci.com/api/v1.1/project/github/$REPOORG/$REPO/checkout-key?circle-token=${CIRCLECI_TOKEN}
