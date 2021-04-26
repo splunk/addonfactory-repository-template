@@ -89,8 +89,8 @@ do
         hub api /repos/$REPOORG/$REPO --raw-field 'visibility=${REPOVISIBILITY}' -X PATCH
         hub api /repos/$REPOORG/$REPO  -H 'Accept: application/vnd.github.nebula-preview+json' -X PATCH -F visibility=$REPOVISIBILITY
         # Using hub API to set Github Actions Secret 
-        SNYK_TOKEN_VALUE=hub api /repos/$REPOORG/addonfactory-repository-template/actions/secrets/SNYK_TOKEN -H "Accept: application/vnd.github.v3+json"
-        echo "SNYK token value $SNYK_TOKEN_VALUE"
+        # SNYK_TOKEN_VALUE=hub api /repos/$REPOORG/addonfactory-repository-template/actions/secrets/SNYK_TOKEN -H "Accept: application/vnd.github.v3+json"
+        # echo "SNYK token value $SNYK_TOKEN_VALUE"
         # public_secret=hub api /repos/$REPOORG/addonfactory-repository-template/actions/secrets/public-key -H "Accept: application/vnd.github.v3+json"
 
         # hub api /repos/$REPOORG/$REPO/actions/secrets/SNYK_TOKEN -H "Accept: application/vnd.github.v3+json" -d '{$SNYK_TOKEN:$SNYK_TOKEN}' -X PUT
@@ -121,6 +121,8 @@ do
         echo "debug check 1"
         echo "SNYK token value $SNYK_TOKEN_VALUE"
         echo "debug check 2"
+        echo "SNYK token value $SNYK_TOKEN"
+        echo "debug check 3"
         # hub api /repos/$REPOORG/$REPO/actions/secrets/SNYK_TOKEN -H "Accept: application/vnd.github.v3+json" -d '{$SNYK_TOKEN:$SNYK_TOKEN}' -X PUT
 
         if [ ! -d "$REPO" ]; then
