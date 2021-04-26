@@ -121,7 +121,7 @@ do
         echo "debug check 1"
         echo "SNYK token value $SNYK_TOKEN_VALUE"
         echo "debug check 2"
-        echo "SNYK token value $SNYK_TOKEN"
+        echo "SNYK token value ${SNYK_TOKEN}"
         echo "debug check 3"
         # hub api /repos/$REPOORG/$REPO/actions/secrets/SNYK_TOKEN -H "Accept: application/vnd.github.v3+json" -d '{$SNYK_TOKEN:$SNYK_TOKEN}' -X PUT
 
