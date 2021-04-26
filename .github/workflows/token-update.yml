@@ -17,7 +17,7 @@ jobs:
       - name: Check github secrets
         run: |
           echo ${{secrets.SNYK_TOKEN}}
-      - name: Adding Github secrets in UCC-Example addon
+      - name: Adding GitHub secrets into Addons
         run: |
           branch_name=$(echo ${GITHUB_REF##*/})
           while IFS=, read -r repo_name repo_id repo_access repo_description repo_branch
@@ -28,9 +28,6 @@ jobs:
                 -H "Accept: application/vnd.github.v3+json" \
                 https://api.github.com/repos/splunk/$repo_name/actions/secrets/SNYK_TOKEN \
                 -d '{"encrypted_value": ${{ secrets.SNYK_TOKEN }} }'
-              echo "===================="
           done < repositories_$branch_name.csv
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Checking jq access
-        run: jq --help
