@@ -117,8 +117,8 @@ do
         echo "adding permission for teams"
         hub api orgs/$REPOORG/teams/products-gdi-addons/repos/$REPOORG/$REPO --raw-field 'permission=maintain' -X PUT
         hub api orgs/$REPOORG/teams/products-gdi-addons-adminrepo/repos/$REPOORG/$REPO --raw-field 'permission=admin' -X PUT
-        API_ID=$(curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/splunk/splunk-add-on-for-ucc-example/actions/secrets/public-key)
-        SNYK_TOKEN_VALUE=$(hub api /repos/$REPOORG/addonfactory-repository-template/actions/secrets/SNYK_TOKEN -H "Accept: application/vnd.github.v3+json")
+
+        SNYK_TOKEN_VALUE=$(curl -H "Accept: application/vnd.github.v3+json" https://$GITHUB_USER:$GITHUB_TOKEN@api.github.com/repos/$REPOORG/addonfactory-repository-template/actions/secrets/SYNK_TOKEN)
         echo "debug check 1"
         echo "SNYK token value $SNYK_TOKEN_VALUE"
         echo "debug check 2"
