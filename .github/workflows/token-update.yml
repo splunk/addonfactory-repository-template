@@ -22,12 +22,13 @@ jobs:
           branch_name=$(echo ${GITHUB_REF##*/})
           while IFS=, read -r repo_name repo_id repo_access repo_description repo_branch
           do
-              echo " :: $repo_name :: "
-            curl \
-              -X PUT \
-              -H "Accept: application/vnd.github.v3+json" \
-              https://api.github.com/repos/splunk/$repo_name/actions/secrets/SNYK_TOKEN \
-              -d '{"encrypted_value": ${{ secrets.SNYK_TOKEN }} }'
+              echo "Repo name: $repo_name"
+              curl \
+                -X PUT \
+                -H "Accept: application/vnd.github.v3+json" \
+                https://api.github.com/repos/splunk/$repo_name/actions/secrets/SNYK_TOKEN \
+                -d '{"encrypted_value": ${{ secrets.SNYK_TOKEN }} }'
+              echo "===================="
           done < repositories_$branch_name.csv
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
