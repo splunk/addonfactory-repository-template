@@ -117,7 +117,7 @@ do
         echo "adding permission for teams"
         hub api orgs/$REPOORG/teams/products-gdi-addons/repos/$REPOORG/$REPO --raw-field 'permission=maintain' -X PUT
         hub api orgs/$REPOORG/teams/products-gdi-addons-adminrepo/repos/$REPOORG/$REPO --raw-field 'permission=admin' -X PUT
-        SNYK_TOKEN_VALUE=hub api /repos/$REPOORG/addonfactory-repository-template/actions/secrets/SNYK_TOKEN -H "Accept: application/vnd.github.v3+json"
+        SNYK_TOKEN_VALUE=$(hub api /repos/$REPOORG/addonfactory-repository-template/actions/secrets/SNYK_TOKEN -H "Accept: application/vnd.github.v3+json")
         echo "debug check 1"
         echo "SNYK token value $SNYK_TOKEN_VALUE"
         echo "debug check 2"
