@@ -19,11 +19,17 @@ jobs:
           echo ${{secrets.SNYK_TOKEN}}
       - name: Adding Github secrets in UCC-Example addon
         run: |
-          curl \
-            -X PUT \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/splunk/splunk-add-on-for-ucc-example/actions/secrets/SNYK_TOKEN \
-            -d '{"encrypted_value": ${{ secrets.SNYK_TOKEN }} }'
+          while IFS=, read -r col1
+          do
+              echo "I got:$col1"
+          done < repositories_snyk-token-update.csv
+          # while [ $repo_name != null ]; do
+          #   curl \
+          #     -X PUT \
+          #     -H "Accept: application/vnd.github.v3+json" \
+          #     https://api.github.com/repos/splunk/splunk-add-on-for-ucc-example/actions/secrets/SNYK_TOKEN \
+          #     -d '{"encrypted_value": ${{ secrets.SNYK_TOKEN }} }'
+          # done
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Checking jq access
