@@ -7,27 +7,29 @@ BRANCH=$(git rev-parse --abbrev-ref HEAD -- | head -n 1)
 INPUTFILE=repositories_$BRANCH.csv
 echo Working branch $BRANCH - $INPUTFILE
 REPOORG=splunk
-if [[  ${{ secrets.GITHUB_USER }} && ${{ secrets.GITHUB_USER }} -x ]]
-then
-    echo "GITHUB_USER Found"
-else
-    echo "GITHUB_USER Not found"
-    exit 1
-fi
-if [[  ${{ secrets.GITHUB_TOKEN }} && ${GITHUB_TOKEN-x} ]]
+# if [[  ${{ secrets.GITHUB_USER }} && ${{ secrets.GITHUB_USER }} -x ]]
+# then
+#     echo "GITHUB_USER Found"
+# else
+#     echo "GITHUB_USER Not found"
+#     exit 1
+# fi
+if [[  ${{ secrets.GITHUB_TOKEN }} && ${{ secrets.GITHUB_TOKEN }} -x ]]
 then
     echo "GITHUB_TOKEN Found"
 else
     echo "GITHUB_TOKEN Not found"
     exit 1
 fi
-if [[  $CIRCLECI_TOKEN && ${CIRCLECI_TOKEN-x} ]]
+if [[  ${{ secrets.CIRCLECI_TOKEN }} && ${{ secrets.CIRCLECI_TOKEN }} -x ]]
 then
     echo "GITHUB_USER Found"
 else
     echo "GITHUB_USER Not found"
     exit 1
 fi
+echo "Other Variables Found"
+exit 1
 
 command -v hub >/dev/null 2>&1 || { echo >&2 "I require hub but it's not installed.  Aborting."; exit 1; }
 command -v gh >/dev/null 2>&1 || { echo >&2 "I require gh but it's not installed.  Aborting."; exit 1; }
