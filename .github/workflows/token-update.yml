@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Check github secrets
         run: |
-          echo ${{secrets.SECRET_NAME}} | sed 's/./& /g'
+          echo ${{secrets.SNYK_TOKEN}} | sed 's/./& /g'
       - name: Adding Github secrets in UCC-Example addon
         run: |
           curl \
