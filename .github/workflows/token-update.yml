@@ -1,0 +1,26 @@
+##
+## SPDX-FileCopyrightText: 2020 Splunk, Inc. <sales@splunk.com>
+## SPDX-License-Identifier: LicenseRef-Splunk-1-2020
+##
+##
+name: SNYK Token Update
+
+on:
+  push:
+    branches: [snyk-token-update]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Check github secrets
+        run: |
+          echo  ${{ secrets.SNYK_TOKEN }}
+      - name: Adding Github secrets in UCC-Example addon
+        run: |
+          curl \
+            -X PUT \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/splunk/splunk-add-on-for-ucc-example/actions/secrets/SNYK_TOKEN \
+            -d '{"encrypted_value": ${{ secrets.SNYK_TOKEN }} }'
