@@ -37,6 +37,8 @@ jobs:
         run: pip install git+https://github.com/pixelb/crudini.git
       - name: Apply Configuration policy
         run: |
+          # Invoking the environment so that we can have an approval
+          # ${{ env.approval-run }}
           test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
           test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
           test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
