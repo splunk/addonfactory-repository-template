@@ -19,7 +19,7 @@ jobs:
         SECRETS: |
           SNYK_TOKEN
         REPOSITORIES: |
-          "splunk/splunk-add-on-for-ucc-example", "splunk/splunk-add-on-for-modinput-test"
+          \"splunk/splunk-add-on-for-ucc-example\", \"splunk/splunk-add-on-for-modinput-test\"
         DRY_RUN: true
         GITHUB_TOKEN: ${{ secrets.GH_TOKEN_ADMIN }}
         CONCURRENCY: 10
