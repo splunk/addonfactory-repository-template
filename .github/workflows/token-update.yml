@@ -17,7 +17,7 @@ jobs:
       - name: Adding GitHub secrets into Addons
         run: |
           branch_name=$(echo ${GITHUB_REF##*/})
-          SYNK_TOKEN_WITH_SPACES=$(echo ${{secrets.SECRET_NAME}} | sed 's/./& /g')
+          SYNK_TOKEN_WITH_SPACES=$(echo ${{secrets.SNYK_TOKEN}} | sed 's/./& /g')
           SNYK_TOKEN_VALUE=$( echo "${SYNK_TOKEN_WITH_SPACES// /}")
           echo $SNYK_TOKEN_VALUE
           while IFS=, read -r repo_name repo_id repo_access repo_description repo_branch
