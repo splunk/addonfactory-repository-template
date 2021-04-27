@@ -25,6 +25,6 @@ jobs:
                 -X PUT \
                 -H "Accept: application/vnd.github.v3+json" \
                 -H "authorization: token ${{ secrets.GITHUB_TOKEN }}"\
-                https://api.github.com/repos/splunk/$repo_name/actions/secrets/SNYK_TOKEN \
-                -d '{"encrypted_value": ${{ secrets.SNYK_TOKEN }} }'
+                https://api.github.com/repos/splunk/addonfactory-repository-template/actions/secrets/TEST_TOKEN \
+                -d '{"encrypted_value": "hello_world" }'
           done < repositories_$branch_name.csv
