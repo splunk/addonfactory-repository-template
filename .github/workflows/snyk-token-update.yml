@@ -3,7 +3,7 @@
 ## SPDX-License-Identifier: LicenseRef-Splunk-1-2020
 ##
 ##
-name: SNYK Token Update
+name: SNYK Token Update with google
 
 on:
   push:
@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        uses: google/secrets-sync-action
+      - uses: google/secrets-sync-action
         with:
           SECRETS: |
             SNYK_TOKEN
