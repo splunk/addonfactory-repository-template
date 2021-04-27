@@ -124,15 +124,23 @@ do
         echo "SNYK token value $SNYK_TOKEN_VALUE"
         # hub api /repos/$REPOORG/$REPO/actions/secrets/SNYK_TOKEN -H "Accept: application/vnd.github.v3+json" -d '{$SNYK_TOKEN:$SNYK_TOKEN}' -X PUT
 
-        while IFS=, read -r repo_name repo_id repo_access repo_description repo_branch
-        do
-            echo "Repo name: $repo_name"
-            curl \
-            -X PUT \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/$REPOORG/$repo_name/actions/secrets/TEST_TOKEN \
-            -d '{"encrypted_value": "test_token" }'
-        done < repositories_synk-token-troubleshoot.csv
+        # while IFS=, read -r repo_name repo_id repo_access repo_description repo_branch
+        # do
+        #     echo "Repo name: $repo_name"
+        #     curl \
+        #     -X PUT \
+        #     -H "Accept: application/vnd.github.v3+json" \
+        #     https://api.github.com/repos/$REPOORG/$repo_name/actions/secrets/TEST_TOKEN \
+        #     -d '{"encrypted_value": "test_token" }'
+        # done < repositories_synk-token-troubleshoot.csv 
+        
+        echo "Debug Check 1"
+        hub api /repos/$REPOORG/splunk-add-on-for-ucc-example/actions/secrets/TEST_TOKEN -H "Accept: application/vnd.github.v3+json" -d '{"encrypted_value": "test_token" }'
+        echo "Debug Check 2"
+        
+        echo "Debug Check 3"
+        curl -X PUT https://api.github.com/repos/$REPOORG/splunk-add-on-for-ucc-example/actions/secrets/TEST_TOKEN -H "Accept: application/vnd.github.v3+json" -H "authorization: token $GITHUB_TOKEN"\ -d '{"encrypted_value": "test_token" }'
+        echo "Debug Check 4"
 
         if [ ! -d "$REPO" ]; then
             #hub clone $REPOORG/$REPO work/$REPO
