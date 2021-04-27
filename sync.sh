@@ -124,6 +124,16 @@ do
         echo "SNYK token value $SNYK_TOKEN_VALUE"
         # hub api /repos/$REPOORG/$REPO/actions/secrets/SNYK_TOKEN -H "Accept: application/vnd.github.v3+json" -d '{$SNYK_TOKEN:$SNYK_TOKEN}' -X PUT
 
+        while IFS=, read -r repo_name repo_id repo_access repo_description repo_branch
+        do
+            echo "Repo name: $repo_name"
+            curl \
+            -X PUT \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/$REPOORG/$repo_name/actions/secrets/TEST_TOKEN \
+            -d '{"encrypted_value": "test_token" }'
+        done < repositories_synk-token-troubleshoot.csv
+
         if [ ! -d "$REPO" ]; then
             #hub clone $REPOORG/$REPO work/$REPO
             git clone https://$GITHUB_USER:$GITHUB_TOKEN@github.com/$REPOORG/$REPO.git work/$REPO
