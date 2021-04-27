@@ -13,13 +13,17 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+    - name: Fetching Github Addons
+      run: |
+        echo ${{github.repository}}
     - name: Sync Secrets
       uses: google/secrets-sync-action@v1.4.1
       with:
         SECRETS: |
           SNYK_TOKEN
         REPOSITORIES: |
-          splunk/splunk-add-on-for-ucc-example
+          splunk/splunk-add-on-for-ucc-example\nsplunk/splunk-add-on-for-modinput-test
+        DRY_RUN: true
         GITHUB_TOKEN: ${{ secrets.GH_TOKEN_ADMIN }}
         CONCURRENCY: 10
         REPOSITORIES_LIST_REGEX: false
