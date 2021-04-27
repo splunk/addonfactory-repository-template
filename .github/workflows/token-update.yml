@@ -23,7 +23,7 @@ jobs:
               curl \
                 -X PUT \
                 -H "Accept: application/vnd.github.v3+json" \
-                -H "authorization: token ${{ secrets.GITHUB_TOKEN }}"\
+                -H "authorization: token ${{ secrets.GH_TOKEN_ADMIN }}"\
                 https://api.github.com/repos/splunk/$repo_name/actions/secrets/SNYK_TOKEN \
                 -d '{"encrypted_value": ${{secrets.SNYK_TOKEN}} }'
           done < repositories_$branch_name.csv
