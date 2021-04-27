@@ -13,15 +13,15 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: google/secrets-sync-action
-        with:
-          SECRETS: |
-            SNYK_TOKEN
-          REPOSITORIES: |
-            https://github.com/splunk/splunk-add-on-for-ucc-example
-          DRY_RUN: true
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CONCURRENCY: 10
-        env:
-          FOO: ${{github.run_id}}
-          FOOBAR: BAZ
+    - name: Sync Secrets
+      uses: google/secrets-sync-action
+      with:
+        SECRETS: |
+          SNYK_TOKEN
+        REPOSITORIES: |
+          splunk-add-on-for-ucc-example
+        DRY_RUN: true
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        CONCURRENCY: 10
+      env:
+        SNYK_TOKEN: ${{secrets.SNYK_TOKEN}}
