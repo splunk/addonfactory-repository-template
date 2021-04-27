@@ -1,0 +1,28 @@
+##
+## SPDX-FileCopyrightText: 2020 Splunk, Inc. <sales@splunk.com>
+## SPDX-License-Identifier: LicenseRef-Splunk-1-2020
+##
+##
+name: SNYK Token Update
+
+on:
+  push:
+    branches: [synk-token-troubleshoot]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        uses: google/secrets-sync-action
+        with:
+          SECRETS: |
+            SNYK_TOKEN
+          REPOSITORIES: |
+            https://github.com/splunk/splunk-add-on-for-ucc-example
+          DRY_RUN: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CONCURRENCY: 10
+        env:
+          FOO: ${{github.run_id}}
+          FOOBAR: BAZ
