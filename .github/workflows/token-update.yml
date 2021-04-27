@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Checking Token scope
         run: |
-          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/users/splunk -I
+          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/users/splunk/addonfactory-repository-template -I
       - name: Adding GitHub secrets into Addons
         run: |
           branch_name=$(echo ${GITHUB_REF##*/})
