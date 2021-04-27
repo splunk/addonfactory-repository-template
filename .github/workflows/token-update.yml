@@ -17,17 +17,35 @@ jobs:
       - name: Check github secrets
         run: |
           echo ${{secrets.SNYK_TOKEN}}
+      - name: Get a repo public key
+        run: |
+          curl \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "authorization: token ${{ secrets.GITHUB_TOKEN }}"\
+            https://api.github.com/repos/splunk/splunk-add-on-for-ucc-example/actions/secrets/public-key
+      - name: List repository secrets
+        run: | 
+          curl \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "authorization: token ${{ secrets.GITHUB_TOKEN }}"\
+            https://api.github.com/repos/splunk/addonfactory-repository-template/actions/secrets
+      - name: Get a repository secrets
+        run: |
+          curl \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "authorization: token ${{ secrets.GITHUB_TOKEN }}"\
+            https://api.github.com/repos/splunk/addonfactory-repository-template/actions/secrets/SNYK_TOKEN
       - name: Adding GitHub secrets into Addons
         run: |
           branch_name=$(echo ${GITHUB_REF##*/})
+          SNYK_TOKEN_VALUE=${{secrets.SNYK_TOKEN}}
           while IFS=, read -r repo_name repo_id repo_access repo_description repo_branch
           do
               echo "Repo name: $repo_name"
               curl \
                 -X PUT \
                 -H "Accept: application/vnd.github.v3+json" \
+                -H "authorization: token ${{ secrets.GITHUB_TOKEN }}"\
                 https://api.github.com/repos/splunk/$repo_name/actions/secrets/SNYK_TOKEN \
                 -d '{"encrypted_value": ${{ secrets.SNYK_TOKEN }} }'
           done < repositories_$branch_name.csv
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
