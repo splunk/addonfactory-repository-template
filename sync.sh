@@ -124,7 +124,7 @@ do
 
         ( git checkout test/common-template-rollout-changes  && git checkout develop && git branch -D test/common-template-rollout-changes ) || true
         git checkout -B "test/common-template-rollout-changes" $BRANCH
-        git submodule update --init --recursive
+        # git submodule update --init --recursive
         #fi
         rsync -avh --include ".*" --ignore-existing ../../seed/ .
         rsync -avh --include ".*" ../../enforce/ .
@@ -132,14 +132,14 @@ do
 
 
 
-        #Cleanup of bad module
-        # Remove the submodule entry from .git/config
-        git submodule deinit -f deps/script || true
-        # Remove the submodule directory from the superproject's .git/modules directory
-        rm -rf .git/modules/deps/script || true
+        # #Cleanup of bad module
+        # # Remove the submodule entry from .git/config
+        # git submodule deinit -f deps/script || true
+        # # Remove the submodule directory from the superproject's .git/modules directory
+        # rm -rf .git/modules/deps/script || true
 
         # Remove the entry in .gitmodules and remove the submodule directory located at path/to/submodule
-        git rm -f deps/script || true
+        # git rm -f deps/script || true
         #Updates for pytest-splunk-add-on >=1.2.2a1
         if [ ! -d "tests/data" ]; then
             mkdir -p tests/data
@@ -156,14 +156,14 @@ do
         if [ -d ".dependabot" ]; then
             git rm -rf .dependabot
         fi
-        if [ -d "deps/apps/splunk_env_indexer" ]; then
-            git submodule deinit -f deps/apps/splunk_env_indexer
-            rm -rf .git/modules/deps/apps/splunk_env_indexer
-            git rm -f deps/apps/splunk_env_indexer
-            git add deps/apps/splunk_env_indexer
-            git commit -m "Deprecate splunk_env_indexer submodule"
-        fi       
-        git submodule update --remote --merge deps/build/addonfactory_test_matrix_splunk 
+        # if [ -d "deps/apps/splunk_env_indexer" ]; then
+        #     git submodule deinit -f deps/apps/splunk_env_indexer
+        #     rm -rf .git/modules/deps/apps/splunk_env_indexer
+        #     git rm -f deps/apps/splunk_env_indexer
+        #     git add deps/apps/splunk_env_indexer
+        #     git commit -m "Deprecate splunk_env_indexer submodule"
+        # fi       
+        # git submodule update --remote --merge deps/build/addonfactory_test_matrix_splunk 
         if [[ -f "requirements.txt" ]]; then
           mkdir -p package/lib || true
           git mv requirements.txt package/lib/
@@ -186,12 +186,12 @@ do
         if [[ -f "build.sh" ]]; then
           git rm build.sh          
         fi
-        if [ -d "deps/build/disable_popup" ]; then
-            git rm -f deps/build/disable_popup
-            git submodule update --remote --merge deps/build/addonfactory_test_matrix_splunk
-            git add deps/build/disable_popup
-            git commit -m "Deprecate disable_popup"
-        fi
+        # if [ -d "deps/build/disable_popup" ]; then
+        #     git rm -f deps/build/disable_popup
+        #     git submodule update --remote --merge deps/build/addonfactory_test_matrix_splunk
+        #     git add deps/build/disable_popup
+        #     git commit -m "Deprecate disable_popup"
+        # fi
         if [[ -d "tests/data" ]]; then
             mkdir -p tests/knowledge || true
             git mv tests/data/* tests/knowledge
