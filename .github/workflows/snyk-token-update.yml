@@ -23,5 +23,6 @@ jobs:
         DRY_RUN: true
         GITHUB_TOKEN: ${{ secrets.GH_TOKEN_ADMIN }}
         CONCURRENCY: 10
+        REPOSITORIES_LIST_REGEX: false
       env:
         SNYK_TOKEN: ${{secrets.SNYK_TOKEN}}
