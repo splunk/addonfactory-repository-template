@@ -18,8 +18,9 @@ jobs:
         run: |
           branch_name=$(echo ${GITHUB_REF##*/})
           SYNK_TOKEN_WITH_SPACES=\"$(echo ${{secrets.SNYK_TOKEN}} | sed 's/./& /g')\"
-          SNYK_TOKEN_VALUE=$( echo "${SYNK_TOKEN_WITH_SPACES// /}")
+          echo SYNK_TOKEN_WITH_SPACES > abc.txt
           echo $SYNK_TOKEN_WITH_SPACES
+          SNYK_TOKEN_VALUE=$(cat abc.txt | sed 's/ //g')
           echo "$SNYK_TOKEN_VALUE"
           # while IFS=, read -r repo_name repo_id repo_access repo_description repo_branch
           # do
