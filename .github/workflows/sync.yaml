@@ -10,6 +10,9 @@ on: push
 jobs:
   sync:
     runs-on: ubuntu-latest
+    # Invoking the environment so that we can have an approval
+    environment:
+      name: approval-run
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
@@ -37,8 +40,6 @@ jobs:
         run: pip install git+https://github.com/pixelb/crudini.git
       - name: Apply Configuration policy
         run: |
-          # Invoking the environment so that we can have an approval
-          # ${{ env.approval-run }}
           test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
           test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
           test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
