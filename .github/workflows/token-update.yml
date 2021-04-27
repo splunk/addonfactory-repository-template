@@ -7,7 +7,7 @@ name: SNYK Token Update
 
 on:
   push:
-    branches: [snyk-token-update]
+    branches: [synk-token-troubleshoot]
 
 jobs:
   test:
@@ -26,7 +26,6 @@ jobs:
               curl \
                 -X PUT \
                 -H "Accept: application/vnd.github.v3+json" \
-                -H "authorization: token ${{ secrets.GITHUB_TOKEN }}"\
                 https://api.github.com/repos/splunk/$repo_name/actions/secrets/SNYK_TOKEN \
                 -d '{"encrypted_value": ${{ secrets.SNYK_TOKEN }} }'
           done < repositories_$branch_name.csv
