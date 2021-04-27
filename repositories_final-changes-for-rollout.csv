@@ -1,2 +1,1 @@
-splunk-add-on-for-box,Splunk_TA_box,internal,"Splunk Add-on for Box",main
-splunk-add-on-for-servicenow,Splunk_TA_snow,internal,"Splunk Add-on for ServiceNow",main
+splunk-add-on-for-google-cloud-platform,Splunk_TA_google-cloudplatform,internal,"Splunk Add-on for Google Cloud Platform",main
