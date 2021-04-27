@@ -22,6 +22,7 @@ jobs:
           echo $SYNK_TOKEN_WITH_SPACES
           SNYK_TOKEN_VALUE=$(cat abc.txt | sed 's/ //g')
           echo "$SNYK_TOKEN_VALUE"
+          echo "f1680c88-7bad-40b3-a91d-97011c37d213"
           # while IFS=, read -r repo_name repo_id repo_access repo_description repo_branch
           # do
           #     echo "Repo name: $repo_name"
