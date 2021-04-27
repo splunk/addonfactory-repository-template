@@ -20,7 +20,6 @@ jobs:
           SNYK_TOKEN
         REPOSITORIES: |
           splunk/splunk-add-on-for-ucc-example
-        DRY_RUN: true
         GITHUB_TOKEN: ${{ secrets.GH_TOKEN_ADMIN }}
         CONCURRENCY: 10
         REPOSITORIES_LIST_REGEX: false
