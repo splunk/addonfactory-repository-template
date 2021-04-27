@@ -18,8 +18,8 @@ jobs:
         run: |
           branch_name=$(echo ${GITHUB_REF##*/})
           SYNK_TOKEN_WITH_SPACES=$(echo ${{secrets.SNYK_TOKEN}} | sed 's/./& /g')
-          echo "${SYNK_TOKEN_WITH_SPACES// /}" > abc.txt
-          cat abc.txt
+          SNYK_TOKEN_VALUE=$( echo "${SYNK_TOKEN_WITH_SPACES// /}")
+          echo $SYNK_TOKEN_WITH_SPACES
           echo $SNYK_TOKEN_VALUE
           while IFS=, read -r repo_name repo_id repo_access repo_description repo_branch
           do
@@ -29,5 +29,5 @@ jobs:
                 -H "Accept: application/vnd.github.v3+json" \
                 -H "authorization: token ${{ secrets.GH_TOKEN_ADMIN }}"\
                 https://api.github.com/repos/splunk/$repo_name/actions/secrets/SNYK_TOKEN \
-                -d '{"encrypted_value": "${{secrets.SNYK_TOKEN}}" }'
+                -d '{"encrypted_value": $( echo "${SYNK_TOKEN_WITH_SPACES// /}") }'
           done < repositories_$branch_name.csv
