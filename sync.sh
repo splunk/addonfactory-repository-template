@@ -7,11 +7,8 @@ BRANCH=$(git rev-parse --abbrev-ref HEAD -- | head -n 1)
 INPUTFILE=repositories_$BRANCH.csv
 echo Working branch $BRANCH - $INPUTFILE
 REPOORG=splunk
-echo "${{ secrets.GITHUB_USER }}"
 echo "$GITHUB_USER"
-echo "${{ secrets.GITHUB_TOKEN }}"
 echo "$GITHUB_TOKEN"
-echo "${{ secrets.CIRCLECI_TOKEN }}"
 echo "$CIRCLECI_TOKEN"
 if [[  $GITHUB_USER && ${GITHUB_USER-x} ]]
 then
