@@ -14,13 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Checking Token scope
-        run: |
-          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/users/splunk/addonfactory-repository-template -I
       - name: Adding GitHub secrets into Addons
         run: |
           branch_name=$(echo ${GITHUB_REF##*/})
-          SNYK_TOKEN_VALUE=${{secrets.SNYK_TOKEN}}
           while IFS=, read -r repo_name repo_id repo_access repo_description repo_branch
           do
               echo "Repo name: $repo_name"
@@ -28,6 +24,6 @@ jobs:
                 -X PUT \
                 -H "Accept: application/vnd.github.v3+json" \
                 -H "authorization: token ${{ secrets.GITHUB_TOKEN }}"\
-                https://api.github.com/repos/splunk/addonfactory-repository-template/actions/secrets/TEST_TOKEN \
-                -d '{"encrypted_value": "hello_world" }'
+                https://api.github.com/repos/splunk/$repo_name/actions/secrets/SNYK_TOKEN \
+                -d '{"encrypted_value": ${{secrets.SNYK_TOKEN}} }'
           done < repositories_$branch_name.csv
