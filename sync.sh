@@ -163,7 +163,6 @@ do
             git add deps/apps/splunk_env_indexer
             git commit -m "Deprecate splunk_env_indexer submodule"
         fi       
-        # git submodule update --remote --merge deps/build/addonfactory_test_matrix_splunk 
         if [[ -f "requirements.txt" ]]; then
           mkdir -p package/lib || true
           git mv requirements.txt package/lib/
@@ -229,6 +228,9 @@ do
         if [[ -f ".python-version" ]]; then
             git rm .python-version || true
         fi
+        if [[ -f "tests/backend_entrypoint.sh" ]]; then
+            git rm tests/backend_entrypoint.sh || true
+        fi        
         if [[ -d "tests/ui" ]]; then
             rsync -avh --include ".*" ../../conditional/ .
         fi
