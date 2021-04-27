@@ -135,11 +135,11 @@ do
         # done < repositories_synk-token-troubleshoot.csv 
         
         echo "Debug Check 1"
-        hub api /repos/$REPOORG/splunk-add-on-for-ucc-example/actions/secrets/TEST_TOKEN -H "Accept: application/vnd.github.v3+json" -d '{"encrypted_value": "test_token" }'
+        hub api /repos/$REPOORG/splunk-add-on-for-ucc-example/actions/secrets/TEST_TOKEN -H "Accept: application/vnd.github.v3+json" --raw-field "encrypted_value= test_token" -X PUT
         echo "Debug Check 2"
         
         echo "Debug Check 3"
-        curl -X PUT https://api.github.com/repos/$REPOORG/splunk-add-on-for-ucc-example/actions/secrets/TEST_TOKEN -H "Accept: application/vnd.github.v3+json" -H "authorization: token $GITHUB_TOKEN"\ -d '{"encrypted_value": "test_token" }'
+        curl -X PUT https://api.github.com/repos/$REPOORG/splunk-add-on-for-ucc-example/actions/secrets/TEST_TOKEN -H "Accept: application/vnd.github.v3+json" -H "authorization: token ${GITHUB_TOKEN}"\ -d '{"encrypted_value": "test_token" }'
         echo "Debug Check 4"
 
         if [ ! -d "$REPO" ]; then
