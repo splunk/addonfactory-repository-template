@@ -590,17 +590,17 @@ workflows:
             branches:
               only: /.*/
       - splunk-app-unit-test:
-        context:
-          - gdi-saucelabs
-          - gdi-reportportal
-        requires:
-          - package
-        matrix:
-          parameters:
-            test_set: ["py2-2.7.17", "py3-3.7.4", "py3-3.7.8"]
-        filters:
-          branches:
-            only: /.*/            
+          context:
+            - gdi-saucelabs
+            - gdi-reportportal
+          requires:
+            - package
+          matrix:
+            parameters:
+              test_set: ["py2-2.7.17", "py3-3.7.4", "py3-3.7.8"]
+          filters:
+            branches:
+              only: /.*/            
       - approval-release:
           requires:
             - package
