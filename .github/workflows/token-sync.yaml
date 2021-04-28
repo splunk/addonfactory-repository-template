@@ -18,6 +18,9 @@ jobs:
           SNYK_TOKEN
         REPOSITORIES: |
           splunk/splunk-add-on-for-*
+          splunk/dropbox-add-on-for-splunk
+          splunk/dropbox-app-for-splunk
+          splunk/seckit_sa_geolocation
         GITHUB_TOKEN: ${{ secrets.GH_TOKEN_ADMIN }}
         CONCURRENCY: 10
         REPOSITORIES_LIST_REGEX: true
