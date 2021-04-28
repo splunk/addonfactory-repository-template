@@ -19,11 +19,12 @@ jobs:
         SECRETS: |
           SNYK_TOKEN
         REPOSITORIES: |
-          splunk/splunk-add-on-for-ucc-example
-          splunk/splunk-add-on-for-modinput-test
+          splunk/splunk-add-on-for-*
+          seckit_sa_geolocation
+          dropbox-app-for-splunk
+          dropbox-add-on-for-splunk
         DRY_RUN: true
         GITHUB_TOKEN: ${{ secrets.GH_TOKEN_ADMIN }}
-        CONCURRENCY: 10
-        REPOSITORIES_LIST_REGEX: false
+        REPOSITORIES_LIST_REGEX: true
       env:
         SNYK_TOKEN: ${{secrets.SNYK_TOKEN}}
