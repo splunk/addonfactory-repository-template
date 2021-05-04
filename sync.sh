@@ -99,8 +99,6 @@ do
         git push --set-upstream origin main
         git tag -a v$(crudini --get package/default/app.conf launcher version) -m "Release"
         git push --follow-tags
-        # git checkout -b develop
-        # git push --set-upstream origin develop
 
     else
         echo Repository is existing
