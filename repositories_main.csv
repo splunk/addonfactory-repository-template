@@ -57,7 +57,6 @@ splunk-add-on-for-unix-and-linux,Splunk_TA_nix,internal,"Splunk Add-on for Unix 
 splunk-add-on-for-websense-dlp,Splunk_TA_websense-dlp,internal,"Splunk Add-on for Websense DLP",main
 splunk-add-on-for-zeek-aka-bro,Splunk_TA_bro,internal,"Splunk Add-on for Zeek aka Bro",main
 splunk-add-on-for-rsa-securid-cas,Splunk_TA_rsa_securid_cas,internal,"Splunk Add-on for RSA SecurID CAS",main
-splunk-add-on-for-splunk-global-monitoring-console,Splunk_TA_splunk_global_monitoring_console,public,"Splunk Add-on for Splunk Global Monitoring Console",main
 splunk-add-on-for-zoom,Splunk_TA_zoom,internal,"Splunk Add-on for Zoom",main
 splunk-add-on-for-google-gsuite,Splunk_TA_google-gsuite,internal,"Splunk Add-on for G Suite",main
 splunk-add-on-for-cef,TA-cef-for-splunk,public,"TA CEF for Splunk",main
@@ -76,3 +75,5 @@ splunk-add-on-for-dynatrace,Splunk_TA_Dynatrace,public,"Splunk Add-on for DynaTr
 splunk-add-on-for-okta-identity-cloud,TA-Okta_Identity_Cloud_for_Splunk,internal,"Okta Identity Cloud Add-on for Splunk",main
 splunk-add-on-for-gws-ta,Splunk_TA_Google_Workspace,internal,"Google Workspace Add-on for Splunk",main
 splunk-add-on-for-cisco-umbrella,Splunk_TA_cisco-umbrella,internal,"Splunk Add-on for Cisco Umbrella",main
+splunk-add-on-for-new-relic,Splunk_TA_New_Relic,internal,"Splunk Add-on for New Relic",main
+splunk-add-on-for-microsoft-sysmon,Splunk_TA_microsoft-sysmon,internal,"Splunk Add-on for Microsoft Sysmon",main
