@@ -95,11 +95,12 @@ do
         curl -X POST --header "Content-Type: application/json" -d "{\"name\":\"GITHUB_TOKEN\", \"value\":\"${GITHUB_TOKEN}\"}" https://circleci.com/api/v1.1/project/github/$REPOORG/$REPO/envvar?circle-token=${CIRCLECI_TOKEN}
 
         git remote set-url origin https://$GITHUB_USER:$GITHUB_TOKEN@github.com/$REPOORG/$REPO.git
+        git checkout -b main
         git push --set-upstream origin main
         git tag -a v$(crudini --get package/default/app.conf launcher version) -m "Release"
         git push --follow-tags
-        git checkout -b develop
-        git push --set-upstream origin develop
+        # git checkout -b develop
+        # git push --set-upstream origin develop
 
     else
         echo Repository is existing
