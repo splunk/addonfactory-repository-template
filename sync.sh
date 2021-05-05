@@ -128,7 +128,7 @@ do
 
         ( git checkout test/common-template-rollout-changes  && git checkout develop && git branch -D test/common-template-rollout-changes ) || true
         git checkout -B "test/common-template-rollout-changes" $BRANCH
-        # Create a temp file so that the submodules are updated via HTTPS instead of SSH
+        # Changing global URLs from SSH to using HTTPS so that script does not fail
         git config --global url.https://github.com/.insteadOf git@github.com:
         git submodule update --init --recursive
         #fi
