@@ -227,6 +227,9 @@ do
         if [[ -f ".python-version" ]]; then
             git rm .python-version || true
         fi
+        if [[ -f ".github/workflows/cla.yaml" ]]; then
+            git rm .github/workflows/cla.yaml || true
+        fi
         if [[ -f "tests/backend_entrypoint.sh" ]]; then
             git rm tests/backend_entrypoint.sh || true
         fi        
