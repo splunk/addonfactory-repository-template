@@ -113,7 +113,7 @@ do
         hub api orgs/$REPOORG/teams/products-gdi-addons-adminrepo/repos/$REPOORG/$REPO --raw-field 'permission=admin' -X PUT
         echo "Adding branch protection"
         hub api -X PATCH -H "Accept: application/vnd.github.v3+json" /repos/$REPOORG/$REPO/branches/main/protection --raw-field '{"dismissal_restrictions": {},"dismiss_stale_reviews": false,"require_code_owner_reviews": true,"required_approving_review_count": 1}'
-        hub api -X PATCH -H "Accept: application/vnd.github.v3+json" /repos/splunk/addonfactory-repository-template/environments/test_environment -d '{"reviewers": [{"type": "User", "id": 60528866}]}'
+        hub api -X PATCH -H "Accept: application/vnd.github.v3+json" /repos/splunk/addonfactory-repository-template/environments/test_environment --raw-field '{"reviewers": [{"type": "User", "id": 60528866}]}'
         if [ ! -d "$REPO" ]; then
             #hub clone $REPOORG/$REPO work/$REPO
             git clone https://$GITHUB_USER:$GITHUB_TOKEN@github.com/$REPOORG/$REPO.git work/$REPO
