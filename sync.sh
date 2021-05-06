@@ -114,7 +114,7 @@ do
         echo "Adding branch protection"
         hub api -X PUT -H "Accept: application/vnd.github.v3+json" /repos/$REPOORG/$REPO/branches/main/protection --raw-field '{"dismissal_restrictions": {},"dismiss_stale_reviews": false,"require_code_owner_reviews": true,"required_approving_review_count": 1}'
         # hub api -X PATCH -H "Accept: application/vnd.github.v3+json" /repos/splunk/addonfactory-repository-template/environments/test_environment --raw-field '{"reviewers": [{"type": "User", "id": 60528866}]}'
-        curl -X PATCH -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/splunk/addonfactory-repository-template/environments/test_environment -d '{"reviewers": [{"type": "User", "id": 60528866}]}'
+        curl -X PUT -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/splunk/addonfactory-repository-template/environments/test_environment -d '{"reviewers": [{"type": "User", "id": 60528866}]}'
         curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/splunk/addonfactory-repository-template/environments
         if [ ! -d "$REPO" ]; then
             #hub clone $REPOORG/$REPO work/$REPO
