@@ -5,9 +5,7 @@
 ##
 name: sync
 
-on:
-  push:
-    branches: [main, develop]
+on: push
 
 jobs:
   sync:
