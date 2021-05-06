@@ -13,6 +13,8 @@ jobs:
     # Invoking the environment so that we can have an approval step
     # environment:
     #   name: approval-run
+    environment:
+      name: test_environment
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
