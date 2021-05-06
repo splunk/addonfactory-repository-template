@@ -15,7 +15,6 @@ jobs:
     #   name: approval-run
     environment:
       name: test_environment
-      url: ${{ steps.Apply_Configuration_policy.outputs.html_url }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
