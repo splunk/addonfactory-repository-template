@@ -6,5 +6,5 @@ updates:
     target-branch: "troubleshoot-cla-release-notes-updates"
     schedule:
       interval: "daily"
-      time: "17:05"
+      time: "17:20"
       timezone: "Asia/Calcutta"
