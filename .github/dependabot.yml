@@ -3,8 +3,8 @@ updates:
   # Maintain dependencies for GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/enforce"
-    target-branch: "main"
+    target-branch: "troubleshoot-cla-release-notes-updates"
     schedule:
       interval: "daily"
-      time: "17:00"
+      time: "17:05"
       timezone: "Asia/Calcutta"
