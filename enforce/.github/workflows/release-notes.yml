@@ -1,10 +1,9 @@
 name: Release-Notes-Preview
 
 on:
-  pull_request:
-    branches: [main, develop]
-  issue_comment:
-    types: [edited]
+  push:
+    branches:
+      - troubleshoot-cla-release-notes-updates
 
 jobs:
   preview:
