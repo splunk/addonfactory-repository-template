@@ -1,8 +1,9 @@
 name: "CLA Assistant"
 on:
-  push:
-    branches:
-      - troubleshoot-cla-release-notes-updates
+  issue_comment:
+    types: [created]
+  pull_request_target:
+    types: [opened, closed, synchronize]
 
 jobs:
   ContributorLicenseAgreement:
