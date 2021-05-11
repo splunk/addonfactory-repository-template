@@ -78,3 +78,4 @@ splunk-add-on-for-cisco-umbrella,Splunk_TA_cisco-umbrella,internal,"Splunk Add-o
 splunk-add-on-for-new-relic,Splunk_TA_New_Relic,internal,"Splunk Add-on for New Relic",main
 splunk-add-on-for-microsoft-sysmon,Splunk_TA_microsoft-sysmon,internal,"Splunk Add-on for Microsoft Sysmon",main
 splunk-add-on-for-fortinet-fortigate,Splunk_TA_fortinet_fortigate,internal,"Fortinet Fortigate Add-on for Splunk",main
+splunk-add-on-for-tenable,TA-Tenable,internal,"Tenable Add-On for Splunk",main
