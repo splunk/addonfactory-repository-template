@@ -81,3 +81,4 @@ splunk-add-on-for-fortinet-fortigate,Splunk_TA_fortinet_fortigate,internal,"Fort
 splunk-add-on-for-tenable,TA-Tenable,internal,"Tenable Add-On for Splunk",main
 splunk-add-on-for-proofpoint-email,TA_pps,internal,"Proofpoint Email Security Add-On for Splunk",main
 splunk-add-on-for-cisco-cloudlock,cisco-cloud-security,internal,"Cisco Cloud Security",main
+google-chrome-add-on-for-splunk,TA_google_chrome,internal,"Google Chrome Add-on for Splunk",main
