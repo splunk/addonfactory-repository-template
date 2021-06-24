@@ -1,2 +1,3 @@
 splunk-add-on-for-ucc-example,Splunk_TA_UCCExample,public,"Splunk_TA_UCCExample",main
 splunk-add-on-for-modinput-test,Splunk_TA_Modinput_Test,public,"Splunk Add-on for Modinput Test",main
+splunk-add-on-for-troubleshoot-test,Splunk_TA_troubleshoot-test,internal,"Splunk Add-on for Troubleshoot test",main
