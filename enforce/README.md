@@ -29,5 +29,5 @@ pytest
 Using external Splunk instance with Eventgen and app pre-installed
 
 ```bash
-pytest --splunk_type=external --splunk_host=something --splunk_user=foo --splunk_password=something
+pytest --splunk-type=external --splunk-host=something --splunk-user=foo --splunk-password=something
 ```
