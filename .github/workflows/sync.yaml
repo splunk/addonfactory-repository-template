@@ -1,0 +1,57 @@
+##
+## SPDX-FileCopyrightText: 2020 Splunk, Inc. <sales@splunk.com>
+## SPDX-License-Identifier: LicenseRef-Splunk-1-2020
+##
+##
+name: sync
+
+on:
+  push:
+    branches:
+      - main 
+      - develop
+  pull_request:
+    types: [opened]
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    # Invoking the environment so that we can have an approval step
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - name: Install rsync
+        run: |
+          sudo apt update -y
+          sudo apt install -y rsync
+      - name: Install GH CLI
+        run: |
+          sudo apt install -y git
+          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0 
+          sudo apt-add-repository -u https://cli.github.com/packages  -y
+          sudo apt install gh -y
+      - name: Install HUB CLI
+        run: |
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+          test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+          test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+          test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
+          echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
+          brew install hub
+      - name: setup python
+        run: pip install git+https://github.com/pixelb/crudini.git
+      - name: Apply Configuration policy
+        id: Apply_Configuration_policy
+        run: |
+          test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+          test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+          test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
+          echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
+          ./sync.sh
+        env:
+          GITHUB_USER: ${{ secrets.GH_USER_ADMIN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_ADMIN }}
+          CIRCLECI_TOKEN: ${{ secrets.CIRCLECI_TOKEN }}
+          RP_ENDPOINT: ${{ secrets.RP_ENDPOINT }}
+          RP_UUID: ${{ secrets.RP_UUID }}
