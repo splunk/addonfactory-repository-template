@@ -13,18 +13,25 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - name: Sync Secrets
-      uses: google/secrets-sync-action@v1.4.1
-      with:
-        SECRETS: |
-          SNYK_TOKEN
-        REPOSITORIES: |
-          splunk/splunk-add-on-for-*
-          splunk/dropbox-add-on-for-splunk
-          splunk/dropbox-app-for-splunk
-          splunk/seckit_sa_geolocation
-        GITHUB_TOKEN: ${{ secrets.GH_TOKEN_ADMIN }}
-        CONCURRENCY: 10
-        REPOSITORIES_LIST_REGEX: true
-      env:
-        SNYK_TOKEN: ${{secrets.SNYK_TOKEN}}
+      - name: Sync Secrets
+        uses: google/secrets-sync-action@v1.4.1
+        with:
+          SECRETS: |
+            SNYK_TOKEN
+          REPOSITORIES: |
+            splunk/splunk-add-on-for-*
+            splunk/dropbox-add-on-for-splunk
+            splunk/dropbox-app-for-splunk
+            splunk/seckit_sa_geolocation
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_ADMIN }}
+          CONCURRENCY: 10
+          REPOSITORIES_LIST_REGEX: true
+        env:
+          CIRCLECI_TOKEN: ${{secrets.CIRCLECI_TOKEN}}
+          GH_TOKEN_ADMIN: ${{secrets.GH_TOKEN_ADMIN}}
+          GH_USER_ADMIN: ${{secrets.GH_USER_ADMIN}}
+          PAT_CLATOOL: ${{secrets.PAT_CLATOOL}}
+          RP_ENDPOINT: ${{secrets.RP_ENDPOINT}}
+          RP_UUID: ${{secrets.RP_UUID}}
+          SNYK_TOKEN: ${{secrets.SNYK_TOKEN}}
+          VT_API_KEY: ${{secrets.VT_API_KEY}}

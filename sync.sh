@@ -236,6 +236,29 @@ do
         if [[ -d "tests/ui" ]]; then
             rsync -avh --include ".*" ../../conditional/ .
         fi
+        if [[ -f ".github/workflows/reuse.yml" ]]; then
+            git rm .github/workflows/reuse.yml || true
+        fi        
+        if [[ -f ".github/workflows/snyk.yml" ]]; then
+            git rm .github/workflows/snyk.yml || true
+        fi        
+        if [[ -f ".github/workflows/rebase.yml" ]]; then
+            git rm .github/workflows/rebase.yml || true
+        fi        
+        if [[ -f ".releaserc.yaml" ]]; then
+            git rm .releaserc.yaml || true
+        fi        
+        if [[ -f "package/lib/py2/requirements.txt" ]]; then
+            git rm package/lib/py2/requirements.txt || true
+        fi  
+        if [[ -f "package/lib/py2/requirements.txt" ]]; then
+            git rm package/lib/py2/requirements.txt || true
+        fi  
+        if [[ -f "requirements_py2_dev.txt" ]]; then
+            git rm requirements_py2_dev.txt || true
+        fi        
+        
+
         git add . || true
         git commit -am "test: common template rollout changes" || true
 
