@@ -4,7 +4,12 @@ set -x
 
 
 BRANCH=$(git rev-parse --abbrev-ref HEAD -- | head -n 1)
-INPUTFILE=repositories_$BRANCH.csv
+if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "develop" ]
+then
+    INPUTFILE=repositories_$BRANCH.csv
+else
+    INPUTFILE=repositories_PR.csv
+fi
 echo Working branch $BRANCH - $INPUTFILE
 REPOORG=splunk
 if [[  $GITHUB_USER && ${GITHUB_USER-x} ]]
@@ -97,11 +102,10 @@ do
         curl -X POST --header "Content-Type: application/json" -d "{\"name\":\"GITHUB_TOKEN\", \"value\":\"${GITHUB_TOKEN}\"}" https://circleci.com/api/v1.1/project/github/$REPOORG/$REPO/envvar?circle-token=${CIRCLECI_TOKEN}
 
         git remote set-url origin https://$GITHUB_USER:$GITHUB_TOKEN@github.com/$REPOORG/$REPO.git
+        git checkout -b main
         git push --set-upstream origin main
         git tag -a v$(crudini --get package/default/app.conf launcher version) -m "Release"
         git push --follow-tags
-        git checkout -b develop
-        git push --set-upstream origin develop
 
     else
         echo Repository is existing
@@ -236,6 +240,9 @@ do
         fi
         if [[ -f ".python-version" ]]; then
             git rm .python-version || true
+        fi
+        if [[ -f ".github/workflows/cla.yaml" ]]; then
+            git rm .github/workflows/cla.yaml || true
         fi
         if [[ -f "tests/backend_entrypoint.sh" ]]; then
             git rm tests/backend_entrypoint.sh || true

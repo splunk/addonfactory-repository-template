@@ -73,7 +73,11 @@ splunk-add-on-for-crowdstrike-fdr,Splunk_TA_CrowdStrike-FDR,internal,"Splunk Add
 splunk-add-on-for-palo-alto-networks,Splunk_TA_palo-alto-networks,internal,"Splunk Add-on for Palo Alto Networks",main
 splunk-add-on-for-dynatrace,Splunk_TA_Dynatrace,public,"Splunk Add-on for DynaTrace",main
 splunk-add-on-for-okta-identity-cloud,TA-Okta_Identity_Cloud_for_Splunk,internal,"Okta Identity Cloud Add-on for Splunk",main
-splunk-add-on-for-gws-ta,Splunk_TA_Google_Workspace,internal,"Google Workspace Add-on for Splunk",main
+splunk-add-on-for-google-workspace,Splunk_TA_Google_Workspace,internal,"Google Workspace Add-on for Splunk",main
 splunk-add-on-for-cisco-umbrella,Splunk_TA_cisco-umbrella,internal,"Splunk Add-on for Cisco Umbrella",main
 splunk-add-on-for-new-relic,Splunk_TA_New_Relic,internal,"Splunk Add-on for New Relic",main
 splunk-add-on-for-microsoft-sysmon,Splunk_TA_microsoft-sysmon,internal,"Splunk Add-on for Microsoft Sysmon",main
+splunk-add-on-for-fortinet-fortigate,Splunk_TA_fortinet_fortigate,internal,"Fortinet Fortigate Add-on for Splunk",main
+splunk-add-on-for-tenable,TA-Tenable,internal,"Tenable Add-On for Splunk",main
+splunk-add-on-for-proofpoint-email,TA_pps,internal,"Proofpoint Email Security Add-On for Splunk",main
+splunk-add-on-for-cisco-cloudlock,cisco-cloud-security,internal,"Cisco Cloud Security",main
