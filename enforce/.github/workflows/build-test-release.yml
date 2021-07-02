@@ -129,7 +129,7 @@ jobs:
         if: ${{ steps.checklibs.outputs.ENABLED == 'true' }}
         run: pip install -r package/lib/requirements.txt
       - uses: snyk/actions/setup@master
-      - uses: actions/setup-go@v1
+      - uses: actions/setup-go@v2.1.3
         with:
           go-version: "1.13"
       - name: Snyk monitor
