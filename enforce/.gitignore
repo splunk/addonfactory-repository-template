@@ -51,3 +51,8 @@ src
 !deps/build
 !package/appserver/static/js/build
 *.log
+
+# ucc ui extensions
+!yarn.lock
+yarn-error.log
+node_modules/
